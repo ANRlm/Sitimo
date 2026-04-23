@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"sync"
 	"text/template"
@@ -23,6 +24,8 @@ import (
 )
 
 var errExportCancelled = errors.New("export cancelled")
+
+var bareTextCommandPattern = regexp.MustCompile(`\\text\{([^{}]+)\}`)
 
 type latexImageAsset struct {
 	SourcePath string
@@ -219,6 +222,9 @@ func (m *Manager) stageLatexWorkspace(root string, latexSource string, latexAsse
 		if err := os.WriteFile(filepath.Join(root, "README.txt"), []byte(latexBundleReadme()), 0o644); err != nil {
 			return fmt.Errorf("写入 LaTeX 说明文件失败：%w", err)
 		}
+		if err := os.WriteFile(filepath.Join(root, "latexmkrc"), []byte(latexmkrcContent()), 0o644); err != nil {
+			return fmt.Errorf("写入 latexmkrc 失败：%w", err)
+		}
 	}
 
 	for _, asset := range latexAssets {
@@ -318,15 +324,28 @@ func (m *Manager) renderLatex(paper domain.PaperDetail, variant domain.ExportVar
 		"ShowAnswerVersion": variant == domain.ExportVariantAnswer || variant == domain.ExportVariantBoth,
 	}
 
-	const tpl = `\documentclass[{{.FontSize}}pt{{if eq .Columns 2}},twocolumn{{end}}]{ctexart}
+	const tpl = `% !TeX program = xelatex
+\RequirePackage{iftex}
+\documentclass[{{.FontSize}}pt{{if eq .Columns 2}},twocolumn{{end}}]{article}
+\ifPDFTeX
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{CJKutf8}
+\newcommand{\MathLibBeginDocument}{\begin{CJK*}{UTF8}{gbsn}}
+\newcommand{\MathLibEndDocument}{\end{CJK*}}
+\else
+\usepackage[UTF8]{ctex}
+\newcommand{\MathLibBeginDocument}{}
+\newcommand{\MathLibEndDocument}{}
+\fi
 \usepackage{amsmath,amssymb,graphicx,geometry}
 \geometry{ {{.PaperSize}}paper, margin=2cm }
 \linespread{ {{.LineHeight}} }
-\title{ {{.Title}} }
-\date{}
 \begin{document}
-\maketitle
+\MathLibBeginDocument
 \begin{center}
+\Large\textbf{ {{.Title}} }\par
+\vspace{0.5em}
 \textbf{ {{.SchoolName}} {{if .ExamName}}· {{.ExamName}}{{end}} }\\
 生成时间：{{.GeneratedAt}}
 \end{center}
@@ -349,6 +368,7 @@ func (m *Manager) renderLatex(paper domain.PaperDetail, variant domain.ExportVar
 {{end}}
 \vspace{1.5em}
 {{end}}
+\MathLibEndDocument
 \end{document}
 `
 
@@ -386,6 +406,7 @@ func normalizeLatexForExport(value string) string {
 	value = strings.ReplaceAll(value, "\r\n", "\n")
 	value = strings.ReplaceAll(value, "\r", "\n")
 	value = strings.ReplaceAll(value, `\r\n`, "\n\n")
+	value = rewriteLatexSegments(value, normalizeLatexTextSegment, normalizeLatexMathSegment)
 
 	var builder strings.Builder
 	builder.Grow(len(value))
@@ -402,6 +423,58 @@ func normalizeLatexForExport(value string) string {
 	}
 
 	return collapseBlankLines(builder.String())
+}
+
+func rewriteLatexSegments(value string, textTransform func(string) string, mathTransform func(string) string) string {
+	var builder strings.Builder
+	cursor := 0
+
+	for cursor < len(value) {
+		startIndex, open, close := findNextMathStart(value, cursor)
+		if startIndex < 0 {
+			builder.WriteString(textTransform(value[cursor:]))
+			break
+		}
+
+		builder.WriteString(textTransform(value[cursor:startIndex]))
+		builder.WriteString(open)
+
+		mathStart := startIndex + len(open)
+		mathLength := strings.Index(value[mathStart:], close)
+		if mathLength < 0 {
+			builder.WriteString(mathTransform(value[mathStart:]))
+			break
+		}
+
+		mathEnd := mathStart + mathLength
+		builder.WriteString(mathTransform(value[mathStart:mathEnd]))
+		builder.WriteString(close)
+		cursor = mathEnd + len(close)
+	}
+
+	return builder.String()
+}
+
+func findNextMathStart(value string, from int) (index int, open string, close string) {
+	inlineIndex := strings.Index(value[from:], `\(`)
+	displayIndex := strings.Index(value[from:], `\[`)
+
+	switch {
+	case inlineIndex < 0 && displayIndex < 0:
+		return -1, "", ""
+	case inlineIndex >= 0 && (displayIndex < 0 || inlineIndex <= displayIndex):
+		return from + inlineIndex, `\(`, `\)`
+	default:
+		return from + displayIndex, `\[`, `\]`
+	}
+}
+
+func normalizeLatexTextSegment(segment string) string {
+	return bareTextCommandPattern.ReplaceAllString(segment, `$1`)
+}
+
+func normalizeLatexMathSegment(segment string) string {
+	return strings.ReplaceAll(segment, "°", `^\circ`)
 }
 
 func shouldConvertLiteralEscapedNewline(value string, next int) bool {
@@ -529,7 +602,15 @@ func latexBundleReadme() string {
 
 1. Upload the whole ZIP to Overleaf and let it extract the project files.
 2. Keep main.tex at the project root.
-3. Compile with XeLaTeX.
-4. If you replace or add figures manually, put them under the images/ folder.
+3. The bundle includes a latexmkrc file that prefers XeLaTeX automatically in Overleaf.
+4. main.tex also has a pdfLaTeX-compatible fallback, so Overleaf defaults should still compile.
+5. If you replace or add figures manually, put them under the images/ folder.
 `)
+}
+
+func latexmkrcContent() string {
+	return strings.TrimSpace(`
+$pdf_mode = 5;
+$xelatex = 'xelatex -interaction=nonstopmode -file-line-error -synctex=1 %O %S';
+`) + "\n"
 }

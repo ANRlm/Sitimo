@@ -20,7 +20,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'MathLib - 数学题库管理系统',
+  title: 'Sitimo - 数学题库管理系统',
   description: '面向中文教师的数学题库管理系统，支持 LaTeX 公式编辑、试卷组排与导出',
   generator: 'v0.app',
   icons: {

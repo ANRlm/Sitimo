@@ -134,7 +134,7 @@ export default function SettingsPage() {
       <PageHeader
         eyebrow="设置"
         title="系统与偏好"
-        description="管理 MathLib 的账户、界面偏好、导出模板与本地数据行为。"
+        description="管理 Sitimo 的账户、界面偏好、导出模板与本地数据行为。"
         badges={
           <>
             <Badge variant="secondary">当前主题：{theme === 'system' ? '跟随系统' : theme === 'dark' ? '深色' : '浅色'}</Badge>

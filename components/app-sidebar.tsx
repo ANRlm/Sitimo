@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  FlaskConical,
   Home,
   FileText,
   Image,
@@ -16,6 +15,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
+import { BrandMark } from '@/components/brand-mark';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -59,12 +59,10 @@ export function AppSidebar() {
           )}
         >
           <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-              <FlaskConical className="h-5 w-5 text-primary-foreground" />
-            </div>
+            <BrandMark />
             {!isCollapsed && (
               <span className="text-lg font-semibold text-sidebar-foreground">
-                MathLib
+                Sitimo
               </span>
             )}
           </Link>

@@ -14,8 +14,8 @@ import {
 
 const steps = [
   {
-    title: '欢迎使用 MathLib',
-    description: 'MathLib 主要由题库、图库和试卷三大模块组成，先看一遍结构再开始录题会更快。',
+    title: '欢迎使用 Sitimo',
+    description: 'Sitimo 主要由题库、图库和试卷三大模块组成，先看一遍结构再开始录题会更快。',
     icon: Compass,
   },
   {

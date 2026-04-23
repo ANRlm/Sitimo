@@ -462,7 +462,7 @@ func writeSeedLatexBundle(path string, job domain.SeedExportJob) error {
 	if err != nil {
 		return err
 	}
-	content := fmt.Sprintf("%% Auto generated seed export\n%% %s\n\\documentclass{ctexart}\n\\begin{document}\n%s\n\\end{document}\n", job.PaperTitle, job.PaperTitle)
+	content := fmt.Sprintf("%% !TeX program = xelatex\n%% Auto generated seed export\n%% %s\n\\RequirePackage{iftex}\n\\documentclass{article}\n\\ifPDFTeX\n\\usepackage[utf8]{inputenc}\n\\usepackage[T1]{fontenc}\n\\usepackage{CJKutf8}\n\\newcommand{\\MathLibBeginDocument}{\\begin{CJK*}{UTF8}{gbsn}}\n\\newcommand{\\MathLibEndDocument}{\\end{CJK*}}\n\\else\n\\usepackage[UTF8]{ctex}\n\\newcommand{\\MathLibBeginDocument}{}\n\\newcommand{\\MathLibEndDocument}{}\n\\fi\n\\begin{document}\n\\MathLibBeginDocument\n%s\n\\MathLibEndDocument\n\\end{document}\n", job.PaperTitle, job.PaperTitle)
 	if _, err := mainTex.Write([]byte(content)); err != nil {
 		return err
 	}
@@ -471,8 +471,16 @@ func writeSeedLatexBundle(path string, job domain.SeedExportJob) error {
 	if err != nil {
 		return err
 	}
-	readmeContent := "MathLib demo LaTeX bundle\nCompile main.tex with XeLaTeX.\nAdd any required figures under the images/ folder.\n"
+	readmeContent := "MathLib demo LaTeX bundle\nThe project prefers XeLaTeX but also includes a pdfLaTeX fallback for Overleaf.\nAdd any required figures under the images/ folder.\n"
 	if _, err := readme.Write([]byte(readmeContent)); err != nil {
+		return err
+	}
+
+	latexmkrc, err := zipWriter.Create("latexmkrc")
+	if err != nil {
+		return err
+	}
+	if _, err := latexmkrc.Write([]byte("$pdf_mode = 5;\n$xelatex = 'xelatex -interaction=nonstopmode -file-line-error -synctex=1 %O %S';\n")); err != nil {
 		return err
 	}
 

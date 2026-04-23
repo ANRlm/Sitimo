@@ -65,7 +65,7 @@ const defaultPaperValues: PaperFormValues = {
   description: '',
   status: 'draft',
   instructions: '请认真作答，将答案写在答题纸上。',
-  footerText: 'MathLib 自动组卷',
+  footerText: 'Sitimo 自动组卷',
   columns: '1',
   fontSize: '12',
   lineHeight: '1.4',

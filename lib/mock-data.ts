@@ -47,8 +47,8 @@ export const mockProblems: Problem[] = [
   {
     id: 'p2',
     code: 'P-2024-0002',
-    latex: '在 \\(\\triangle ABC\\) 中，已知 \\(a=2\\)，\\(b=\\sqrt{3}\\)，\\(\\angle A = 60°\\)，求 \\(\\angle B\\)。',
-    answerLatex: '\\(\\angle B = 45°\\) 或 \\(\\angle B = 135°\\)',
+    latex: '在 \\(\\triangle ABC\\) 中，已知 \\(a=2\\)，\\(b=\\sqrt{3}\\)，\\(\\angle A = 60^\\circ\\)，求 \\(\\angle B\\)。',
+    answerLatex: '\\(\\angle B = 45^\\circ\\) 或 \\(\\angle B = 135^\\circ\\)',
     solutionLatex: '由正弦定理 \\(\\dfrac{a}{\\sin A} = \\dfrac{b}{\\sin B}\\)，代入得 \\(\\sin B = \\dfrac{b \\sin A}{a} = \\dfrac{\\sqrt{3} \\cdot \\frac{\\sqrt{3}}{2}}{2} = \\dfrac{3}{4}\\)。',
     type: 'solve',
     difficulty: 'medium',

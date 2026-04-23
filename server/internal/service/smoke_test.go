@@ -332,8 +332,9 @@ func TestSmokeFlows(t *testing.T) {
 		}
 
 		var (
-			mainTex  string
-			hasImage bool
+			mainTex      string
+			hasImage     bool
+			hasLatexmkrc bool
 		)
 		for _, file := range archiveReader.File {
 			if file.Name == "main.tex" {
@@ -351,19 +352,31 @@ func TestSmokeFlows(t *testing.T) {
 			if strings.HasPrefix(file.Name, "images/") {
 				hasImage = true
 			}
+			if file.Name == "latexmkrc" {
+				hasLatexmkrc = true
+			}
 		}
 		if !strings.Contains(mainTex, "Smoke Export Paper") {
 			t.Fatalf("expected export artifact to contain paper title, got %q", mainTex)
 		}
-		if strings.Contains(mainTex, "/app/storage/") {
-			t.Fatalf("expected latex export to avoid absolute storage paths, got %q", mainTex)
-		}
-		if !strings.Contains(mainTex, `\IfFileExists{images/`) {
-			t.Fatalf("expected portable latex image guard, got %q", mainTex)
-		}
-		if !hasImage {
-			t.Fatal("expected latex bundle to contain staged image assets")
-		}
+			if strings.Contains(mainTex, "/app/storage/") {
+				t.Fatalf("expected latex export to avoid absolute storage paths, got %q", mainTex)
+			}
+			if !strings.Contains(mainTex, `\IfFileExists{images/`) {
+				t.Fatalf("expected portable latex image guard, got %q", mainTex)
+			}
+			if !strings.Contains(mainTex, `\usepackage{CJKutf8}`) {
+				t.Fatalf("expected latex bundle to include pdfLaTeX Chinese fallback, got %q", mainTex)
+			}
+			if strings.Contains(mainTex, `MathLib exported bundle requires XeLaTeX`) {
+				t.Fatalf("expected latex bundle to avoid hard XeLaTeX requirement, got %q", mainTex)
+			}
+			if !hasImage {
+				t.Fatal("expected latex bundle to contain staged image assets")
+			}
+			if !hasLatexmkrc {
+				t.Fatal("expected latex bundle to contain latexmkrc for Overleaf")
+			}
 	})
 
 	t.Run("pdf_export_tolerates_literal_newline_escapes", func(t *testing.T) {
