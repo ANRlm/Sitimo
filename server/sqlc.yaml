@@ -1,0 +1,15 @@
+version: "2"
+sql:
+  - engine: "postgresql"
+    schema:
+      - "migrations/001_init.sql"
+      - "migrations/002_triggers.sql"
+      - "migrations/003_export_job_cancel.sql"
+      - "migrations/004_add_blank_lines_to_paper_items.sql"
+    queries:
+      - "queries"
+    gen:
+      go:
+        package: "sqlc"
+        out: "internal/store/sqlc"
+        sql_package: "pgx/v5"

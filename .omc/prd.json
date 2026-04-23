@@ -1,0 +1,282 @@
+{
+  "title": "MathLib 功能增强",
+  "version": "1.0",
+  "created": "2026-04-22",
+  "stories": [
+    {
+      "id": "US-001",
+      "title": "数据库迁移：添加留空行字段",
+      "priority": 1,
+      "complexity": "complex",
+      "agent": "opus",
+      "estimatedTime": "30min",
+      "acceptanceCriteria": [
+        "创建迁移文件 server/migrations/006_add_blank_lines_to_paper_items.sql",
+        "迁移文件包含 ALTER TABLE paper_items ADD COLUMN blank_lines INTEGER NOT NULL DEFAULT 0",
+        "迁移文件包含 CHECK 约束：blank_lines >= 0 AND blank_lines <= 10",
+        "迁移文件包含 goose Down 回滚逻辑",
+        "执行迁移成功，数据库中 paper_items 表包含 blank_lines 字段"
+      ],
+      "passes": true
+    },
+    {
+      "id": "US-002",
+      "title": "后端类型更新：PaperItem 添加 BlankLines 字段",
+      "priority": 2,
+      "complexity": "simple",
+      "agent": "haiku",
+      "estimatedTime": "15min",
+      "dependencies": ["US-001"],
+      "acceptanceCriteria": [
+        "server/internal/domain/types.go 中 PaperItem 结构体包含 BlankLines int 字段",
+        "字段包含正确的 JSON tag: `json:\"blankLines\"`",
+        "Go 代码编译无错误"
+      ],
+      "passes": true
+    },
+    {
+      "id": "US-003",
+      "title": "实现图片批量删除 API",
+      "priority": 3,
+      "complexity": "standard",
+      "agent": "sonnet",
+      "estimatedTime": "45min",
+      "acceptanceCriteria": [
+        "server/internal/store/images.go 包含 BatchDeleteImages(ctx, imageIDs []string) (int, error) 方法",
+        "方法使用事务批量软删除（设置 is_deleted = true）",
+        "server/internal/api/images.go 包含 handleBatchDeleteImages handler",
+        "handler 解析请求体 {\"imageIds\": [\"id1\", \"id2\"]}",
+        "handler 返回 {\"ok\": true, \"deleted\": N}",
+        "server/internal/api/server.go 注册路由 POST /api/images/batch-delete",
+        "使用 curl 测试批量删除 5 张图片成功"
+      ],
+      "passes": true
+    },
+    {
+      "id": "US-004",
+      "title": "验证题目批量删除 API（已存在）",
+      "priority": 4,
+      "complexity": "simple",
+      "agent": "haiku",
+      "estimatedTime": "10min",
+      "acceptanceCriteria": [
+        "确认 server/internal/api/problems.go 包含 handleBatchDeleteProblems",
+        "确认路由 POST /api/problems/batch-delete 已注册",
+        "使用 curl 测试批量删除 3 道题目成功"
+      ],
+      "passes": true
+    },
+    {
+      "id": "US-005",
+      "title": "图库批量删除 UI",
+      "priority": 5,
+      "complexity": "standard",
+      "agent": "sonnet",
+      "estimatedTime": "60min",
+      "dependencies": ["US-003"],
+      "acceptanceCriteria": [
+        "app/images/page.tsx 包含批量删除按钮",
+        "按钮仅在 selectedImages.length > 0 时显示",
+        "点击按钮显示确认对话框，包含删除数量",
+        "确认后调用 /api/images/batch-delete",
+        "删除成功后显示 toast 提示",
+        "删除后列表自动刷新",
+        "lib/api/images.ts 包含 batchDeleteImages 函数",
+        "lib/hooks/use-images.ts 包含 useBatchDeleteImages hook",
+        "前端 TypeScript 编译无错误"
+      ],
+      "passes": true
+    },
+    {
+      "id": "US-006",
+      "title": "题库批量删除 UI",
+      "priority": 6,
+      "complexity": "standard",
+      "agent": "sonnet",
+      "estimatedTime": "60min",
+      "dependencies": ["US-004"],
+      "acceptanceCriteria": [
+        "app/problems/page.tsx 包含批量删除按钮",
+        "按钮仅在 selectedProblems.length > 0 时显示",
+        "点击按钮显示确认对话框",
+        "确认后调用 /api/problems/batch-delete",
+        "删除成功后显示 toast 提示并刷新列表",
+        "lib/api/problems.ts 包含 batchDeleteProblems 函数",
+        "lib/hooks/use-problems.ts 包含 useBatchDeleteProblems hook",
+        "前端 TypeScript 编译无错误"
+      ],
+      "passes": true
+    },
+    {
+      "id": "US-007",
+      "title": "创建示例数据文件（使用 demo- 前缀）",
+      "priority": 7,
+      "complexity": "standard",
+      "agent": "sonnet",
+      "estimatedTime": "45min",
+      "acceptanceCriteria": [
+        "server/testdata/demo-data.json 存在",
+        "所有 ID 使用 demo- 前缀：demo-tag-001, demo-problem-001, demo-image-001, demo-paper-001",
+        "包含至少 5 个标签、20 道题目、10 张图片、3 份试卷",
+        "题目覆盖不同难度和年级",
+        "试卷包含留空行配置（blankLines 字段）",
+        "JSON 格式正确，可被 Go 解析"
+      ],
+      "passes": true
+    },
+    {
+      "id": "US-008",
+      "title": "实现示例数据管理 API",
+      "priority": 8,
+      "complexity": "complex",
+      "agent": "opus",
+      "estimatedTime": "90min",
+      "dependencies": ["US-007"],
+      "acceptanceCriteria": [
+        "server/internal/service/service.go 包含 LoadDemoData 方法",
+        "LoadDemoData 读取 testdata/demo-data.json 并插入数据库",
+        "server/internal/service/service.go 包含 ClearDemoData 方法",
+        "ClearDemoData 删除所有 ID 以 demo- 开头的数据",
+        "server/internal/service/service.go 包含 GetDemoDataStatus 方法",
+        "GetDemoDataStatus 返回示例数据加载状态和数量",
+        "server/internal/api/settings.go 包含 handleLoadDemoData handler",
+        "server/internal/api/settings.go 包含 handleClearDemoData handler",
+        "server/internal/api/settings.go 包含 handleDemoDataStatus handler",
+        "server/internal/api/server.go 注册 3 个路由：POST /api/settings/demo-data/load, POST /api/settings/demo-data/clear, GET /api/settings/demo-data/status",
+        "使用 curl 测试加载示例数据成功",
+        "使用 curl 测试清除示例数据成功"
+      ],
+      "passes": true
+    },
+    {
+      "id": "US-009",
+      "title": "示例数据管理 UI",
+      "priority": 9,
+      "complexity": "standard",
+      "agent": "sonnet",
+      "estimatedTime": "45min",
+      "dependencies": ["US-008"],
+      "acceptanceCriteria": [
+        "app/settings/page.tsx 包含示例数据管理区域",
+        "显示示例数据状态（已加载/未加载）",
+        "包含\"加载示例数据\"按钮",
+        "包含\"删除示例数据\"按钮（仅在已加载时启用）",
+        "删除前显示确认对话框",
+        "操作成功后显示 toast 提示",
+        "lib/api/settings.ts 包含 loadDemoData, clearDemoData, getDemoDataStatus 函数",
+        "lib/hooks/use-settings.ts 包含对应的 hooks",
+        "前端 TypeScript 编译无错误"
+      ],
+      "passes": true
+    },
+    {
+      "id": "US-010",
+      "title": "移除学科选择相关代码",
+      "priority": 10,
+      "complexity": "standard",
+      "agent": "sonnet",
+      "estimatedTime": "45min",
+      "acceptanceCriteria": [
+        "app/problems/page.tsx 删除学科筛选下拉框和相关状态",
+        "app/problems/[id]/edit/page.tsx 删除学科输入字段（如果存在）",
+        "app/papers/[id]/editor/page.tsx 删除学科输入字段",
+        "lib/hooks/use-meta.ts 删除 useSubjects hook",
+        "lib/api/meta.ts 删除 getSubjects 函数",
+        "server/internal/api/meta.go 删除 handleMetaSubjects handler",
+        "server/internal/api/server.go 删除 GET /api/meta/subjects 路由",
+        "前端 TypeScript 编译无错误",
+        "Go 代码编译无错误",
+        "访问题库页面无学科筛选选项"
+      ],
+      "passes": true
+    },
+    {
+      "id": "US-011",
+      "title": "创建年级常量定义",
+      "priority": 11,
+      "complexity": "simple",
+      "agent": "haiku",
+      "estimatedTime": "10min",
+      "acceptanceCriteria": [
+        "创建文件 lib/constants.ts",
+        "定义 STANDARD_GRADES 常量数组：['初一', '初二', '初三', '高一', '高二', '高三']",
+        "导出 StandardGrade 类型",
+        "前端 TypeScript 编译无错误"
+      ],
+      "passes": true
+    },
+    {
+      "id": "US-012",
+      "title": "年级标准化 UI",
+      "priority": 12,
+      "complexity": "standard",
+      "agent": "sonnet",
+      "estimatedTime": "30min",
+      "dependencies": ["US-011"],
+      "acceptanceCriteria": [
+        "app/problems/[id]/edit/page.tsx 年级输入改为 Select 组件",
+        "Select 选项包含 STANDARD_GRADES 中的所有值",
+        "包含\"不指定\"选项",
+        "前端 TypeScript 编译无错误",
+        "访问题目编辑页面，年级为下拉选择"
+      ],
+      "passes": true
+    },
+    {
+      "id": "US-013",
+      "title": "前端类型更新：PaperItem 添加 blankLines",
+      "priority": 13,
+      "complexity": "simple",
+      "agent": "haiku",
+      "estimatedTime": "10min",
+      "dependencies": ["US-002"],
+      "acceptanceCriteria": [
+        "lib/types.ts 中 PaperItem 类型包含 blankLines?: number 字段",
+        "前端 TypeScript 编译无错误"
+      ],
+      "passes": true
+    },
+    {
+      "id": "US-014",
+      "title": "试卷编辑器留空行 UI",
+      "priority": 14,
+      "complexity": "standard",
+      "agent": "sonnet",
+      "estimatedTime": "60min",
+      "dependencies": ["US-013"],
+      "acceptanceCriteria": [
+        "app/papers/[id]/editor/page.tsx 题目项卡片包含留空行输入控件",
+        "使用 Slider 组件，范围 0-10",
+        "显示当前留空行数值",
+        "修改留空行数值后状态正确更新",
+        "保存试卷时 blankLines 字段正确提交",
+        "前端 TypeScript 编译无错误"
+      ],
+      "passes": true
+    },
+    {
+      "id": "US-015",
+      "title": "LaTeX 导出支持留空行",
+      "priority": 15,
+      "complexity": "standard",
+      "agent": "sonnet",
+      "estimatedTime": "45min",
+      "dependencies": ["US-002", "US-014"],
+      "acceptanceCriteria": [
+        "server/internal/export/manager.go 的 LaTeX 渲染逻辑包含留空行处理",
+        "当 item.BlankLines > 0 时，在题目后添加 \\vspace{Xem}",
+        "X 为 blankLines 的值",
+        "导出包含留空行的试卷，LaTeX 文件包含正确的 \\vspace 命令",
+        "Go 代码编译无错误"
+      ],
+      "passes": true
+    }
+  ],
+  "globalAcceptanceCriteria": [
+    "所有 Go 代码编译无错误",
+    "所有前端 TypeScript 代码编译无错误",
+    "数据库迁移成功执行",
+    "所有 API 端点可通过 curl 测试",
+    "所有 UI 功能可在浏览器中验证"
+  ]
+}

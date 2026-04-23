@@ -1,0 +1,208 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1776868621188,
+  "projectRoot": "/Users/cnhyk/Downloads/V0/server",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Go",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "go.mod"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": "go",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "cmd": {
+      "path": "cmd",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1776868621178,
+      "keyFiles": []
+    },
+    "internal": {
+      "path": "internal",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1776868621179,
+      "keyFiles": []
+    },
+    "migrations": {
+      "path": "migrations",
+      "purpose": "Database migrations",
+      "fileCount": 4,
+      "lastAccessed": 1776868621179,
+      "keyFiles": [
+        "001_init.sql",
+        "002_triggers.sql",
+        "003_export_job_cancel.sql",
+        "004_add_blank_lines_to_paper_items.sql"
+      ]
+    },
+    "queries": {
+      "path": "queries",
+      "purpose": null,
+      "fileCount": 8,
+      "lastAccessed": 1776868621179,
+      "keyFiles": [
+        "exports.sql",
+        "images.sql",
+        "meta.sql",
+        "papers.sql",
+        "problems.sql"
+      ]
+    },
+    "storage": {
+      "path": "storage",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1776868621179,
+      "keyFiles": []
+    },
+    "testdata": {
+      "path": "testdata",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1776868621179,
+      "keyFiles": [
+        "demo-data.json",
+        "demo-data.json.backup"
+      ]
+    },
+    "internal/api": {
+      "path": "internal/api",
+      "purpose": "API routes",
+      "fileCount": 11,
+      "lastAccessed": 1776868621180,
+      "keyFiles": [
+        "exports.go",
+        "images.go",
+        "meta.go"
+      ]
+    },
+    "internal/config": {
+      "path": "internal/config",
+      "purpose": "Configuration files",
+      "fileCount": 1,
+      "lastAccessed": 1776868621180,
+      "keyFiles": [
+        "config.go"
+      ]
+    },
+    "testdata/lib": {
+      "path": "testdata/lib",
+      "purpose": "Library code",
+      "fileCount": 1,
+      "lastAccessed": 1776868621180,
+      "keyFiles": [
+        "constants.ts"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "migrations/004_add_blank_lines_to_paper_items.sql",
+      "accessCount": 2,
+      "lastAccessed": 1776869756004,
+      "type": "file"
+    },
+    {
+      "path": "internal/export/manager.go",
+      "accessCount": 2,
+      "lastAccessed": 1776869834858,
+      "type": "file"
+    },
+    {
+      "path": "testdata/lib/constants.ts",
+      "accessCount": 1,
+      "lastAccessed": 1776869756058,
+      "type": "file"
+    },
+    {
+      "path": "testdata/demo-data.json",
+      "accessCount": 1,
+      "lastAccessed": 1776869756681,
+      "type": "file"
+    },
+    {
+      "path": "internal/store/sqlc/models.go",
+      "accessCount": 1,
+      "lastAccessed": 1776869773837,
+      "type": "file"
+    },
+    {
+      "path": "internal/domain/types.go",
+      "accessCount": 1,
+      "lastAccessed": 1776869773889,
+      "type": "file"
+    },
+    {
+      "path": "internal/api/settings.go",
+      "accessCount": 1,
+      "lastAccessed": 1776869786817,
+      "type": "file"
+    },
+    {
+      "path": "internal/store/reset.go",
+      "accessCount": 1,
+      "lastAccessed": 1776869786852,
+      "type": "file"
+    },
+    {
+      "path": "internal/api/problems.go",
+      "accessCount": 1,
+      "lastAccessed": 1776869786904,
+      "type": "file"
+    },
+    {
+      "path": "internal/api/images.go",
+      "accessCount": 1,
+      "lastAccessed": 1776869786956,
+      "type": "file"
+    },
+    {
+      "path": "internal/api/server.go",
+      "accessCount": 1,
+      "lastAccessed": 1776869806597,
+      "type": "file"
+    },
+    {
+      "path": "internal/api/meta.go",
+      "accessCount": 1,
+      "lastAccessed": 1776869834909,
+      "type": "file"
+    },
+    {
+      "path": "queries/papers.sql",
+      "accessCount": 1,
+      "lastAccessed": 1776870062074,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

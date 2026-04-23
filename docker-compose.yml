@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: mathlib-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mathlib
+      POSTGRES_USER: mathlib
+      POSTGRES_PASSWORD: mathlib
+    ports:
+      - "5432:5432"
+    volumes:
+      - v0_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mathlib -d mathlib"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  server:
+    build:
+      context: ./server
+    container_name: mathlib-server
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - path: ./.env
+        required: false
+    environment:
+      DATABASE_URL: postgres://mathlib:mathlib@postgres:5432/mathlib?sslmode=disable
+    ports:
+      - "8080:8080"
+    volumes:
+      - v0_storage:/app/storage
+
+  web:
+    build:
+      context: .
+    container_name: mathlib-web
+    restart: unless-stopped
+    depends_on:
+      - server
+    env_file:
+      - path: ./.env
+        required: false
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:8080/api/v1
+      PORT: 3000
+    ports:
+      - "3000:3000"
+
+volumes:
+  v0_pgdata:
+    external: true
+  v0_storage:
+    external: true

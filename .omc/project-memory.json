@@ -1,0 +1,468 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1776927883260,
+  "projectRoot": "/Users/cnhyk/Repositories/Sitimo",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "next",
+        "version": "16.2.0",
+        "category": "fullstack"
+      },
+      {
+        "name": "react",
+        "version": "19.2.4",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "19.2.4",
+        "category": "frontend"
+      }
+    ],
+    "packageManager": "pnpm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "pnpm build",
+    "testCommand": null,
+    "lintCommand": "pnpm lint",
+    "devCommand": "pnpm dev",
+    "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start",
+      "lint": "eslint ."
+    }
+  },
+  "conventions": {
+    "namingStyle": "camelCase",
+    "importStyle": "ES modules",
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "app",
+      "components",
+      "lib",
+      "scripts"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "app": {
+      "path": "app",
+      "purpose": "Application code",
+      "fileCount": 4,
+      "lastAccessed": 1776927883247,
+      "keyFiles": [
+        "globals.css",
+        "layout.tsx",
+        "page.tsx"
+      ]
+    },
+    "components": {
+      "path": "components",
+      "purpose": "UI components",
+      "fileCount": 15,
+      "lastAccessed": 1776927883248,
+      "keyFiles": [
+        "app-header.tsx",
+        "app-layout.tsx",
+        "app-runtime.tsx",
+        "app-sidebar.tsx",
+        "confirm-action-button.tsx"
+      ]
+    },
+    "hooks": {
+      "path": "hooks",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1776927883250,
+      "keyFiles": [
+        "use-mobile.ts",
+        "use-toast.ts"
+      ]
+    },
+    "lib": {
+      "path": "lib",
+      "purpose": "Library code",
+      "fileCount": 15,
+      "lastAccessed": 1776927883250,
+      "keyFiles": [
+        "catalogs.ts",
+        "constants.ts",
+        "format.ts",
+        "forms.ts",
+        "frontend-contracts.ts"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 1,
+      "lastAccessed": 1776927883251,
+      "keyFiles": [
+        "generate-demo-data.mjs"
+      ]
+    },
+    "server": {
+      "path": "server",
+      "purpose": null,
+      "fileCount": 8,
+      "lastAccessed": 1776927883251,
+      "keyFiles": [
+        "Dockerfile",
+        "entrypoint.sh",
+        "go.mod",
+        "go.sum",
+        "mathlib"
+      ]
+    },
+    "styles": {
+      "path": "styles",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1776927883251,
+      "keyFiles": [
+        "globals.css"
+      ]
+    },
+    "lib/api": {
+      "path": "lib/api",
+      "purpose": "API routes",
+      "fileCount": 9,
+      "lastAccessed": 1776927883251,
+      "keyFiles": [
+        "client.ts",
+        "exports.ts",
+        "images.ts"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "app/problems/page.tsx",
+      "accessCount": 29,
+      "lastAccessed": 1776879580854,
+      "type": "file"
+    },
+    {
+      "path": "server/internal/domain/types.go",
+      "accessCount": 18,
+      "lastAccessed": 1776869217777,
+      "type": "file"
+    },
+    {
+      "path": "server/internal/api/server.go",
+      "accessCount": 13,
+      "lastAccessed": 1776868057954,
+      "type": "file"
+    },
+    {
+      "path": "server/cmd/mathlib/main.go",
+      "accessCount": 12,
+      "lastAccessed": 1776877513781,
+      "type": "file"
+    },
+    {
+      "path": "lib/types.ts",
+      "accessCount": 11,
+      "lastAccessed": 1776869252894,
+      "type": "file"
+    },
+    {
+      "path": "server/internal/store/reset.go",
+      "accessCount": 10,
+      "lastAccessed": 1776868124086,
+      "type": "file"
+    },
+    {
+      "path": "server/internal/store/snapshot.go",
+      "accessCount": 9,
+      "lastAccessed": 1776842289614,
+      "type": "file"
+    },
+    {
+      "path": "app/problems/[id]/edit/page.tsx",
+      "accessCount": 9,
+      "lastAccessed": 1776869332124,
+      "type": "file"
+    },
+    {
+      "path": "server/migrations/001_init.sql",
+      "accessCount": 8,
+      "lastAccessed": 1776856395420,
+      "type": "file"
+    },
+    {
+      "path": "server/internal/store/db.go",
+      "accessCount": 8,
+      "lastAccessed": 1776856440500,
+      "type": "file"
+    },
+    {
+      "path": "server/internal/export/manager.go",
+      "accessCount": 8,
+      "lastAccessed": 1776869268463,
+      "type": "file"
+    },
+    {
+      "path": "app/images/page.tsx",
+      "accessCount": 8,
+      "lastAccessed": 1776879667233,
+      "type": "file"
+    },
+    {
+      "path": "app/page.tsx",
+      "accessCount": 7,
+      "lastAccessed": 1776847521110,
+      "type": "file"
+    },
+    {
+      "path": "package.json",
+      "accessCount": 7,
+      "lastAccessed": 1776855928541,
+      "type": "file"
+    },
+    {
+      "path": "app/papers/[id]/editor/page.tsx",
+      "accessCount": 7,
+      "lastAccessed": 1776869106028,
+      "type": "file"
+    },
+    {
+      "path": "server",
+      "accessCount": 7,
+      "lastAccessed": 1776877513806,
+      "type": "directory"
+    },
+    {
+      "path": "server/internal/api/exports.go",
+      "accessCount": 5,
+      "lastAccessed": 1776842143067,
+      "type": "file"
+    },
+    {
+      "path": "server/internal/worker/broadcaster.go",
+      "accessCount": 5,
+      "lastAccessed": 1776842219237,
+      "type": "file"
+    },
+    {
+      "path": "server/internal/store/problems.go",
+      "accessCount": 5,
+      "lastAccessed": 1776858967233,
+      "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 5,
+      "lastAccessed": 1776868078315,
+      "type": "directory"
+    },
+    {
+      "path": "eslint.config.mjs",
+      "accessCount": 4,
+      "lastAccessed": 1776825592360,
+      "type": "file"
+    },
+    {
+      "path": "lib/hooks/use-exports.ts",
+      "accessCount": 4,
+      "lastAccessed": 1776841439905,
+      "type": "file"
+    },
+    {
+      "path": "server/internal/service/search.go",
+      "accessCount": 4,
+      "lastAccessed": 1776842218613,
+      "type": "file"
+    },
+    {
+      "path": "app",
+      "accessCount": 4,
+      "lastAccessed": 1776847571970,
+      "type": "directory"
+    },
+    {
+      "path": "lib/api/problems.ts",
+      "accessCount": 4,
+      "lastAccessed": 1776858967196,
+      "type": "file"
+    },
+    {
+      "path": "app/exports/page.tsx",
+      "accessCount": 3,
+      "lastAccessed": 1776834149091,
+      "type": "file"
+    },
+    {
+      "path": "server/internal/service/problems.go",
+      "accessCount": 3,
+      "lastAccessed": 1776842295544,
+      "type": "file"
+    },
+    {
+      "path": "lib/api/client.ts",
+      "accessCount": 3,
+      "lastAccessed": 1776868078243,
+      "type": "file"
+    },
+    {
+      "path": "app/settings/page.tsx",
+      "accessCount": 3,
+      "lastAccessed": 1776869299767,
+      "type": "file"
+    },
+    {
+      "path": "lib/api/exports.ts",
+      "accessCount": 2,
+      "lastAccessed": 1776834144520,
+      "type": "file"
+    },
+    {
+      "path": "app/problems/[id]/page.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1776841307967,
+      "type": "file"
+    },
+    {
+      "path": "lib/store.ts",
+      "accessCount": 2,
+      "lastAccessed": 1776841311163,
+      "type": "file"
+    },
+    {
+      "path": "server/internal/service/exports.go",
+      "accessCount": 2,
+      "lastAccessed": 1776841319190,
+      "type": "file"
+    },
+    {
+      "path": "app/problems/import/page.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1776841320475,
+      "type": "file"
+    },
+    {
+      "path": "server/internal/store/exports.go",
+      "accessCount": 2,
+      "lastAccessed": 1776842287746,
+      "type": "file"
+    },
+    {
+      "path": "app/layout.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1776847279851,
+      "type": "file"
+    },
+    {
+      "path": "lib/catalogs.ts",
+      "accessCount": 2,
+      "lastAccessed": 1776851658022,
+      "type": "file"
+    },
+    {
+      "path": "app/papers/page.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1776879646707,
+      "type": "file"
+    },
+    {
+      "path": "app/images/[id]/page.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1776825072609,
+      "type": "file"
+    },
+    {
+      "path": "app/images/[id]/edit/page.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1776825073513,
+      "type": "file"
+    },
+    {
+      "path": "app/tags/page.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1776825073736,
+      "type": "file"
+    },
+    {
+      "path": "app/search/page.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1776825077793,
+      "type": "file"
+    },
+    {
+      "path": "app/papers/[id]/page.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1776825078957,
+      "type": "file"
+    },
+    {
+      "path": "app/trash/page.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1776825084699,
+      "type": "file"
+    },
+    {
+      "path": "components/app-sidebar.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1776825085343,
+      "type": "file"
+    },
+    {
+      "path": "server/internal/image/placeholder.go",
+      "accessCount": 1,
+      "lastAccessed": 1776830114407,
+      "type": "file"
+    },
+    {
+      "path": "server/internal/service/images.go",
+      "accessCount": 1,
+      "lastAccessed": 1776830114727,
+      "type": "file"
+    },
+    {
+      "path": "Prompt3_工程化加固.md",
+      "accessCount": 1,
+      "lastAccessed": 1776830361709,
+      "type": "file"
+    },
+    {
+      "path": "lib/mock-data.ts",
+      "accessCount": 1,
+      "lastAccessed": 1776834081249,
+      "type": "file"
+    },
+    {
+      "path": "components/app-header.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1776834094424,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

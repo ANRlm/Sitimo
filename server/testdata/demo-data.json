@@ -1,0 +1,2047 @@
+{
+  "tags": [
+    {
+      "id": "demo-tag-1",
+      "name": "积分",
+      "category": "topic",
+      "color": "#0F766E",
+      "description": null
+    },
+    {
+      "id": "demo-tag-2",
+      "name": "定积分",
+      "category": "topic",
+      "color": "#0F766E",
+      "description": null
+    },
+    {
+      "id": "demo-tag-3",
+      "name": "三角函数",
+      "category": "topic",
+      "color": "#0891B2",
+      "description": null
+    },
+    {
+      "id": "demo-tag-4",
+      "name": "数列",
+      "category": "topic",
+      "color": "#7C3AED",
+      "description": null
+    },
+    {
+      "id": "demo-tag-5",
+      "name": "数学归纳法",
+      "category": "topic",
+      "color": "#7C3AED",
+      "description": null
+    },
+    {
+      "id": "demo-tag-6",
+      "name": "导数",
+      "category": "topic",
+      "color": "#DC2626",
+      "description": null
+    },
+    {
+      "id": "demo-tag-7",
+      "name": "概率统计",
+      "category": "topic",
+      "color": "#F59E0B",
+      "description": null
+    },
+    {
+      "id": "demo-tag-8",
+      "name": "解析几何",
+      "category": "topic",
+      "color": "#10B981",
+      "description": null
+    },
+    {
+      "id": "demo-tag-9",
+      "name": "立体几何",
+      "category": "topic",
+      "color": "#6366F1",
+      "description": null
+    },
+    {
+      "id": "demo-tag-10",
+      "name": "函数",
+      "category": "topic",
+      "color": "#EC4899",
+      "description": null
+    },
+    {
+      "id": "demo-tag-11",
+      "name": "北京高考",
+      "category": "source",
+      "color": "#EF4444",
+      "description": null
+    },
+    {
+      "id": "demo-tag-12",
+      "name": "全国卷",
+      "category": "source",
+      "color": "#EF4444",
+      "description": null
+    },
+    {
+      "id": "demo-tag-13",
+      "name": "模拟题",
+      "category": "source",
+      "color": "#F97316",
+      "description": null
+    },
+    {
+      "id": "demo-tag-14",
+      "name": "重点",
+      "category": "custom",
+      "color": "#FBBF24",
+      "description": null
+    },
+    {
+      "id": "demo-tag-15",
+      "name": "易错",
+      "category": "custom",
+      "color": "#F87171",
+      "description": null
+    },
+    {
+      "id": "demo-tag-16",
+      "name": "向量",
+      "category": "topic",
+      "color": "#14B8A6",
+      "description": null
+    },
+    {
+      "id": "demo-tag-17",
+      "name": "不等式",
+      "category": "topic",
+      "color": "#8B5CF6",
+      "description": null
+    },
+    {
+      "id": "demo-tag-18",
+      "name": "集合",
+      "category": "topic",
+      "color": "#06B6D4",
+      "description": null
+    },
+    {
+      "id": "demo-tag-19",
+      "name": "复数",
+      "category": "topic",
+      "color": "#84CC16",
+      "description": null
+    },
+    {
+      "id": "demo-tag-20",
+      "name": "排列组合",
+      "category": "topic",
+      "color": "#F472B6",
+      "description": null
+    },
+    {
+      "id": "demo-tag-21",
+      "name": "一元一次方程",
+      "category": "topic",
+      "color": "#0EA5E9",
+      "description": null
+    },
+    {
+      "id": "demo-tag-22",
+      "name": "平面几何",
+      "category": "topic",
+      "color": "#14B8A6",
+      "description": null
+    },
+    {
+      "id": "demo-tag-23",
+      "name": "二次函数",
+      "category": "topic",
+      "color": "#F97316",
+      "description": null
+    }
+  ],
+  "problems": [
+    {
+      "id": "demo-problem-1",
+      "code": "P-2024-0001",
+      "latex": "已知定积分 \\(\\int_0^1 x^2 \\,dx\\) 的值为（\\text{A}）\\(\\dfrac{1}{4}\\) （\\text{B}）\\(\\dfrac{1}{3}\\) （\\text{C}）\\(\\dfrac{1}{2}\\) （\\text{D}）\\(1\\)。",
+      "answerLatex": "选 \\(\\text{B}\\)。",
+      "solutionLatex": "由牛顿-莱布尼茨公式，\\(\\int_0^1 x^2 \\,dx = \\left[\\dfrac{x^3}{3}\\right]_0^1 = \\dfrac{1}{3}\\)。",
+      "type": "multiple_choice",
+      "difficulty": "easy",
+      "subjectiveScore": 3,
+      "subject": "数学",
+      "grade": "高三",
+      "source": "2024 届高三开学诊断",
+      "tagIds": [
+        "demo-tag-1",
+        "demo-tag-2"
+      ],
+      "imageIds": [],
+      "notes": "用于验证选择题展示与答案版本切换。",
+      "createdAt": "2026-04-22T00:52:10.911Z",
+      "updatedAt": "2026-04-22T00:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-2",
+      "code": "P-2024-0002",
+      "latex": "在 \\(\\triangle ABC\\) 中，已知 \\(a=2\\)，\\(b=\\sqrt{3}\\)，\\(\\angle A = 60°\\)，求 \\(\\angle B\\)。",
+      "answerLatex": "\\(\\sin B = \\dfrac{3}{4}\\)，因此 \\(\\angle B = \\arcsin \\dfrac{3}{4}\\) 或 \\(180^\\circ-\\arcsin \\dfrac{3}{4}\\)。",
+      "solutionLatex": "由正弦定理 \\(\\dfrac{a}{\\sin A}=\\dfrac{b}{\\sin B}\\)，代入得 \\(\\sin B = \\dfrac{\\sqrt3\\cdot \\sin 60^\\circ}{2}=\\dfrac34\\)。再结合三角形内角和判断角 \\(B\\) 的可能取值。",
+      "type": "solve",
+      "difficulty": "medium",
+      "subjectiveScore": 5,
+      "subject": "数学",
+      "grade": "高二",
+      "source": "2023 北京高考改编",
+      "tagIds": [
+        "demo-tag-3",
+        "demo-tag-11"
+      ],
+      "imageIds": [
+        "demo-img5"
+      ],
+      "notes": "演示多版本题目、图片关联与搜索来源筛选。",
+      "createdAt": "2026-04-21T21:52:10.912Z",
+      "updatedAt": "2026-04-21T23:52:10.912Z",
+      "version": 3,
+      "isDeleted": false,
+      "versions": [
+        {
+          "version": 1,
+          "createdAt": "2026-04-21T21:52:10.912Z",
+          "snapshot": {
+            "id": "demo-problem-2",
+            "code": "P-2024-0002",
+            "latex": "在 \\((\\triangle ABC)\\) 中，已知 \\(a=2\\)，\\(b=\\sqrt{3}\\)，\\(\\angle A=60^\\circ\\)，求角 \\(B\\) 的大小。",
+            "answerLatex": "\\(\\sin B = \\dfrac34\\)。",
+            "solutionLatex": "由正弦定理可得 \\(\\sin B = \\dfrac{b\\sin A}{a} = \\dfrac34\\)。",
+            "type": "solve",
+            "difficulty": "medium",
+            "subjectiveScore": 5,
+            "subject": "数学",
+            "grade": "高二",
+            "source": "校本三角函数讲义",
+            "tagIds": [
+              "demo-tag-3"
+            ],
+            "imageIds": [],
+            "notes": "初稿，仅保留核心条件。",
+            "createdAt": "2026-04-21T21:52:10.912Z",
+            "updatedAt": "2026-04-21T21:52:10.912Z",
+            "version": 1,
+            "isDeleted": false
+          }
+        },
+        {
+          "version": 2,
+          "createdAt": "2026-04-21T22:38:10.912Z",
+          "snapshot": {
+            "id": "demo-problem-2",
+            "code": "P-2024-0002",
+            "latex": "在 \\((\\triangle ABC)\\) 中，已知 \\(a=2\\)，\\(b=\\sqrt{3}\\)，\\(\\angle A=60^\\circ\\)。利用正弦定理求角 \\(B\\) 的可能取值。",
+            "answerLatex": "\\(\\angle B = \\arcsin \\dfrac34\\) 或 \\(180^\\circ-\\arcsin \\dfrac34\\)。",
+            "solutionLatex": "先由正弦定理求出 \\(\\sin B=\\dfrac34\\)，再讨论正弦值相同对应的两个角。",
+            "type": "solve",
+            "difficulty": "medium",
+            "subjectiveScore": 5,
+            "subject": "数学",
+            "grade": "高二",
+            "source": "2023 北京高考改编",
+            "tagIds": [
+              "demo-tag-3",
+              "demo-tag-11"
+            ],
+            "imageIds": [],
+            "notes": "二稿，补充“可能取值”的表述。",
+            "createdAt": "2026-04-21T21:52:10.912Z",
+            "updatedAt": "2026-04-21T22:38:10.912Z",
+            "version": 2,
+            "isDeleted": false
+          }
+        },
+        {
+          "version": 3,
+          "createdAt": "2026-04-21T23:52:10.912Z",
+          "snapshot": {
+            "id": "demo-problem-2",
+            "code": "P-2024-0002",
+            "latex": "在 \\(\\triangle ABC\\) 中，已知 \\(a=2\\)，\\(b=\\sqrt{3}\\)，\\(\\angle A = 60°\\)，求 \\(\\angle B\\)。",
+            "answerLatex": "\\(\\sin B = \\dfrac{3}{4}\\)，因此 \\(\\angle B = \\arcsin \\dfrac{3}{4}\\) 或 \\(180^\\circ-\\arcsin \\dfrac{3}{4}\\)。",
+            "solutionLatex": "由正弦定理 \\(\\dfrac{a}{\\sin A}=\\dfrac{b}{\\sin B}\\)，代入得 \\(\\sin B = \\dfrac{\\sqrt3\\cdot \\sin 60^\\circ}{2}=\\dfrac34\\)。再结合三角形内角和判断角 \\(B\\) 的可能取值。",
+            "type": "solve",
+            "difficulty": "medium",
+            "subjectiveScore": 5,
+            "subject": "数学",
+            "grade": "高二",
+            "source": "2023 北京高考改编",
+            "tagIds": [
+              "demo-tag-3",
+              "demo-tag-11"
+            ],
+            "imageIds": [
+              "demo-img5"
+            ],
+            "notes": "演示多版本题目、图片关联与搜索来源筛选。",
+            "createdAt": "2026-04-21T21:52:10.912Z",
+            "updatedAt": "2026-04-21T23:52:10.912Z",
+            "version": 3,
+            "isDeleted": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "demo-problem-3",
+      "code": "P-2024-0003",
+      "latex": "证明：对任意正整数 \\(n\\)，\\(\\sum_{k=1}^n k^3 = \\left(\\dfrac{n(n+1)}{2}\\right)^2\\)。",
+      "answerLatex": "证明见解析",
+      "solutionLatex": "使用数学归纳法证明：\n1. 当 \\(n=1\\) 时，左边 = 1，右边 = 1，成立。\n2. 假设 \\(n=k\\) 时成立，则 \\(n=k+1\\) 时...",
+      "type": "proof",
+      "difficulty": "hard",
+      "subjectiveScore": 8,
+      "subject": "数学",
+      "grade": "高三",
+      "source": null,
+      "tagIds": [
+        "demo-tag-4",
+        "demo-tag-5"
+      ],
+      "imageIds": [
+        "demo-img1"
+      ],
+      "notes": null,
+      "createdAt": "2026-04-21T02:52:10.912Z",
+      "updatedAt": "2026-04-21T14:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-4",
+      "code": "P-2024-0004",
+      "latex": "设函数 \\(f(x) = e^x - ax\\)，讨论 \\(f(x)\\) 的单调性。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "solve",
+      "difficulty": "medium",
+      "subjectiveScore": 6,
+      "subject": "数学",
+      "grade": "高三",
+      "source": "海淀区一模",
+      "tagIds": [
+        "demo-tag-6",
+        "demo-tag-10"
+      ],
+      "imageIds": [
+        "demo-img6",
+        "demo-img9"
+      ],
+      "notes": "函数与导数专题常见分类讨论题。",
+      "createdAt": "2026-04-20T02:52:10.912Z",
+      "updatedAt": "2026-04-20T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-5",
+      "code": "P-2024-0005",
+      "latex": "已知随机变量 \\(X\\) 服从正态分布 \\(N(2, 4)\\)，求 \\(P(X > 4)\\)。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "solve",
+      "difficulty": "easy",
+      "subjectiveScore": 4,
+      "subject": "数学",
+      "grade": "高二",
+      "source": "校本周测",
+      "tagIds": [
+        "demo-tag-7"
+      ],
+      "imageIds": [],
+      "notes": null,
+      "createdAt": "2026-04-19T02:52:10.912Z",
+      "updatedAt": "2026-04-19T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-6",
+      "code": "P-2024-0006",
+      "latex": "已知椭圆 \\(\\dfrac{x^2}{a^2} + \\dfrac{y^2}{b^2} = 1\\) (\\(a > b > 0\\)) 的离心率为 \\(\\dfrac{\\sqrt{2}}{2}\\)，求 \\(a\\) 与 \\(b\\) 的关系。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "solve",
+      "difficulty": "medium",
+      "subjectiveScore": 5,
+      "subject": "数学",
+      "grade": "高三",
+      "source": null,
+      "tagIds": [
+        "demo-tag-8"
+      ],
+      "imageIds": [
+        "demo-img1",
+        "demo-img2"
+      ],
+      "notes": null,
+      "createdAt": "2026-04-18T02:52:10.912Z",
+      "updatedAt": "2026-04-18T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-7",
+      "code": "P-2024-0007",
+      "latex": "如图，在正方体 \\(ABCD-A_1B_1C_1D_1\\) 中，求直线 \\(A_1C\\) 与平面 \\(BDD_1B_1\\) 所成的角。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "solve",
+      "difficulty": "hard",
+      "subjectiveScore": 7,
+      "subject": "数学",
+      "grade": "高三",
+      "source": "全国卷立体几何模拟",
+      "tagIds": [
+        "demo-tag-9",
+        "demo-tag-16"
+      ],
+      "imageIds": [
+        "demo-img1",
+        "demo-img3",
+        "demo-img8"
+      ],
+      "notes": "最终版本补充了向量法提示。",
+      "createdAt": "2026-04-17T02:52:10.912Z",
+      "updatedAt": "2026-04-17T16:12:10.912Z",
+      "version": 2,
+      "isDeleted": false,
+      "versions": [
+        {
+          "version": 1,
+          "createdAt": "2026-04-17T02:52:10.912Z",
+          "snapshot": {
+            "id": "demo-problem-7",
+            "code": "P-2024-0007",
+            "latex": "如图，在正方体 \\(ABCD-A_1B_1C_1D_1\\) 中，求直线 \\(A_1C\\) 与平面 \\(BDD_1B_1\\) 所成的角。",
+            "answerLatex": null,
+            "solutionLatex": null,
+            "type": "solve",
+            "difficulty": "hard",
+            "subjectiveScore": 7,
+            "subject": "数学",
+            "grade": "高三",
+            "source": "立体几何专题训练",
+            "tagIds": [
+              "demo-tag-9",
+              "demo-tag-16"
+            ],
+            "imageIds": [
+              "demo-img1",
+              "demo-img3"
+            ],
+            "notes": "初稿，只保留空间几何法。",
+            "createdAt": "2026-04-17T02:52:10.912Z",
+            "updatedAt": "2026-04-17T02:52:10.912Z",
+            "version": 1,
+            "isDeleted": false
+          }
+        },
+        {
+          "version": 2,
+          "createdAt": "2026-04-17T16:12:10.912Z",
+          "snapshot": {
+            "id": "demo-problem-7",
+            "code": "P-2024-0007",
+            "latex": "如图，在正方体 \\(ABCD-A_1B_1C_1D_1\\) 中，求直线 \\(A_1C\\) 与平面 \\(BDD_1B_1\\) 所成的角。",
+            "answerLatex": null,
+            "solutionLatex": null,
+            "type": "solve",
+            "difficulty": "hard",
+            "subjectiveScore": 7,
+            "subject": "数学",
+            "grade": "高三",
+            "source": "全国卷立体几何模拟",
+            "tagIds": [
+              "demo-tag-9",
+              "demo-tag-16"
+            ],
+            "imageIds": [
+              "demo-img1",
+              "demo-img3",
+              "demo-img8"
+            ],
+            "notes": "最终版本补充了向量法提示。",
+            "createdAt": "2026-04-17T02:52:10.912Z",
+            "updatedAt": "2026-04-17T16:12:10.912Z",
+            "version": 2,
+            "isDeleted": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "demo-problem-8",
+      "code": "P-2024-0008",
+      "latex": "已知函数 \\(f(x) = \\ln x - \\dfrac{1}{2}x^2 + x\\)，求 \\(f(x)\\) 的极值。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "solve",
+      "difficulty": "medium",
+      "subjectiveScore": 6,
+      "subject": "数学",
+      "grade": "高三",
+      "source": "函数压轴训练",
+      "tagIds": [
+        "demo-tag-6",
+        "demo-tag-10"
+      ],
+      "imageIds": [
+        "demo-img4",
+        "demo-img6"
+      ],
+      "notes": null,
+      "createdAt": "2026-04-16T02:52:10.912Z",
+      "updatedAt": "2026-04-16T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-9",
+      "code": "P-2024-0009",
+      "latex": "若 \\(a, b \\in \\mathbb{R}^+\\) 且 \\(a + b = 1\\)，求 \\(\\dfrac{1}{a} + \\dfrac{4}{b}\\) 的最小值。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "solve",
+      "difficulty": "medium",
+      "subjectiveScore": 5,
+      "subject": "数学",
+      "grade": "高二",
+      "source": null,
+      "tagIds": [
+        "demo-tag-17"
+      ],
+      "imageIds": [],
+      "notes": null,
+      "createdAt": "2026-04-15T02:52:10.912Z",
+      "updatedAt": "2026-04-15T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-10",
+      "code": "P-2024-0010",
+      "latex": "设集合 \\(A=\\{x\\mid x^2-3x+2<0\\}\\)，\\(B=\\{x\\mid x>1\\}\\)，则 \\(A\\cap B=\\underline{\\qquad}\\)。",
+      "answerLatex": "\\((1,2)\\)",
+      "solutionLatex": "由 \\(x^2-3x+2=(x-1)(x-2)\\)，得 \\(A=(1,2)\\)。又 \\(B=(1,+\\infty)\\)，故 \\(A\\cap B=(1,2)\\)。",
+      "type": "fill_blank",
+      "difficulty": "easy",
+      "subjectiveScore": 2,
+      "subject": "数学",
+      "grade": "高一",
+      "source": "集合基础过关",
+      "tagIds": [
+        "demo-tag-18"
+      ],
+      "imageIds": [],
+      "notes": "用于验证填空题与简短答案展示。",
+      "createdAt": "2026-04-14T02:52:10.912Z",
+      "updatedAt": "2026-04-14T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-11",
+      "code": "P-2024-0011",
+      "latex": "计算复数 \\(\\dfrac{(1+i)^2}{1-i}\\) 的值。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "solve",
+      "difficulty": "easy",
+      "subjectiveScore": 2,
+      "subject": "数学",
+      "grade": "高二",
+      "source": null,
+      "tagIds": [
+        "demo-tag-19"
+      ],
+      "imageIds": [],
+      "notes": null,
+      "createdAt": "2026-04-13T02:52:10.912Z",
+      "updatedAt": "2026-04-13T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-12",
+      "code": "P-2024-0012",
+      "latex": "从 5 名男生和 3 名女生中选 4 人参加比赛，要求至少有 1 名女生，共有多少种选法？",
+      "answerLatex": "\\(\\binom{8}{4}-\\binom{5}{4}=70-5=65\\)。",
+      "solutionLatex": "先从 8 人中任选 4 人，再减去“全是男生”的情况，得到 \\(\\binom84-\\binom54=65\\)。",
+      "type": "other",
+      "difficulty": "easy",
+      "subjectiveScore": 3,
+      "subject": "数学",
+      "grade": "高二",
+      "source": "排列组合专题讲义",
+      "tagIds": [
+        "demo-tag-20",
+        "demo-tag-7"
+      ],
+      "imageIds": [
+        "demo-img7"
+      ],
+      "notes": "以“开放题/综合题”类型覆盖 other 题型。",
+      "createdAt": "2026-04-12T02:52:10.912Z",
+      "updatedAt": "2026-04-12T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-13",
+      "code": "P-2024-0013",
+      "latex": "设等差数列 \\(\\{a_n\\}\\) 的前 \\(n\\) 项和为 \\(S_n\\)，若 \\(a_3 = 7\\)，\\(S_4 = 24\\)，求数列的通项公式。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "solve",
+      "difficulty": "medium",
+      "subjectiveScore": 5,
+      "subject": "数学",
+      "grade": "高二",
+      "source": "高二数列周测",
+      "tagIds": [
+        "demo-tag-4"
+      ],
+      "imageIds": [],
+      "notes": null,
+      "createdAt": "2026-04-11T02:52:10.912Z",
+      "updatedAt": "2026-04-11T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-14",
+      "code": "P-2024-0014",
+      "latex": "求函数 \\(y = \\sin 2x + \\cos 2x\\) 的最大值及取得最大值时 \\(x\\) 的取值集合。",
+      "answerLatex": "最大值为 \\(\\sqrt2\\)。当 \\(2x=\\dfrac{\\pi}{4}+2k\\pi\\) 时取到，即 \\(x=\\dfrac{\\pi}{8}+k\\pi\\)。",
+      "solutionLatex": "化为 \\(y=\\sqrt2\\sin\\left(2x+\\dfrac{\\pi}{4}\\right)\\)，故最大值为 \\(\\sqrt2\\)，并由正弦函数取最大值得到对应解集。",
+      "type": "solve",
+      "difficulty": "medium",
+      "subjectiveScore": 5,
+      "subject": "数学",
+      "grade": "高一",
+      "source": "三角函数单元回炉训练",
+      "tagIds": [
+        "demo-tag-3",
+        "demo-tag-10"
+      ],
+      "imageIds": [
+        "demo-img5"
+      ],
+      "notes": "多次修订后补充了最值取到条件。",
+      "createdAt": "2026-04-10T02:52:10.912Z",
+      "updatedAt": "2026-04-10T18:32:10.912Z",
+      "version": 4,
+      "isDeleted": false,
+      "versions": [
+        {
+          "version": 1,
+          "createdAt": "2026-04-10T02:52:10.912Z",
+          "snapshot": {
+            "id": "demo-problem-14",
+            "code": "P-2024-0014",
+            "latex": "求函数 \\(y = \\sin 2x + \\cos 2x\\) 的最大值。",
+            "answerLatex": "最大值为 \\(\\sqrt2\\)。",
+            "solutionLatex": "化为 \\(\\sqrt2\\sin(2x+\\frac\\pi4)\\)，最大值即为 \\(\\sqrt2\\)。",
+            "type": "solve",
+            "difficulty": "medium",
+            "subjectiveScore": 5,
+            "subject": "数学",
+            "grade": "高一",
+            "source": "三角函数课堂例题",
+            "tagIds": [
+              "demo-tag-3",
+              "demo-tag-10"
+            ],
+            "imageIds": [],
+            "notes": "初稿，仅求最大值。",
+            "createdAt": "2026-04-10T02:52:10.912Z",
+            "updatedAt": "2026-04-10T02:52:10.912Z",
+            "version": 1,
+            "isDeleted": false
+          }
+        },
+        {
+          "version": 2,
+          "createdAt": "2026-04-10T08:32:10.912Z",
+          "snapshot": {
+            "id": "demo-problem-14",
+            "code": "P-2024-0014",
+            "latex": "求函数 \\(y = \\sin 2x + \\cos 2x\\) 的最大值，并求在区间 \\([0,2\\pi]\\) 内何时取得最大值。",
+            "answerLatex": "最大值为 \\(\\sqrt2\\)。",
+            "solutionLatex": "先化为 \\(\\sqrt2\\sin(2x+\\frac\\pi4)\\)，再在指定区间内求相位。",
+            "type": "solve",
+            "difficulty": "medium",
+            "subjectiveScore": 5,
+            "subject": "数学",
+            "grade": "高一",
+            "source": "三角函数单元回炉训练",
+            "tagIds": [
+              "demo-tag-3",
+              "demo-tag-10"
+            ],
+            "imageIds": [],
+            "notes": "二稿，加入区间限制。",
+            "createdAt": "2026-04-10T02:52:10.912Z",
+            "updatedAt": "2026-04-10T08:32:10.912Z",
+            "version": 2,
+            "isDeleted": false
+          }
+        },
+        {
+          "version": 3,
+          "createdAt": "2026-04-10T12:52:10.912Z",
+          "snapshot": {
+            "id": "demo-problem-14",
+            "code": "P-2024-0014",
+            "latex": "求函数 \\(y = \\sin 2x + \\cos 2x\\) 的最大值及取得最大值时 \\(x\\) 的取值集合。",
+            "answerLatex": "最大值为 \\(\\sqrt2\\)。当 \\(2x=\\dfrac{\\pi}{4}+2k\\pi\\) 时取到，即 \\(x=\\dfrac{\\pi}{8}+k\\pi\\)。",
+            "solutionLatex": "化为 \\(y=\\sqrt2\\sin\\left(2x+\\dfrac{\\pi}{4}\\right)\\)，故最大值为 \\(\\sqrt2\\)，并由正弦函数取最大值得到对应解集。",
+            "type": "solve",
+            "difficulty": "medium",
+            "subjectiveScore": 5,
+            "subject": "数学",
+            "grade": "高一",
+            "source": "三角函数单元回炉训练",
+            "tagIds": [
+              "demo-tag-3",
+              "demo-tag-10"
+            ],
+            "imageIds": [
+              "demo-img5"
+            ],
+            "notes": "三稿，补入辅助图。",
+            "createdAt": "2026-04-10T02:52:10.912Z",
+            "updatedAt": "2026-04-10T12:52:10.912Z",
+            "version": 3,
+            "isDeleted": false
+          }
+        },
+        {
+          "version": 4,
+          "createdAt": "2026-04-10T18:32:10.912Z",
+          "snapshot": {
+            "id": "demo-problem-14",
+            "code": "P-2024-0014",
+            "latex": "求函数 \\(y = \\sin 2x + \\cos 2x\\) 的最大值及取得最大值时 \\(x\\) 的取值集合。",
+            "answerLatex": "最大值为 \\(\\sqrt2\\)。当 \\(2x=\\dfrac{\\pi}{4}+2k\\pi\\) 时取到，即 \\(x=\\dfrac{\\pi}{8}+k\\pi\\)。",
+            "solutionLatex": "化为 \\(y=\\sqrt2\\sin\\left(2x+\\dfrac{\\pi}{4}\\right)\\)，故最大值为 \\(\\sqrt2\\)，并由正弦函数取最大值得到对应解集。",
+            "type": "solve",
+            "difficulty": "medium",
+            "subjectiveScore": 5,
+            "subject": "数学",
+            "grade": "高一",
+            "source": "三角函数单元回炉训练",
+            "tagIds": [
+              "demo-tag-3",
+              "demo-tag-10"
+            ],
+            "imageIds": [
+              "demo-img5"
+            ],
+            "notes": "多次修订后补充了最值取到条件。",
+            "createdAt": "2026-04-10T02:52:10.912Z",
+            "updatedAt": "2026-04-10T18:32:10.912Z",
+            "version": 4,
+            "isDeleted": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "demo-problem-15",
+      "code": "P-2024-0015",
+      "latex": "在平面直角坐标系中，向量 \\(\\vec{a} = (1, 2)\\)，\\(\\vec{b} = (3, -1)\\)，求 \\(\\vec{a} \\cdot \\vec{b}\\) 和 \\(|\\vec{a} + \\vec{b}|\\)。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "solve",
+      "difficulty": "easy",
+      "subjectiveScore": 3,
+      "subject": "数学",
+      "grade": "高一",
+      "source": null,
+      "tagIds": [
+        "demo-tag-16"
+      ],
+      "imageIds": [],
+      "notes": null,
+      "createdAt": "2026-04-09T02:52:10.912Z",
+      "updatedAt": "2026-04-09T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-16",
+      "code": "P-2024-0016",
+      "latex": "设 \\(f(x) = |x - 1| + |x + 2|\\)，求 \\(f(x)\\) 的最小值。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "solve",
+      "difficulty": "medium",
+      "subjectiveScore": 4,
+      "subject": "数学",
+      "grade": "高一",
+      "source": null,
+      "tagIds": [
+        "demo-tag-10",
+        "demo-tag-17"
+      ],
+      "imageIds": [],
+      "notes": null,
+      "createdAt": "2026-04-08T02:52:10.912Z",
+      "updatedAt": "2026-04-08T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-17",
+      "code": "P-2024-0017",
+      "latex": "已知抛物线 \\(y^2 = 4x\\) 的焦点为 \\(F\\)，点 \\(P\\) 在抛物线上且 \\(|PF| = 5\\)，求点 \\(P\\) 的坐标。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "solve",
+      "difficulty": "medium",
+      "subjectiveScore": 5,
+      "subject": "数学",
+      "grade": "高三",
+      "source": null,
+      "tagIds": [
+        "demo-tag-8"
+      ],
+      "imageIds": [],
+      "notes": null,
+      "createdAt": "2026-04-07T02:52:10.912Z",
+      "updatedAt": "2026-04-07T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-18",
+      "code": "P-2024-0018",
+      "latex": "求 \\(\\lim_{n \\to \\infty} \\dfrac{1 + 2 + 3 + \\cdots + n}{n^2}\\) 的值。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "solve",
+      "difficulty": "easy",
+      "subjectiveScore": 3,
+      "subject": "数学",
+      "grade": "高三",
+      "source": "极限基础练习",
+      "tagIds": [
+        "demo-tag-4"
+      ],
+      "imageIds": [],
+      "notes": null,
+      "createdAt": "2026-04-06T02:52:10.912Z",
+      "updatedAt": "2026-04-06T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-19",
+      "code": "P-2024-0019",
+      "latex": "设 \\(f(x)\\) 是定义在 \\(\\mathbb{R}\\) 上的奇函数，当 \\(x > 0\\) 时，\\(f(x) = x^2 - 2x\\)。求 \\(f(-3)\\)。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "solve",
+      "difficulty": "easy",
+      "subjectiveScore": 3,
+      "subject": "数学",
+      "grade": "高一",
+      "source": null,
+      "tagIds": [
+        "demo-tag-10"
+      ],
+      "imageIds": [],
+      "notes": null,
+      "createdAt": "2026-04-05T02:52:10.912Z",
+      "updatedAt": "2026-04-05T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-20",
+      "code": "P-2024-0020",
+      "latex": "已知数列 \\(\\{a_n\\}\\) 满足 \\(a_1 = 1\\)，\\(a_{n+1} = 2a_n + 1\\)，求通项公式 \\(a_n\\)。",
+      "answerLatex": "通项公式为 \\(a_n = 2^n - 1\\)。",
+      "solutionLatex": "令 \\(b_n=a_n+1\\)，则 \\(b_{n+1}=2b_n\\)，且 \\(b_1=2\\)。所以 \\(b_n=2^n\\)，从而 \\(a_n=2^n-1\\)。",
+      "type": "solve",
+      "difficulty": "medium",
+      "subjectiveScore": 6,
+      "subject": "数学",
+      "grade": "高二",
+      "source": "递推数列课堂作业",
+      "tagIds": [
+        "demo-tag-4"
+      ],
+      "imageIds": [],
+      "notes": null,
+      "createdAt": "2026-04-04T02:52:10.912Z",
+      "updatedAt": "2026-04-04T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-21",
+      "code": "P-2024-0021",
+      "latex": "证明：对于任意的正整数 \\(n\\)，\\(n^3 - n\\) 能被 6 整除。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "proof",
+      "difficulty": "medium",
+      "subjectiveScore": 5,
+      "subject": "数学",
+      "grade": "高一",
+      "source": null,
+      "tagIds": [
+        "demo-tag-5"
+      ],
+      "imageIds": [],
+      "notes": null,
+      "createdAt": "2026-04-03T02:52:10.912Z",
+      "updatedAt": "2026-04-03T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-22",
+      "code": "P-2024-0022",
+      "latex": "已知 \\(\\sin\\alpha + \\cos\\alpha = \\dfrac{1}{5}\\)，\\(\\alpha \\in (0, \\pi)\\)，求 \\(\\tan\\alpha\\) 的值。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "solve",
+      "difficulty": "hard",
+      "subjectiveScore": 7,
+      "subject": "数学",
+      "grade": "高一",
+      "source": null,
+      "tagIds": [
+        "demo-tag-3"
+      ],
+      "imageIds": [],
+      "notes": null,
+      "createdAt": "2026-04-02T02:52:10.912Z",
+      "updatedAt": "2026-04-02T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-23",
+      "code": "P-2024-0023",
+      "latex": "在国际数学奥林匹克中，证明对于任意正整数 \\(n\\)，存在 \\(n\\) 个连续正整数，使得它们都是合数。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "proof",
+      "difficulty": "olympiad",
+      "subjectiveScore": 10,
+      "subject": "数学",
+      "grade": "高三",
+      "source": "奥赛讲义选题",
+      "tagIds": [
+        "demo-tag-5",
+        "demo-tag-14"
+      ],
+      "imageIds": [],
+      "notes": "已放入回收站，供恢复与彻底删除测试。",
+      "createdAt": "2026-04-01T02:52:10.912Z",
+      "updatedAt": "2026-04-03T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": true
+    },
+    {
+      "id": "demo-problem-24",
+      "code": "P-2024-0024",
+      "latex": "设 \\(a, b, c\\) 为正实数且 \\(abc = 1\\)，证明 \\(\\dfrac{1}{a^3(b+c)} + \\dfrac{1}{b^3(c+a)} + \\dfrac{1}{c^3(a+b)} \\geq \\dfrac{3}{2}\\)。",
+      "answerLatex": null,
+      "solutionLatex": null,
+      "type": "proof",
+      "difficulty": "olympiad",
+      "subjectiveScore": 9,
+      "subject": "数学",
+      "grade": "高三",
+      "source": "不等式拔高讲评",
+      "tagIds": [
+        "demo-tag-17",
+        "demo-tag-14"
+      ],
+      "imageIds": [],
+      "notes": null,
+      "createdAt": "2026-03-31T02:52:10.912Z",
+      "updatedAt": "2026-03-31T02:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-25",
+      "code": "P-2024-0025",
+      "latex": "解方程 \\(2(x-3) + 5 = 3x - 4\\)。",
+      "answerLatex": "\\(x = 3\\)",
+      "solutionLatex": "移项整理得 \\(2x - 1 = 3x - 4\\)，于是 \\(x = 3\\)。",
+      "type": "solve",
+      "difficulty": "easy",
+      "subjectiveScore": 2,
+      "subject": "数学",
+      "grade": "初一",
+      "source": null,
+      "tagIds": [
+        "demo-tag-21"
+      ],
+      "imageIds": [],
+      "notes": null,
+      "createdAt": "2026-04-18T08:52:10.912Z",
+      "updatedAt": "2026-04-18T11:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-26",
+      "code": "P-2024-0026",
+      "latex": "如图，在 \\(\\triangle ABC\\) 中，\\(AB = AC\\)，\\(\\angle BAC = 40^\\circ\\)。求 \\(\\angle ABC\\) 的度数。",
+      "answerLatex": "\\(\\angle ABC = 70^\\circ\\)",
+      "solutionLatex": "等腰三角形底角相等，且三角形内角和为 \\(180^\\circ\\)，所以 \\(\\angle ABC = \\angle ACB = \\dfrac{180^\\circ - 40^\\circ}{2} = 70^\\circ\\)。",
+      "type": "solve",
+      "difficulty": "easy",
+      "subjectiveScore": 3,
+      "subject": "数学",
+      "grade": "初二",
+      "source": null,
+      "tagIds": [
+        "demo-tag-22"
+      ],
+      "imageIds": [],
+      "notes": null,
+      "createdAt": "2026-04-17T07:52:10.912Z",
+      "updatedAt": "2026-04-17T09:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-27",
+      "code": "P-2024-0027",
+      "latex": "已知抛物线 \\(y = x^2 - 4x + 3\\)，求其顶点坐标。",
+      "answerLatex": "顶点坐标为 \\((2, -1)\\)",
+      "solutionLatex": "配方得 \\(y = (x-2)^2 - 1\\)，所以顶点坐标为 \\((2, -1)\\)。",
+      "type": "solve",
+      "difficulty": "medium",
+      "subjectiveScore": 4,
+      "subject": "数学",
+      "grade": "初三",
+      "source": null,
+      "tagIds": [
+        "demo-tag-23"
+      ],
+      "imageIds": [],
+      "notes": null,
+      "createdAt": "2026-04-16T05:52:10.912Z",
+      "updatedAt": "2026-04-16T10:52:10.912Z",
+      "version": 1,
+      "isDeleted": false
+    },
+    {
+      "id": "demo-problem-28",
+      "code": "P-2024-0028",
+      "latex": "已知圆 \\(x^2+y^2-4x+2y-4=0\\)，求圆心坐标与半径。",
+      "answerLatex": "圆心为 \\( (2,-1) \\)，半径为 \\(3\\)。",
+      "solutionLatex": "配方得 \\((x-2)^2+(y+1)^2=9\\)，故圆心为 \\( (2,-1) \\)，半径为 \\(3\\)。",
+      "type": "solve",
+      "difficulty": "medium",
+      "subjectiveScore": 4,
+      "subject": "数学",
+      "grade": "高二",
+      "source": "解析几何练习册",
+      "tagIds": [
+        "demo-tag-8",
+        "demo-tag-14"
+      ],
+      "imageIds": [],
+      "notes": "回收站中的第二道演示题。",
+      "createdAt": "2026-04-02T10:12:10.912Z",
+      "updatedAt": "2026-04-04T09:42:10.912Z",
+      "version": 1,
+      "isDeleted": true
+    }
+  ],
+  "images": [
+    {
+      "id": "demo-img1",
+      "filename": "cube-diagram.png",
+      "mime": "image/png",
+      "size": 45678,
+      "width": 800,
+      "height": 600,
+      "tagIds": [
+        "demo-tag-9"
+      ],
+      "linkedProblemIds": [
+        "demo-problem-3",
+        "demo-problem-6",
+        "demo-problem-7"
+      ],
+      "description": "共享的立体几何示意图",
+      "createdAt": "2026-03-23T02:52:10.912Z",
+      "updatedAt": "2026-03-23T02:52:10.912Z",
+      "isDeleted": false
+    },
+    {
+      "id": "demo-img2",
+      "filename": "ellipse.png",
+      "mime": "image/png",
+      "size": 34567,
+      "width": 600,
+      "height": 400,
+      "tagIds": [
+        "demo-tag-8"
+      ],
+      "linkedProblemIds": [
+        "demo-problem-6"
+      ],
+      "description": "椭圆示意图",
+      "createdAt": "2026-03-28T02:52:10.912Z",
+      "updatedAt": "2026-03-28T02:52:10.912Z",
+      "isDeleted": false
+    },
+    {
+      "id": "demo-img3",
+      "filename": "solid-geometry.png",
+      "mime": "image/png",
+      "size": 56789,
+      "width": 700,
+      "height": 700,
+      "tagIds": [
+        "demo-tag-9"
+      ],
+      "linkedProblemIds": [
+        "demo-problem-7"
+      ],
+      "description": "立体几何图形",
+      "createdAt": "2026-04-02T02:52:10.912Z",
+      "updatedAt": "2026-04-02T02:52:10.912Z",
+      "isDeleted": false
+    },
+    {
+      "id": "demo-img4",
+      "filename": "coordinate-system.png",
+      "mime": "image/png",
+      "size": 23456,
+      "width": 500,
+      "height": 500,
+      "tagIds": [
+        "demo-tag-8",
+        "demo-tag-10"
+      ],
+      "linkedProblemIds": [
+        "demo-problem-8"
+      ],
+      "description": "坐标系背景图",
+      "createdAt": "2026-04-07T02:52:10.912Z",
+      "updatedAt": "2026-04-07T02:52:10.912Z",
+      "isDeleted": false
+    },
+    {
+      "id": "demo-img5",
+      "filename": "triangle-abc.png",
+      "mime": "image/png",
+      "size": 34567,
+      "width": 600,
+      "height": 450,
+      "tagIds": [
+        "demo-tag-3",
+        "demo-tag-16"
+      ],
+      "linkedProblemIds": [
+        "demo-problem-14",
+        "demo-problem-2"
+      ],
+      "description": "三角函数辅助图",
+      "createdAt": "2026-04-12T02:52:10.912Z",
+      "updatedAt": "2026-04-12T02:52:10.912Z",
+      "isDeleted": false
+    },
+    {
+      "id": "demo-img6",
+      "filename": "function-graph.jpg",
+      "mime": "image/jpeg",
+      "size": 45678,
+      "width": 800,
+      "height": 500,
+      "tagIds": [
+        "demo-tag-6",
+        "demo-tag-10"
+      ],
+      "linkedProblemIds": [
+        "demo-problem-4",
+        "demo-problem-8"
+      ],
+      "description": "函数图像示意",
+      "createdAt": "2026-04-14T02:52:10.912Z",
+      "updatedAt": "2026-04-14T02:52:10.912Z",
+      "isDeleted": false
+    },
+    {
+      "id": "demo-img7",
+      "filename": "probability-tree.png",
+      "mime": "image/png",
+      "size": 56789,
+      "width": 700,
+      "height": 800,
+      "tagIds": [
+        "demo-tag-7",
+        "demo-tag-20"
+      ],
+      "linkedProblemIds": [
+        "demo-problem-12"
+      ],
+      "description": "概率树状图",
+      "createdAt": "2026-04-17T02:52:10.912Z",
+      "updatedAt": "2026-04-17T02:52:10.912Z",
+      "isDeleted": false
+    },
+    {
+      "id": "demo-img8",
+      "filename": "vector-diagram.webp",
+      "mime": "image/webp",
+      "size": 23456,
+      "width": 600,
+      "height": 600,
+      "tagIds": [
+        "demo-tag-16",
+        "demo-tag-9"
+      ],
+      "linkedProblemIds": [
+        "demo-problem-7"
+      ],
+      "description": "向量关系示意",
+      "createdAt": "2026-04-19T02:52:10.912Z",
+      "updatedAt": "2026-04-19T02:52:10.912Z",
+      "isDeleted": false
+    },
+    {
+      "id": "demo-img9",
+      "filename": "parabola.png",
+      "mime": "image/png",
+      "size": 34567,
+      "width": 640,
+      "height": 480,
+      "tagIds": [
+        "demo-tag-8",
+        "demo-tag-10"
+      ],
+      "linkedProblemIds": [
+        "demo-problem-4"
+      ],
+      "description": "抛物线图像",
+      "createdAt": "2026-04-20T02:52:10.912Z",
+      "updatedAt": "2026-04-20T02:52:10.912Z",
+      "isDeleted": false
+    },
+    {
+      "id": "demo-img10",
+      "filename": "sphere.png",
+      "mime": "image/png",
+      "size": 45678,
+      "width": 500,
+      "height": 500,
+      "tagIds": [
+        "demo-tag-9"
+      ],
+      "linkedProblemIds": [],
+      "description": "未关联但可直接用于新建试卷的球体截面素材。",
+      "createdAt": "2026-04-21T02:52:10.912Z",
+      "updatedAt": "2026-04-21T02:52:10.912Z",
+      "isDeleted": false
+    },
+    {
+      "id": "demo-img11",
+      "filename": "matrix-table.png",
+      "mime": "image/png",
+      "size": 23456,
+      "width": 400,
+      "height": 300,
+      "tagIds": [
+        "demo-tag-4"
+      ],
+      "linkedProblemIds": [],
+      "description": "最近删除的矩阵排版示意图，可在回收站恢复。",
+      "createdAt": "2026-04-19T14:52:10.912Z",
+      "updatedAt": "2026-04-21T14:52:10.912Z",
+      "isDeleted": true
+    },
+    {
+      "id": "demo-img12",
+      "filename": "circle-theorem.png",
+      "mime": "image/png",
+      "size": 34567,
+      "width": 550,
+      "height": 550,
+      "tagIds": [
+        "demo-tag-3",
+        "demo-tag-14"
+      ],
+      "linkedProblemIds": [],
+      "description": "已删除超过 7 天且未关联的孤儿图片，用于清理测试。",
+      "createdAt": "2026-04-08T20:52:10.912Z",
+      "updatedAt": "2026-04-10T20:52:10.912Z",
+      "isDeleted": true
+    }
+  ],
+  "papers": [
+    {
+      "id": "demo-paper-1",
+      "title": "2024 年高三数学期中考试",
+      "subtitle": "函数与导数综合卷",
+      "schoolName": "北京市第一中学",
+      "examName": "高三数学期中考试",
+      "subject": "数学",
+      "duration": 120,
+      "totalScore": 120,
+      "description": "覆盖函数、数列、立体几何与概率统计。",
+      "status": "completed",
+      "instructions": "本卷满分 150 分，考试时间 120 分钟。请将答案写在答题纸指定区域内。",
+      "footerText": "— 第 1 页 共 4 页 —",
+      "createdAt": "2026-04-08T02:52:10.912Z",
+      "updatedAt": "2026-04-22T01:52:10.912Z",
+      "layout": {
+        "columns": 1,
+        "fontSize": 12,
+        "lineHeight": 1.3,
+        "paperSize": "A4",
+        "showAnswerVersion": true
+      },
+      "items": [
+        {
+          "id": "item-1-p1",
+          "problemId": "demo-problem-1",
+          "score": 8,
+          "orderIndex": 0,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-2-p2",
+          "problemId": "demo-problem-2",
+          "score": 10,
+          "orderIndex": 1,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-3-p3",
+          "problemId": "demo-problem-3",
+          "score": 12,
+          "orderIndex": 2,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-4-p4",
+          "problemId": "demo-problem-4",
+          "score": 12,
+          "orderIndex": 3,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-5-p5",
+          "problemId": "demo-problem-5",
+          "score": 8,
+          "orderIndex": 4,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-6-p6",
+          "problemId": "demo-problem-6",
+          "score": 12,
+          "orderIndex": 5,
+          "imagePosition": "right",
+          "blankLines": 0
+        },
+        {
+          "id": "item-7-p7",
+          "problemId": "demo-problem-7",
+          "score": 14,
+          "orderIndex": 6,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-8-p8",
+          "problemId": "demo-problem-8",
+          "score": 12,
+          "orderIndex": 7,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-9-p9",
+          "problemId": "demo-problem-9",
+          "score": 10,
+          "orderIndex": 8,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-10-p10",
+          "problemId": "demo-problem-10",
+          "score": 8,
+          "orderIndex": 9,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-11-p11",
+          "problemId": "demo-problem-11",
+          "score": 6,
+          "orderIndex": 10,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-12-p12",
+          "problemId": "demo-problem-12",
+          "score": 8,
+          "orderIndex": 11,
+          "imagePosition": "below",
+          "blankLines": 0
+        }
+      ]
+    },
+    {
+      "id": "demo-paper-2",
+      "title": "高二数学周测（第 3 周）",
+      "subtitle": "数列专题",
+      "schoolName": "北京市第一中学",
+      "examName": "阶段测试",
+      "subject": "数学",
+      "duration": 90,
+      "totalScore": 60,
+      "description": "双栏 B5 周测，验证紧凑排版与数列专题组卷。",
+      "status": "completed",
+      "instructions": "请将答案写在答题纸指定区域内。",
+      "footerText": "— 第 1 页 共 2 页 —",
+      "createdAt": "2026-04-12T02:52:10.912Z",
+      "updatedAt": "2026-04-14T02:52:10.912Z",
+      "layout": {
+        "columns": 2,
+        "fontSize": 11,
+        "lineHeight": 1.45,
+        "paperSize": "B5",
+        "showAnswerVersion": false
+      },
+      "items": [
+        {
+          "id": "item-1-p13",
+          "problemId": "demo-problem-13",
+          "score": 10,
+          "orderIndex": 0,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-2-p18",
+          "problemId": "demo-problem-18",
+          "score": 8,
+          "orderIndex": 1,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-3-p20",
+          "problemId": "demo-problem-20",
+          "score": 12,
+          "orderIndex": 2,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-4-p21",
+          "problemId": "demo-problem-21",
+          "score": 12,
+          "orderIndex": 3,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-5-p4",
+          "problemId": "demo-problem-4",
+          "score": 10,
+          "orderIndex": 4,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-6-p9",
+          "problemId": "demo-problem-9",
+          "score": 8,
+          "orderIndex": 5,
+          "imagePosition": "below",
+          "blankLines": 0
+        }
+      ]
+    },
+    {
+      "id": "demo-paper-3",
+      "title": "函数专题练习",
+      "subtitle": "单元滚动训练",
+      "schoolName": "北京市第一中学",
+      "examName": "阶段测试",
+      "subject": "数学",
+      "duration": 75,
+      "totalScore": 48,
+      "description": "草稿版练习卷，强调函数图像、解析与不带答案导出。",
+      "status": "draft",
+      "instructions": "请独立完成。",
+      "footerText": "— 第 1 页 共 2 页 —",
+      "createdAt": "2026-04-19T02:52:10.912Z",
+      "updatedAt": "2026-04-21T02:52:10.912Z",
+      "layout": {
+        "columns": 1,
+        "fontSize": 12,
+        "lineHeight": 1.5,
+        "paperSize": "A4",
+        "showAnswerVersion": false
+      },
+      "items": [
+        {
+          "id": "item-1-p4",
+          "problemId": "demo-problem-4",
+          "score": 10,
+          "orderIndex": 0,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-2-p8",
+          "problemId": "demo-problem-8",
+          "score": 12,
+          "orderIndex": 1,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-3-p14",
+          "problemId": "demo-problem-14",
+          "score": 10,
+          "orderIndex": 2,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-4-p16",
+          "problemId": "demo-problem-16",
+          "score": 8,
+          "orderIndex": 3,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-5-p19",
+          "problemId": "demo-problem-19",
+          "score": 8,
+          "orderIndex": 4,
+          "imagePosition": "below",
+          "blankLines": 0
+        }
+      ]
+    },
+    {
+      "id": "demo-paper-4",
+      "title": "解析几何综合测试",
+      "subtitle": "圆锥曲线专项",
+      "schoolName": "北京市第一中学",
+      "examName": "阶段测试",
+      "subject": "数学",
+      "duration": 100,
+      "totalScore": 64,
+      "description": "待审核版本，包含解析几何与不等式拔高题。",
+      "status": "review",
+      "instructions": "请在规定时间内完成。",
+      "footerText": "— 第 1 页 共 3 页 —",
+      "createdAt": "2026-04-15T02:52:10.912Z",
+      "updatedAt": "2026-04-18T02:52:10.912Z",
+      "layout": {
+        "columns": 2,
+        "fontSize": 11,
+        "lineHeight": 1.35,
+        "paperSize": "Letter",
+        "showAnswerVersion": true
+      },
+      "items": [
+        {
+          "id": "item-1-p6",
+          "problemId": "demo-problem-6",
+          "score": 12,
+          "orderIndex": 0,
+          "imagePosition": "right",
+          "blankLines": 0
+        },
+        {
+          "id": "item-2-p17",
+          "problemId": "demo-problem-17",
+          "score": 12,
+          "orderIndex": 1,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-3-p15",
+          "problemId": "demo-problem-15",
+          "score": 8,
+          "orderIndex": 2,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-4-p22",
+          "problemId": "demo-problem-22",
+          "score": 14,
+          "orderIndex": 3,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-5-p24",
+          "problemId": "demo-problem-24",
+          "score": 18,
+          "orderIndex": 4,
+          "imagePosition": "below",
+          "blankLines": 0
+        }
+      ]
+    },
+    {
+      "id": "demo-paper-5",
+      "title": "三角函数单元测试",
+      "subtitle": "基础巩固",
+      "schoolName": "北京市第一中学",
+      "examName": "阶段测试",
+      "subject": "数学",
+      "duration": 60,
+      "totalScore": 40,
+      "description": "三角函数基础练习。",
+      "status": "draft",
+      "instructions": "请先完成基础题，再完成最后一题的拓展追问。",
+      "footerText": "— 第 1 页 共 1 页 —",
+      "createdAt": "2026-04-21T02:52:10.912Z",
+      "updatedAt": "2026-04-21T14:52:10.912Z",
+      "layout": {
+        "columns": 1,
+        "fontSize": 12,
+        "lineHeight": 1.3,
+        "paperSize": "A4",
+        "showAnswerVersion": true
+      },
+      "items": [
+        {
+          "id": "item-1-p2",
+          "problemId": "demo-problem-2",
+          "score": 10,
+          "orderIndex": 0,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-2-p14",
+          "problemId": "demo-problem-14",
+          "score": 10,
+          "orderIndex": 1,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-3-p22",
+          "problemId": "demo-problem-22",
+          "score": 12,
+          "orderIndex": 2,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-4-p9",
+          "problemId": "demo-problem-9",
+          "score": 8,
+          "orderIndex": 3,
+          "imagePosition": "below",
+          "blankLines": 0
+        }
+      ]
+    },
+    {
+      "id": "demo-paper-6",
+      "title": "初中数学基础练习",
+      "subtitle": "方程、几何与二次函数",
+      "schoolName": "北京市育才中学",
+      "examName": "单元检测",
+      "subject": "数学",
+      "duration": 60,
+      "totalScore": 30,
+      "description": "用于验证初中年级筛选与组卷流程的演示试卷。",
+      "status": "completed",
+      "instructions": "请在规定区域内写出主要步骤。",
+      "footerText": "— 第 1 页 共 1 页 —",
+      "createdAt": "2026-04-20T02:52:10.912Z",
+      "updatedAt": "2026-04-21T05:52:10.912Z",
+      "layout": {
+        "columns": 1,
+        "fontSize": 11,
+        "lineHeight": 1.4,
+        "paperSize": "B5",
+        "showAnswerVersion": false
+      },
+      "items": [
+        {
+          "id": "item-1-p25",
+          "problemId": "demo-problem-25",
+          "score": 8,
+          "orderIndex": 0,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-2-p26",
+          "problemId": "demo-problem-26",
+          "score": 10,
+          "orderIndex": 1,
+          "imagePosition": "below",
+          "blankLines": 0
+        },
+        {
+          "id": "item-3-p27",
+          "problemId": "demo-problem-27",
+          "score": 12,
+          "orderIndex": 2,
+          "imagePosition": "below",
+          "blankLines": 0
+        }
+      ]
+    }
+  ],
+  "exportJobs": [
+    {
+      "id": "demo-export-1",
+      "paperId": "demo-paper-1",
+      "paperTitle": "2024 年高三数学期中考试",
+      "format": "pdf",
+      "variant": "both",
+      "status": "done",
+      "progress": 100,
+      "createdAt": "2026-04-22T01:52:10.912Z",
+      "completedAt": "2026-04-22T01:55:10.912Z"
+    },
+    {
+      "id": "demo-export-2",
+      "paperId": "demo-paper-2",
+      "paperTitle": "高二数学周测（第 3 周）",
+      "format": "latex",
+      "variant": "student",
+      "status": "done",
+      "progress": 100,
+      "createdAt": "2026-04-21T21:12:10.912Z",
+      "completedAt": "2026-04-21T21:14:10.912Z"
+    },
+    {
+      "id": "demo-export-3",
+      "paperId": "demo-paper-6",
+      "paperTitle": "初中数学基础练习",
+      "format": "pdf",
+      "variant": "student",
+      "status": "pending",
+      "progress": 0,
+      "createdAt": "2026-04-22T09:32:10.912Z",
+      "completedAt": null
+    },
+    {
+      "id": "demo-export-4",
+      "paperId": "demo-paper-4",
+      "paperTitle": "解析几何综合测试",
+      "format": "pdf",
+      "variant": "answer",
+      "status": "processing",
+      "progress": 55,
+      "createdAt": "2026-04-22T10:05:10.912Z",
+      "completedAt": null
+    },
+    {
+      "id": "demo-export-5",
+      "paperId": "demo-paper-5",
+      "paperTitle": "三角函数单元测试",
+      "format": "latex",
+      "variant": "both",
+      "status": "failed",
+      "progress": 100,
+      "errorMessage": "LaTeX 编译失败：第 3 题辅助图缺少引用标签。",
+      "createdAt": "2026-04-20T18:42:10.912Z",
+      "completedAt": "2026-04-20T18:45:10.912Z"
+    }
+  ],
+  "searchHistory": [
+    {
+      "id": "demo-search-history-1",
+      "query": "三角函数",
+      "filters": {
+        "formula": "",
+        "conditions": [
+          {
+            "id": "demo-h1-c1",
+            "field": "grade",
+            "operator": "eq",
+            "value": "高一"
+          },
+          {
+            "id": "demo-h1-c2",
+            "field": "tag",
+            "operator": "eq",
+            "value": "demo-tag-3"
+          }
+        ]
+      },
+      "resultCount": 2,
+      "createdAt": "2026-04-22T08:30:10.912Z"
+    },
+    {
+      "id": "demo-search-history-2",
+      "query": "",
+      "filters": {
+        "formula": "\\int_0^1 x^2 \\, dx",
+        "conditions": []
+      },
+      "resultCount": 1,
+      "createdAt": "2026-04-22T07:10:10.912Z"
+    },
+    {
+      "id": "demo-search-history-3",
+      "query": "数列",
+      "filters": {
+        "formula": "",
+        "conditions": [
+          {
+            "id": "demo-h3-c1",
+            "field": "difficulty",
+            "operator": "eq",
+            "value": "medium"
+          },
+          {
+            "id": "demo-h3-c2",
+            "field": "tag",
+            "operator": "eq",
+            "value": "demo-tag-4"
+          }
+        ]
+      },
+      "resultCount": 2,
+      "createdAt": "2026-04-21T19:25:10.912Z"
+    },
+    {
+      "id": "demo-search-history-4",
+      "query": "",
+      "filters": {
+        "formula": "",
+        "conditions": [
+          {
+            "id": "demo-h4-c1",
+            "field": "hasImage",
+            "operator": "eq",
+            "value": "yes"
+          },
+          {
+            "id": "demo-h4-c2",
+            "field": "grade",
+            "operator": "eq",
+            "value": "高三"
+          }
+        ]
+      },
+      "resultCount": 4,
+      "createdAt": "2026-04-21T13:52:10.912Z"
+    },
+    {
+      "id": "demo-search-history-5",
+      "query": "北京高考",
+      "filters": {
+        "formula": "",
+        "conditions": [
+          {
+            "id": "demo-h5-c1",
+            "field": "source",
+            "operator": "contains",
+            "value": "北京"
+          }
+        ]
+      },
+      "resultCount": 2,
+      "createdAt": "2026-04-20T22:15:10.912Z"
+    },
+    {
+      "id": "demo-search-history-6",
+      "query": "",
+      "filters": {
+        "formula": "",
+        "conditions": [
+          {
+            "id": "demo-h6-c1",
+            "field": "date",
+            "operator": "between",
+            "value": "2026-04-16",
+            "secondValue": "2026-04-23"
+          }
+        ]
+      },
+      "resultCount": 10,
+      "createdAt": "2026-04-19T10:42:10.912Z"
+    }
+  ],
+  "savedSearches": [
+    {
+      "id": "demo-saved-search-1",
+      "name": "高一三角函数带图题",
+      "query": "三角函数",
+      "filters": {
+        "formula": "",
+        "conditions": [
+          {
+            "id": "demo-s1-c1",
+            "field": "grade",
+            "operator": "eq",
+            "value": "高一"
+          },
+          {
+            "id": "demo-s1-c2",
+            "field": "hasImage",
+            "operator": "eq",
+            "value": "yes"
+          },
+          {
+            "id": "demo-s1-c3",
+            "field": "tag",
+            "operator": "eq",
+            "value": "demo-tag-3"
+          }
+        ]
+      },
+      "createdAt": "2026-04-22T06:12:10.912Z"
+    },
+    {
+      "id": "demo-saved-search-2",
+      "name": "数列中档题",
+      "query": "",
+      "filters": {
+        "formula": "",
+        "conditions": [
+          {
+            "id": "demo-s2-c1",
+            "field": "tag",
+            "operator": "eq",
+            "value": "demo-tag-4"
+          },
+          {
+            "id": "demo-s2-c2",
+            "field": "difficulty",
+            "operator": "eq",
+            "value": "medium"
+          }
+        ]
+      },
+      "createdAt": "2026-04-21T20:22:10.912Z"
+    },
+    {
+      "id": "demo-saved-search-3",
+      "name": "导数与函数卷面素材",
+      "query": "",
+      "filters": {
+        "formula": "",
+        "conditions": [
+          {
+            "id": "demo-s3-c1",
+            "field": "tag",
+            "operator": "contains",
+            "value": "demo-tag-10"
+          },
+          {
+            "id": "demo-s3-c2",
+            "field": "source",
+            "operator": "contains",
+            "value": "海淀"
+          }
+        ]
+      },
+      "createdAt": "2026-04-21T11:55:10.912Z"
+    },
+    {
+      "id": "demo-saved-search-4",
+      "name": "奥赛证明题",
+      "query": "",
+      "filters": {
+        "formula": "",
+        "conditions": [
+          {
+            "id": "demo-s4-c1",
+            "field": "difficulty",
+            "operator": "eq",
+            "value": "olympiad"
+          },
+          {
+            "id": "demo-s4-c2",
+            "field": "type",
+            "operator": "eq",
+            "value": "proof"
+          }
+        ]
+      },
+      "createdAt": "2026-04-20T16:42:10.912Z"
+    },
+    {
+      "id": "demo-saved-search-5",
+      "name": "最近一周新题",
+      "query": "",
+      "filters": {
+        "formula": "",
+        "conditions": [
+          {
+            "id": "demo-s5-c1",
+            "field": "date",
+            "operator": "between",
+            "value": "2026-04-16",
+            "secondValue": "2026-04-23"
+          }
+        ]
+      },
+      "createdAt": "2026-04-19T08:18:10.912Z"
+    }
+  ],
+  "settings": {
+    "profile": {
+      "name": "演示管理员",
+      "avatar": "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=256&q=80",
+      "notes": "用于联调题库、搜索、导出与回收站功能的本地演示资料。"
+    },
+    "preferences": {
+      "defaultView": "list",
+      "defaultSort": "code-asc",
+      "showAnswerVersion": false
+    },
+    "export": {
+      "columns": 2,
+      "lineHeight": 1.45,
+      "paperSize": "B5",
+      "mathFont": "XITS Math",
+      "zhFont": "Source Han Serif SC"
+    },
+    "separators": {
+      "problemStart": "\\begin{problem}[score=10]",
+      "problemEnd": "\\end{problem}"
+    }
+  }
+}
