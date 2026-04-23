@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"cd /Users/cnhyk/Downloads/V0 && docker-compose exec -T db psql -U mathlib -d mathlib -c \\\"SELECT version FROM goose_db_version ORDER BY id DESC LIMIT 1;\\\"\",\"description\":\"Check current mig...",
-  "error": "Exit code 1\nservice \"db\" is not running",
-  "timestamp": "2026-04-22T14:38:36.089Z",
-  "retry_count": 1
-}
