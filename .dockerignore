@@ -3,7 +3,8 @@ node_modules
 .git
 .omc
 *.md
-.env*
+.env.example
+.env.local
 storage
 .gitignore
 Dockerfile
