@@ -19,25 +19,28 @@ type ApiEnvelope<T> = {
   error: { code: string; message: string } | null;
 };
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:8080/api/v1';
+const API_BASE = '/api/v1';
 
 type RequestOptions = RequestInit & {
   query?: Record<string, string | number | boolean | undefined | null>;
 };
 
 function withQuery(path: string, query?: RequestOptions['query']) {
-  const url = new URL(`${API_BASE}${path}`);
-
+  let url = `${API_BASE}${path}`;
   if (query) {
+    const params = new URLSearchParams();
     Object.entries(query).forEach(([key, value]) => {
       if (value === undefined || value === null || value === '') {
         return;
       }
-      url.searchParams.set(key, String(value));
+      params.set(key, String(value));
     });
+    const qs = params.toString();
+    if (qs) {
+      url = `${url}${url.includes('?') ? '&' : '?'}${qs}`;
+    }
   }
-
-  return url.toString();
+  return url;
 }
 
 export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
