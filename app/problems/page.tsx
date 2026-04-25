@@ -151,6 +151,7 @@ export default function ProblemsPage() {
                   setPage(1);
                 }}
                 placeholder="搜题干、编号..."
+                aria-label="搜索题目或编号"
                 className="pl-9"
               />
             </div>
@@ -263,10 +264,10 @@ export default function ProblemsPage() {
                 </>
               ) : null}
               <ToggleGroup type="single" value={viewMode} onValueChange={(value) => value && setViewMode(value as typeof viewMode)}>
-                <ToggleGroupItem value="grid">
+                <ToggleGroupItem value="grid" size="sm" aria-label="网格视图">
                   <LayoutGrid className="h-4 w-4" />
                 </ToggleGroupItem>
-                <ToggleGroupItem value="list">
+                <ToggleGroupItem value="list" size="sm" aria-label="列表视图">
                   <List className="h-4 w-4" />
                 </ToggleGroupItem>
               </ToggleGroup>

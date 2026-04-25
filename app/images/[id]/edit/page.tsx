@@ -9,6 +9,7 @@ import { PageHeader, PagePanel, PageShell } from '@/components/page-shell';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Slider } from '@/components/ui/slider';
 import { useEditImage, useImage } from '@/lib/hooks/use-images';
 
@@ -64,7 +65,17 @@ export default function ImageEditPage({ params }: { params: Promise<{ id: string
   };
 
   if (!image) {
-    return <div className="p-6 text-sm text-muted-foreground">正在加载图像...</div>;
+    return (
+      <div className="space-y-4">
+        <PagePanel>
+          <div className="space-y-4 p-6">
+            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="h-32 w-full" />
+          </div>
+        </PagePanel>
+      </div>
+    );
   }
 
   return (

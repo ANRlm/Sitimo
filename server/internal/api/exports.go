@@ -1,6 +1,7 @@
 package api
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -96,6 +97,10 @@ func (s *Server) handleDeleteExport(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleDownloadExport(w http.ResponseWriter, r *http.Request) {
+	if !isAuthenticated(r) {
+		respondError(w, http.StatusForbidden, "forbidden", errors.New("authentication required"))
+		return
+	}
 	ctx, cancel := requestContext(r)
 	defer cancel()
 	job, err := s.svc.Repository().GetExportJob(ctx, chi.URLParam(r, "id"))
@@ -205,6 +210,10 @@ func sanitizeASCIIFilename(value string) string {
 }
 
 func (s *Server) handleExportStream(w http.ResponseWriter, r *http.Request) {
+	if !isAuthenticated(r) {
+		respondError(w, http.StatusForbidden, "forbidden", errors.New("authentication required"))
+		return
+	}
 	w.Header().Set("Content-Type", "text/event-stream")
 	w.Header().Set("Cache-Control", "no-cache")
 	w.Header().Set("Connection", "keep-alive")

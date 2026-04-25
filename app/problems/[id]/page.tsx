@@ -1,10 +1,10 @@
 'use client';
 
-import { use } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Copy, Link2, Pencil, ShoppingBasket, Trash2 } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { toast } from 'sonner';
+import { use } from 'react';
 import { ConfirmActionButton } from '@/components/confirm-action-button';
 import { LatexCodeEditor } from '@/components/latex-code-editor';
 import { MathText } from '@/components/math-text';
@@ -12,6 +12,7 @@ import { PageHeader, PagePanel, PageShell } from '@/components/page-shell';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { formatAbsoluteDateTime } from '@/lib/format';
 import { useDeleteProblem, useProblem, useProblemVersions, useRollbackProblemVersion } from '@/lib/hooks/use-problems';
@@ -35,7 +36,17 @@ export default function ProblemDetailPage({ params }: { params: Promise<{ id: st
   }
 
   if (!problem) {
-    return <div className="p-6 text-sm text-muted-foreground">正在加载题目详情...</div>;
+    return (
+      <div className="space-y-4">
+        <PagePanel>
+          <div className="space-y-4 p-6">
+            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="h-32 w-full" />
+          </div>
+        </PagePanel>
+      </div>
+    );
   }
 
   const difficulty = difficultyConfig[problem.difficulty];

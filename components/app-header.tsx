@@ -86,7 +86,7 @@ export function AppHeader({ onOpenBasket }: AppHeaderProps) {
   const breadcrumbs = getBreadcrumbs(pathname);
 
   return (
-    <header className="sticky top-0 z-30 bg-background/95 backdrop-blur transition-all duration-300">
+    <header className="sticky top-0 z-30 bg-background/95 backdrop-blur">
       <div className="relative box-border flex h-14 items-center justify-between border-b border-border px-4">
         <div className="flex items-center gap-3">
           <Button

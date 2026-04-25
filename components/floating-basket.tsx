@@ -25,9 +25,11 @@ export function FloatingBasket({ open, onOpenChange }: FloatingBasketProps) {
   return (
     <>
       {/* Floating button */}
-      <button
+      <Button
+        variant="ghost"
+        size="icon"
         onClick={() => onOpenChange(true)}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
+        className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-accent text-accent-foreground shadow-lg hover:scale-105"
       >
         <ShoppingBasket className="h-6 w-6" />
         {items.length > 0 && (
@@ -36,7 +38,7 @@ export function FloatingBasket({ open, onOpenChange }: FloatingBasketProps) {
           </span>
         )}
         <span className="sr-only">打开题目篮子</span>
-      </button>
+      </Button>
 
       {/* Sheet */}
       <Sheet open={open} onOpenChange={onOpenChange}>

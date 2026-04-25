@@ -1,9 +1,10 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
-import { FileUp, MoveRight, UploadCloud } from 'lucide-react';
+import { CheckCircle, FileUp, MoveRight, UploadCloud } from 'lucide-react';
+import { parseTexFile } from '@/lib/latex-file-parser';
 import { LatexCodeEditor } from '@/components/latex-code-editor';
 import { MathText } from '@/components/math-text';
 import { PageHeader, PagePanel, PageShell } from '@/components/page-shell';
@@ -45,8 +46,17 @@ function parseTagNames(value: string | undefined) {
     .filter(Boolean);
 }
 
+interface FileInfo {
+  name: string;
+  problemCount: number;
+  warnings: string[];
+}
+
 export default function ProblemImportPage() {
   const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [isDragging, setIsDragging] = useState(false);
+  const [fileInfo, setFileInfo] = useState<FileInfo | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const previewMutation = usePreviewBatchImport();
   const commitMutation = useCommitBatchImport();
   const form = useForm<ProblemImportFormValues>({
@@ -124,6 +134,44 @@ export default function ProblemImportPage() {
     }
   };
 
+  const handleFile = useCallback(
+    (file: File) => {
+      if (!file.name.endsWith('.tex')) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target?.result as string;
+        const result = parseTexFile(content);
+        form.setValue('latexSource', result.latex);
+        form.setValue('separatorStart', '\\begin{problem}');
+        form.setValue('separatorEnd', '\\end{problem}');
+        if (result.suggestedSource) form.setValue('source', result.suggestedSource);
+        setFileInfo({ name: file.name, problemCount: result.problemCount, warnings: result.warnings });
+      };
+      reader.readAsText(file, 'utf-8');
+    },
+    [form],
+  );
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setIsDragging(false);
+      const file = e.dataTransfer.files[0];
+      if (file) handleFile(file);
+    },
+    [handleFile],
+  );
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  }, []);
+
   return (
     <Form {...form}>
       <PageShell wide>
@@ -177,10 +225,49 @@ export default function ProblemImportPage() {
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
             <PagePanel>
               <div className="space-y-4 p-6">
-                <div className="flex h-48 flex-col items-center justify-center rounded-2xl border-2 border-dashed text-center">
-                  <UploadCloud className="mb-4 h-12 w-12 text-primary" />
-                  <p className="font-medium">拖拽 .tex 文件到此，或直接粘贴源码</p>
-                </div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".tex"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) handleFile(file);
+                    e.target.value = '';
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  onDrop={handleDrop}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  className={`flex h-48 w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed text-center transition-colors ${
+                    isDragging
+                      ? 'border-primary bg-primary/10'
+                      : fileInfo
+                        ? 'border-green-500/60 bg-green-500/5'
+                        : 'border-border hover:border-primary/60 hover:bg-muted/30'
+                  }`}
+                >
+                  {fileInfo ? (
+                    <>
+                      <CheckCircle className="mb-3 h-10 w-10 text-green-500" />
+                      <p className="font-medium text-foreground">{fileInfo.name}</p>
+                      <p className="mt-1 text-sm text-muted-foreground">检测到 {fileInfo.problemCount} 道题目</p>
+                      {fileInfo.warnings.length > 0 && (
+                        <p className="mt-1 text-xs text-amber-600">{fileInfo.warnings.join('；')}</p>
+                      )}
+                      <p className="mt-2 text-xs text-muted-foreground">点击重新上传</p>
+                    </>
+                  ) : (
+                    <>
+                      <UploadCloud className={`mb-3 h-10 w-10 ${isDragging ? 'text-primary' : 'text-muted-foreground'}`} />
+                      <p className="font-medium">{isDragging ? '松开以上传' : '拖拽 .tex 文件到此，或点击选择'}</p>
+                      <p className="mt-1 text-xs text-muted-foreground">也可直接在下方粘贴源码</p>
+                    </>
+                  )}
+                </button>
                 <FormField
                   control={form.control}
                   name="latexSource"

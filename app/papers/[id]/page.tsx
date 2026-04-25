@@ -8,6 +8,7 @@ import { PaperDocument } from '@/components/paper-document';
 import { PageHeader, PagePanel, PageShell } from '@/components/page-shell';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { formatAbsoluteDateTime } from '@/lib/format';
@@ -25,7 +26,17 @@ export default function PaperPreviewPage({ params }: { params: Promise<{ id: str
   }
 
   if (!paperQuery.data) {
-    return <div className="p-6 text-sm text-muted-foreground">正在加载试卷...</div>;
+    return (
+      <div className="space-y-4">
+        <PagePanel>
+          <div className="space-y-4 p-6">
+            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="h-32 w-full" />
+          </div>
+        </PagePanel>
+      </div>
+    );
   }
 
   const paper = paperQuery.data;

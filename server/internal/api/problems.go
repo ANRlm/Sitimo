@@ -1,9 +1,13 @@
 package api
 
 import (
+	"encoding/json"
 	"errors"
+	"fmt"
+	"io"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"mathlib/server/internal/domain"
 	"mathlib/server/internal/service"
@@ -149,10 +153,63 @@ func (s *Server) handleRollbackProblemVersion(w http.ResponseWriter, r *http.Req
 
 func (s *Server) handlePreviewImport(w http.ResponseWriter, r *http.Request) {
 	var input domain.ImportPreviewRequest
-	if err := decodeJSON(r, &input); err != nil {
-		respondError(w, http.StatusBadRequest, "invalid_json", err)
-		return
+
+	contentType := r.Header.Get("Content-Type")
+
+	if strings.HasPrefix(contentType, "multipart/form-data") {
+		if err := r.ParseMultipartForm(5 << 20); err != nil {
+			respondError(w, http.StatusBadRequest, "parse_multipart_failed", err)
+			return
+		}
+
+		defaultsStr := r.FormValue("defaults")
+		if defaultsStr != "" {
+			if err := json.Unmarshal([]byte(defaultsStr), &input.Defaults); err != nil {
+				respondError(w, http.StatusBadRequest, "invalid_defaults_json", err)
+				return
+			}
+		}
+		if input.Defaults == nil {
+			input.Defaults = make(map[string]any)
+		}
+
+		files := r.MultipartForm.File["files"]
+		if len(files) == 0 {
+			respondError(w, http.StatusBadRequest, "no_files", errors.New("请至少上传一个 .tex 文件"))
+			return
+		}
+
+		for _, fh := range files {
+			if !strings.HasSuffix(strings.ToLower(fh.Filename), ".tex") {
+				respondError(w, http.StatusBadRequest, "invalid_file_type",
+					errors.New(fmt.Sprintf("仅支持 .tex 文件: %s", fh.Filename)))
+				return
+			}
+
+			file, err := fh.Open()
+			if err != nil {
+				respondError(w, http.StatusInternalServerError, "file_read_failed", err)
+				return
+			}
+			content, err := io.ReadAll(file)
+			file.Close()
+			if err != nil {
+				respondError(w, http.StatusInternalServerError, "file_read_failed", err)
+				return
+			}
+
+			input.Files = append(input.Files, domain.UploadedFile{
+				Filename: fh.Filename,
+				Content:  content,
+			})
+		}
+	} else {
+		if err := decodeJSON(r, &input); err != nil {
+			respondError(w, http.StatusBadRequest, "invalid_json", err)
+			return
+		}
 	}
+
 	respondJSON(w, http.StatusOK, s.svc.PreviewBatchImport(input))
 }
 

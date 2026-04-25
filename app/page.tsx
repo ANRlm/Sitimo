@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from '@/components/ui/empty';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatRelativeTime } from '@/lib/format';
+import { cn } from '@/lib/utils';
 import { useMetaStats, useRecentExports, useRecentProblems } from '@/lib/hooks/use-meta';
 import { difficultyConfig, type ExportJob, type Problem } from '@/lib/types';
 
@@ -175,7 +176,7 @@ function StatCard({
   return (
     <PagePanel>
       <div className="flex items-center gap-4 p-5">
-        <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${iconClassName}`}>
+        <div className={cn("flex h-12 w-12 items-center justify-center rounded-2xl", iconClassName)}>
           <Icon className="h-6 w-6" />
         </div>
         <div>
@@ -209,7 +210,7 @@ function RecentProblemRow({ problem }: { problem: Problem }) {
 function EmptyList({ label, description }: { label: string; description: string }) {
   return (
     <div className="px-5 py-8">
-      <Empty className="border-none bg-transparent p-0 md:p-0">
+      <Empty className="border-none bg-transparent">
         <EmptyHeader className="items-start text-left">
           <EmptyTitle className="text-base">{label}</EmptyTitle>
           <EmptyDescription className="text-left">{description}</EmptyDescription>

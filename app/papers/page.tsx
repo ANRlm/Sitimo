@@ -41,7 +41,7 @@ export default function PapersPage() {
       <PageToolbar className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <div className="relative w-full lg:max-w-sm">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索试卷标题..." className="pl-9" />
+          <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索试卷标题..." aria-label="搜索试卷标题" className="pl-9" />
         </div>
         <div className="rounded-full bg-muted px-3 py-2 text-sm text-muted-foreground">共 {papersQuery.data?.total ?? 0} 份试卷</div>
       </PageToolbar>
@@ -51,12 +51,12 @@ export default function PapersPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>标题</TableHead>
-                <TableHead>题目数</TableHead>
-                <TableHead>总分</TableHead>
-                <TableHead>最后修改</TableHead>
-                <TableHead>状态</TableHead>
-                <TableHead className="w-[260px] text-right">操作</TableHead>
+                <TableHead className="py-3 px-4">标题</TableHead>
+                <TableHead className="py-3 px-4">题目数</TableHead>
+                <TableHead className="py-3 px-4">总分</TableHead>
+                <TableHead className="py-3 px-4">最后修改</TableHead>
+                <TableHead className="py-3 px-4">状态</TableHead>
+                <TableHead className="w-[260px] text-right py-3 px-4">操作</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -76,17 +76,17 @@ export default function PapersPage() {
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
-                      <Button variant="ghost" size="icon" asChild title="查看">
+                      <Button variant="ghost" size="icon" asChild title="查看" aria-label="查看">
                         <Link href={`/papers/${paper.id}`}>
                           <Eye className="h-4 w-4" />
                         </Link>
                       </Button>
-                      <Button variant="ghost" size="icon" asChild title="编辑">
+                      <Button variant="ghost" size="icon" asChild title="编辑" aria-label="编辑">
                         <Link href={`/papers/${paper.id}/editor`}>
                           <Pencil className="h-4 w-4" />
                         </Link>
                       </Button>
-                      <Button variant="ghost" size="icon" onClick={() => duplicateMutation.mutate(paper.id)} disabled={duplicateMutation.isPending} title="复制">
+                      <Button variant="ghost" size="icon" onClick={() => duplicateMutation.mutate(paper.id)} disabled={duplicateMutation.isPending} title="复制" aria-label="复制">
                         <Copy className="h-4 w-4" />
                       </Button>
                       <ConfirmActionButton

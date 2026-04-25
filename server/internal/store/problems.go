@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/jackc/pgx/v5"
+
 	"mathlib/server/internal/domain"
 	"mathlib/server/internal/search"
 	"mathlib/server/internal/store/sqlc"
@@ -18,6 +20,19 @@ func (r *Repository) CreateProblem(ctx context.Context, input domain.ProblemWrit
 	}
 	defer tx.Rollback(ctx)
 
+	created, err := r.createProblemTx(ctx, tx, input)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := tx.Commit(ctx); err != nil {
+		return nil, err
+	}
+
+	return created, nil
+}
+
+func (r *Repository) createProblemTx(ctx context.Context, tx pgx.Tx, input domain.ProblemWriteInput) (*domain.ProblemDetail, error) {
 	id := newID()
 	code, err := r.NextProblemCode(ctx, tx)
 	if err != nil {
@@ -55,10 +70,6 @@ func (r *Repository) CreateProblem(ctx context.Context, input domain.ProblemWrit
 		return nil, err
 	}
 	if err := r.insertProblemVersion(ctx, queries, id, 1, input, code, now, false); err != nil {
-		return nil, err
-	}
-
-	if err := tx.Commit(ctx); err != nil {
 		return nil, err
 	}
 
@@ -250,6 +261,55 @@ func (r *Repository) RollbackProblemVersion(ctx context.Context, problemID strin
 		ImageIDs:        snapshot.ImageIDs,
 		Notes:           snapshot.Notes,
 	})
+}
+
+func (r *Repository) CreateProblemsTx(ctx context.Context, tx pgx.Tx, inputs []domain.ProblemWriteInput) ([]string, error) {
+	ids := make([]string, 0, len(inputs))
+	queries := r.queries.WithTx(tx)
+
+	for _, input := range inputs {
+		id := newID()
+		code, err := r.NextProblemCode(ctx, tx)
+		if err != nil {
+			return nil, err
+		}
+		now := time.Now().UTC()
+		formulaTokens := search.TokenizeLatex(input.Latex)
+		subjectiveScore, err := pgNumericFromPtr(input.SubjectiveScore)
+		if err != nil {
+			return nil, err
+		}
+		if _, err := queries.InsertProblem(ctx, sqlc.InsertProblemParams{
+			ID:              id,
+			Code:            code,
+			Latex:           input.Latex,
+			AnswerLatex:     pgTextFromPtr(input.AnswerLatex),
+			SolutionLatex:   pgTextFromPtr(input.SolutionLatex),
+			ProblemType:     string(input.Type),
+			Difficulty:      string(input.Difficulty),
+			SubjectiveScore: subjectiveScore,
+			Subject:         pgTextFromPtr(input.Subject),
+			Grade:           pgTextFromPtr(input.Grade),
+			Source:          pgTextFromPtr(input.Source),
+			Notes:           pgTextFromPtr(input.Notes),
+			FormulaTokens:   pgTextFromString(formulaTokens),
+			Version:         1,
+			CreatedAt:       pgTimestamptzFromTime(now),
+			UpdatedAt:       pgTimestamptzFromTime(now),
+		}); err != nil {
+			return nil, err
+		}
+
+		if err := r.replaceProblemRelations(ctx, queries, id, input.TagIDs, input.ImageIDs); err != nil {
+			return nil, err
+		}
+		if err := r.insertProblemVersion(ctx, queries, id, 1, input, code, now, false); err != nil {
+			return nil, err
+		}
+		ids = append(ids, id)
+	}
+
+	return ids, nil
 }
 
 func (r *Repository) BatchTagProblems(ctx context.Context, problemIDs, tagIDs []string, replace bool) error {

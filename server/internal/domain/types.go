@@ -231,31 +231,45 @@ type MetaStats struct {
 
 type SettingsPayload map[string]any
 
+type UploadedFile struct {
+	Filename string `json:"filename"`
+	Content  []byte `json:"content"`
+	Encoding string `json:"encoding,omitempty"`
+}
+
 type ImportPreviewRequest struct {
-	Latex          string         `json:"latex"`
-	SeparatorStart string         `json:"separatorStart"`
-	SeparatorEnd   string         `json:"separatorEnd"`
-	Defaults       map[string]any `json:"defaults"`
+	Latex          string         `json:"latex,omitempty"`
+	SeparatorStart string         `json:"separatorStart,omitempty"`
+	SeparatorEnd   string         `json:"separatorEnd,omitempty"`
+	Defaults       map[string]any `json:"defaults,omitempty"`
+	Files          []UploadedFile `json:"files,omitempty"`
 }
 
 type ImportPreviewDraft struct {
-	ID         string     `json:"id"`
-	Title      string     `json:"title"`
-	Latex      string     `json:"latex"`
-	Difficulty Difficulty `json:"difficulty"`
-	Status     string     `json:"status"`
-	Error      *string    `json:"error,omitempty"`
-	Warnings   []string   `json:"warnings,omitempty"`
-	Subject    *string    `json:"subject,omitempty"`
-	Grade      *string    `json:"grade,omitempty"`
-	Source     *string    `json:"source,omitempty"`
-	TagNames   []string   `json:"tagNames"`
+	ID            string      `json:"id"`
+	Title         string      `json:"title"`
+	Latex         string      `json:"latex"`
+	Difficulty    Difficulty  `json:"difficulty"`
+	Status        string      `json:"status"`
+	Error         *string     `json:"error,omitempty"`
+	Warnings      []string    `json:"warnings,omitempty"`
+	Subject       *string     `json:"subject,omitempty"`
+	Grade         *string     `json:"grade,omitempty"`
+	Source        *string     `json:"source,omitempty"`
+	TagNames      []string    `json:"tagNames"`
+	AnswerLatex   *string     `json:"answerLatex,omitempty"`
+	SolutionLatex *string     `json:"solutionLatex,omitempty"`
+	InferredType  ProblemType `json:"inferredType,omitempty"`
+	NeedsReview   bool        `json:"needsReview,omitempty"`
+	SectionTags   []string    `json:"sectionTags,omitempty"`
 }
 
 type ImportPreviewResponse struct {
-	Parsed   []ImportPreviewDraft `json:"parsed"`
-	Errors   []map[string]any     `json:"errors"`
-	Warnings []string             `json:"warnings"`
+	Parsed            []ImportPreviewDraft `json:"parsed"`
+	Errors            []map[string]any     `json:"errors"`
+	Warnings          []string             `json:"warnings"`
+	PairedAnswerFiles []string             `json:"pairedAnswerFiles,omitempty"`
+	UnpairedWarnings  []string             `json:"unpairedWarnings,omitempty"`
 }
 
 type ProblemWriteInput struct {

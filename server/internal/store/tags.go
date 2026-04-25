@@ -2,6 +2,7 @@ package store
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"mathlib/server/internal/domain"
@@ -60,6 +61,9 @@ func (r *Repository) DeleteTag(ctx context.Context, id string) error {
 }
 
 func (r *Repository) MergeTag(ctx context.Context, sourceID, targetID string) error {
+	if sourceID == targetID {
+		return errors.New("cannot merge tag with itself")
+	}
 	tx, err := r.db.Begin(ctx)
 	if err != nil {
 		return err

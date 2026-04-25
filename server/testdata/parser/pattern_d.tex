@@ -1,0 +1,59 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{geometry}
+\usepackage{tcolorbox}
+\usepackage{tasks}
+
+\geometry{left=2cm, right=2cm, top=2.5cm, bottom=2.5cm}
+
+\newtcolorbox{mybox}[1]{
+    colback=white,
+    colframe=black,
+    coltitle=black,
+    fonttitle=\bfseries\Large\linespread{1.5}\selectfont,
+    sharp corners,
+    boxrule=0.8pt,
+    toptitle=3mm,
+    bottomtitle=3mm,
+    top=4mm,
+    bottom=4mm,
+    left=2mm,
+    right=2mm,
+    titlerule=0.5pt,
+    attach title to upper,
+    after title={\par\medskip\hrule\medskip},
+    title=#1
+}
+
+\settasks{
+    label=\Alph*.,
+    label-width=1.5em,
+    item-indent=2em,
+    column-sep=10pt
+}
+
+\begin{document}
+
+\begin{mybox}{单选题：集合的交集运算}
+
+已知集合 \( A = \{ x \mid 1 < x^2 < 9 \} \)，\( B = \{-2, -1, 0, 1, 2\} \)，则 \( A \cap B = ( ) \)
+
+\begin{tasks}(4)
+    \task \( \{-2, -1, 0\} \)
+    \task \( \{-2, 2\} \)
+    \task \( \{-1, 0, 1\} \)
+    \task \( \{0, 1, 2\} \)
+\end{tasks}
+
+\end{mybox}
+
+\vspace{2em}
+
+\begin{mybox}{填空题：函数定义域}
+
+函数 \( f(x) = \sqrt{4 - x^2} + \ln(x + 1) \) 的定义域为 \underline{\hspace{4cm}}.
+
+\end{mybox}
+
+\end{document}

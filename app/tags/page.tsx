@@ -4,8 +4,9 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Merge, Pencil, Plus, Search, Trash2 } from 'lucide-react';
+import { Merge, Pencil, Plus, Search, Trash2, FileText } from 'lucide-react';
 import { ConfirmActionButton } from '@/components/confirm-action-button';
+import { Empty, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
 import { PageHeader, PagePanel, PageShell } from '@/components/page-shell';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -139,11 +140,11 @@ export default function TagsPage() {
 
           <div className="grid min-h-[calc(100vh-16rem)] gap-4 xl:grid-cols-[320px_minmax(0,1fr)]">
         <PagePanel className="flex flex-col overflow-hidden">
-          <CardHeader className="shrink-0 space-y-3 pb-3">
+          <CardHeader className="shrink-0 space-y-4 pb-4 pt-6">
             <div className="flex items-center gap-2">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input placeholder="搜索标签..." value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} className="pl-9" />
+                <Input placeholder="搜索标签..." value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} aria-label="搜索标签" className="pl-9" />
               </div>
               <Button type="button" variant="outline" onClick={resetForm}>
                 <Plus className="mr-2 h-4 w-4" />
@@ -162,7 +163,7 @@ export default function TagsPage() {
           </CardHeader>
 
           <ScrollArea className="flex-1">
-            <div className="space-y-1 px-3 pb-3">
+            <div className="space-y-1 px-5 pb-3">
               {filteredTags.map((tag) => (
                 <button
                   key={tag.id}
@@ -188,7 +189,7 @@ export default function TagsPage() {
         </PagePanel>
 
         <PagePanel className="flex flex-col overflow-hidden">
-          <CardHeader className="shrink-0 border-b pb-4">
+          <CardHeader className="shrink-0 border-b pb-4 pt-6">
             <CardTitle className="flex items-center gap-2">
               {selectedTag ? <Pencil className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
               {selectedTag ? '编辑标签' : '新建标签'}
@@ -381,7 +382,14 @@ export default function TagsPage() {
                     </Link>
                   ))}
                   {selectedTag && (relatedProblemsQuery.data?.items?.length ?? 0) === 0 ? (
-                    <div className="rounded-2xl border border-dashed p-6 text-sm text-muted-foreground">当前标签下还没有题目。</div>
+                    <Empty>
+                      <EmptyMedia variant="icon">
+                        <FileText className="h-6 w-6" />
+                      </EmptyMedia>
+                      <EmptyHeader>
+                        <EmptyTitle>当前标签下还没有题目</EmptyTitle>
+                      </EmptyHeader>
+                    </Empty>
                   ) : null}
                 </div>
               </div>

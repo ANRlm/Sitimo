@@ -48,6 +48,8 @@ export type ImportPreviewResponse = {
   parsed: ParsedProblemDraft[];
   errors: Array<{ index: number; message: string }>;
   warnings: string[];
+  pairedAnswerFiles?: string[];
+  unpairedWarnings?: string[];
 };
 
 function normalizeProblem<T extends Problem>(problem: T): T {
@@ -124,15 +126,28 @@ export async function rollbackProblemVersion(id: string, version: number) {
 }
 
 export async function previewBatchImport(input: {
-  latex: string;
-  separatorStart: string;
-  separatorEnd: string;
+  latex?: string;
+  separatorStart?: string;
+  separatorEnd?: string;
   defaults: Record<string, unknown>;
 }) {
   return apiRequest<ImportPreviewResponse>('/problems/batch-import/preview', {
     method: 'POST',
     body: JSON.stringify(input),
   });
+}
+
+export async function previewBatchImportWithFiles(
+  formData: FormData
+): Promise<ImportPreviewResponse & { pairedAnswerFiles?: string[]; unpairedWarnings?: string[] }> {
+  const response = await fetch('/api/v1/problems/import/preview', {
+    method: 'POST',
+    body: formData,
+  });
+  if (!response.ok) {
+    throw new Error(`Import preview failed: ${response.statusText}`);
+  }
+  return response.json();
 }
 
 export async function commitBatchImport(drafts: ParsedProblemDraft[]) {

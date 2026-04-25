@@ -126,12 +126,12 @@ export function AppSidebar() {
           >
             <Avatar className="h-8 w-8">
               <AvatarFallback className="bg-primary text-primary-foreground text-sm">
-                管
+                教
               </AvatarFallback>
             </Avatar>
             {!isCollapsed && (
               <span className="text-sm font-medium text-sidebar-foreground">
-                管理员
+                教师
               </span>
             )}
           </div>

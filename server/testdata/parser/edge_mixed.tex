@@ -1,0 +1,34 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{tasks}
+
+\geometry{left=2cm, right=2cm, top=2.5cm, bottom=2.5cm}
+
+\settasks{
+    label=\Alph*.,
+    label-width=1.5em,
+    item-indent=2em,
+    column-sep=10pt
+}
+
+\begin{document}
+
+\begin{enumerate}[label=\textbf{题 \arabic*}]
+
+\item 已知函数 \( f(x) = \begin{cases} e^x, & x < 0 \\ x^2 + 1, & x \geq 0 \end{cases} \)，则下列说法正确的是 ( \quad )
+
+\begin{tasks}(4)
+    \task \( f(-1) = e \)
+    \task \( f(0) = 0 \)
+    \task \( f(1) = 1 \)
+    \task \( f(f(-1)) = e^2 + 1 \)
+\end{tasks}
+
+且函数 \( f(x) \) 的值域为 \underline{\hspace{2cm}}.
+
+\end{enumerate}
+
+\end{document}

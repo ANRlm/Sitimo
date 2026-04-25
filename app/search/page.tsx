@@ -158,9 +158,9 @@ export default function SearchPage() {
         <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_320px]">
           <div className="relative">
             <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-            <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="输入关键词、题号或题干片段..." className="h-12 pl-11 text-base" />
+            <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="输入关键词、题号或题干片段..." aria-label="搜索题目" className="h-12 pl-11 text-base" />
           </div>
-          <Input value={formula} onChange={(event) => setFormula(event.target.value)} placeholder="公式搜索，如：\\int_0^1 x^2 dx" className="h-12" />
+          <Input value={formula} onChange={(event) => setFormula(event.target.value)} placeholder="公式搜索，如：\\int_0^1 x^2 dx" aria-label="公式搜索" className="h-12" />
         </div>
       </PageHeader>
 
@@ -290,10 +290,10 @@ export default function SearchPage() {
               </Select>
 
               <ToggleGroup type="single" value={viewMode} onValueChange={(value) => value && setViewMode(value as 'grid' | 'list')}>
-                <ToggleGroupItem value="grid" size="sm">
+                <ToggleGroupItem value="grid" size="sm" aria-label="网格视图">
                   <LayoutGrid className="h-4 w-4" />
                 </ToggleGroupItem>
-                <ToggleGroupItem value="list" size="sm">
+                <ToggleGroupItem value="list" size="sm" aria-label="列表视图">
                   <List className="h-4 w-4" />
                 </ToggleGroupItem>
               </ToggleGroup>

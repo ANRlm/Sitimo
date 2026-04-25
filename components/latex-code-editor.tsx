@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils';
 const latexLanguage = StreamLanguage.define(stex);
 
 type LatexCodeEditorProps = {
-  value: string;
+  value: string | undefined;
   onChange?: (value: string) => void;
   placeholder?: string;
   readOnly?: boolean;

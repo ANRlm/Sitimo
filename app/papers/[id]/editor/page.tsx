@@ -1,6 +1,6 @@
 'use client';
 
-import { use, useEffect, useMemo, useState } from 'react';
+import React, { use, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm, useWatch } from 'react-hook-form';
@@ -20,7 +20,7 @@ import {
   useSortable,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { ArrowLeft, Download, GripVertical, Plus, Save, ShoppingBasket, Trash2 } from 'lucide-react';
+import { ArrowLeft, Download, FileText, GripVertical, Plus, Save, ShoppingBasket, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { MathText } from '@/components/math-text';
 import { PaperDocument } from '@/components/paper-document';
@@ -28,6 +28,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -135,7 +136,7 @@ function parseOptionalFloat(value: string | undefined) {
   return Number.isFinite(parsed) ? parsed : undefined;
 }
 
-function SortableItemCard({
+const SortableItemCard = React.memo(function SortableItemCard({
   item,
   index,
   onScoreChange,
@@ -210,7 +211,7 @@ function SortableItemCard({
       </div>
     </div>
   );
-}
+});
 
 export default function PaperEditorPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -476,7 +477,7 @@ export default function PaperEditorPage({ params }: { params: Promise<{ id: stri
   return (
     <Form {...form}>
       <div className="flex h-[calc(100vh-3.5rem)] flex-col">
-        <div className="border-b bg-background/95 px-4 py-5 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+        <div className="border-b border-border/70 bg-background/95 px-4 py-5 backdrop-blur supports-[backdrop-filter]:bg-background/80">
           <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_auto] xl:items-start">
             <div className="flex min-w-0 items-start gap-3">
               <Button
@@ -490,7 +491,7 @@ export default function PaperEditorPage({ params }: { params: Promise<{ id: stri
                   返回
                 </Link>
               </Button>
-              <div className="min-w-0 flex-1 rounded-3xl border border-border/60 bg-card/70 p-4 shadow-sm">
+              <div className="min-w-0 flex-1 rounded-3xl border border-border/70 bg-card/80 p-4 shadow-sm">
                 <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                   <span className="rounded-full border border-border/70 bg-background/80 px-2.5 py-1 font-medium text-foreground/80">
                     试卷编辑器
@@ -541,7 +542,7 @@ export default function PaperEditorPage({ params }: { params: Promise<{ id: stri
               </div>
             </div>
 
-            <div className="flex flex-col gap-3 rounded-3xl border border-border/60 bg-card/60 p-3 shadow-sm xl:min-w-[24rem]">
+            <div className="flex flex-col gap-3 rounded-3xl border border-border/70 bg-card/80 p-3 shadow-sm xl:min-w-[24rem]">
               <div className="flex flex-wrap items-center gap-2 xl:justify-end">
                 <Tabs value={mode} onValueChange={(value) => setMode(value as EditorMode)}>
                   <TabsList className="rounded-xl border border-border/60 bg-background/80 p-1">
@@ -584,7 +585,7 @@ export default function PaperEditorPage({ params }: { params: Promise<{ id: stri
             <PaperDocument paper={previewPaper} showAnswers={showAnswerVersion} />
           </div>
         ) : (
-          <div className="grid min-h-0 flex-1 gap-4 p-4 xl:grid-cols-[360px_1fr]">
+          <div className="grid min-h-0 flex-1 gap-4 p-6 xl:grid-cols-[360px_1fr]">
             <ScrollArea className="min-h-0">
               <div className="space-y-4 pr-4">
                 <Card>
@@ -858,9 +859,15 @@ export default function PaperEditorPage({ params }: { params: Promise<{ id: stri
               <ScrollArea className="min-h-0 flex-1">
                 <div className="space-y-4 p-5">
                   {items.length === 0 ? (
-                    <div className="rounded-2xl border border-dashed p-10 text-center text-sm text-muted-foreground">
-                      当前试卷还没有题目，可从题目篮子导入或搜索添加。
-                    </div>
+                    <Empty>
+                      <EmptyMedia variant="icon">
+                        <FileText className="h-6 w-6" />
+                      </EmptyMedia>
+                      <EmptyHeader>
+                        <EmptyTitle>还没有添加题目</EmptyTitle>
+                        <EmptyDescription>请点击上方按钮添加。</EmptyDescription>
+                      </EmptyHeader>
+                    </Empty>
                   ) : (
                     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                       <SortableContext items={items.map((item) => item.id)} strategy={verticalListSortingStrategy}>

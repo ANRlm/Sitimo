@@ -145,6 +145,7 @@ export default function ImagesPage() {
                   setPage(1);
                 }}
                 placeholder="搜图片名、描述..."
+                aria-label="搜索图片"
                 className="pl-9"
               />
             </div>
@@ -213,10 +214,10 @@ export default function ImagesPage() {
             ) : null}
 
             <ToggleGroup type="single" value={viewMode} onValueChange={(value) => value && setViewMode(value as typeof viewMode)}>
-              <ToggleGroupItem value="masonry">
+              <ToggleGroupItem value="masonry" aria-label="网格视图">
                 <Rows3 className="h-4 w-4" />
               </ToggleGroupItem>
-              <ToggleGroupItem value="grid">
+              <ToggleGroupItem value="grid" aria-label="列表视图">
                 <LayoutGrid className="h-4 w-4" />
               </ToggleGroupItem>
             </ToggleGroup>

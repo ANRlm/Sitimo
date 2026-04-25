@@ -176,7 +176,7 @@ export default function ProblemEditPage({ params }: { params: Promise<{ id: stri
                         </FormItem>
                       )}
                     />
-                    <div className="rounded-2xl border border-border/70 bg-muted/30 p-4">
+                    <div className="rounded-2xl border border-border/70 bg-muted/30 p-6">
                       <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground/80">实时预览</p>
                       <MathText latex={latex} className="leading-7" />
                     </div>
@@ -200,7 +200,7 @@ export default function ProblemEditPage({ params }: { params: Promise<{ id: stri
                         </FormItem>
                       )}
                     />
-                    <div className="rounded-2xl border border-border/70 bg-muted/30 p-4">
+                    <div className="rounded-2xl border border-border/70 bg-muted/30 p-6">
                       {answerLatex ? (
                         <MathText latex={answerLatex} />
                       ) : (
@@ -227,7 +227,7 @@ export default function ProblemEditPage({ params }: { params: Promise<{ id: stri
                         </FormItem>
                       )}
                     />
-                    <div className="rounded-2xl border border-border/70 bg-muted/30 p-4">
+                    <div className="rounded-2xl border border-border/70 bg-muted/30 p-6">
                       {solutionLatex ? (
                         <MathText latex={solutionLatex} />
                       ) : (

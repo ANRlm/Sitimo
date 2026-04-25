@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation';
 import { PageHeader, PagePanel, PageShell } from '@/components/page-shell';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useImage } from '@/lib/hooks/use-images';
 
 export default function ImageDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -20,7 +21,17 @@ export default function ImageDetailPage({ params }: { params: Promise<{ id: stri
   }
 
   if (!payload) {
-    return <div className="p-6 text-sm text-muted-foreground">正在加载图像...</div>;
+    return (
+      <div className="space-y-4">
+        <PagePanel>
+          <div className="space-y-4 p-6">
+            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="h-32 w-full" />
+          </div>
+        </PagePanel>
+      </div>
+    );
   }
 
   const { image, linkedProblems, tags } = payload;

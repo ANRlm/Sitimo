@@ -1,0 +1,26 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{geometry}
+\usepackage{enumitem}
+
+\geometry{left=2cm, right=2cm, top=2.5cm, bottom=2.5cm}
+
+\begin{document}
+
+\section*{嵌套枚举}
+
+\begin{enumerate}[label=\textbf{题 \arabic*}]
+
+\item 计算下列定积分：
+
+\begin{enumerate}[label=(\arabic*)]
+    \item \( \displaystyle\int_0^1 x^2 \,dx \)
+    \item \( \displaystyle\int_1^e \dfrac{1}{x} \,dx \)
+\end{enumerate}
+
+\item 已知 \( f(x) = x^3 + ax^2 + bx + c \) 在 \( x = 1 \) 处取得极值 \( -2 \)，且 \( f'(0) = 1 \)，求 \( a, b, c \) 的值。
+
+\end{enumerate}
+
+\end{document}

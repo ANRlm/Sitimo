@@ -25,6 +25,7 @@ type Server struct {
 }
 
 func New(cfg config.Config, svc *service.Service, logger zerolog.Logger) http.Handler {
+	SetLogger(logger)
 	server := &Server{cfg: cfg, svc: svc, logger: logger}
 
 	r := chi.NewRouter()
@@ -97,16 +98,42 @@ func New(cfg config.Config, svc *service.Service, logger zerolog.Logger) http.Ha
 
 		r.Get("/settings", server.handleGetSettings)
 		r.Put("/settings", server.handleUpdateSettings)
-		r.Post("/settings/demo-data", server.handleResetDemoData)
-		r.Post("/settings/demo-data/load", server.handleLoadDemoData)
-		r.Post("/settings/demo-data/clear", server.handleClearDemoData)
 		r.Get("/settings/demo-data/status", server.handleDemoDataStatus)
-		r.Post("/settings/export-all", server.handleExportAll)
-		r.Post("/settings/import-all", server.handleImportAll)
-		r.Post("/settings/sweep-orphans", server.handleSweepOrphans)
+
+		r.Route("/settings", func(r chi.Router) {
+			r.Group(func(r chi.Router) {
+				r.Use(server.adminAuth)
+				r.Post("/demo-data", server.handleResetDemoData)
+				r.Post("/demo-data/load", server.handleLoadDemoData)
+				r.Post("/demo-data/clear", server.handleClearDemoData)
+				r.Post("/export-all", server.handleExportAll)
+				r.Post("/import-all", server.handleImportAll)
+				r.Post("/sweep-orphans", server.handleSweepOrphans)
+			})
+		})
 	})
 
 	return r
+}
+
+func (s *Server) adminAuth(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		key := r.Header.Get("X-Admin-Key")
+		if key == "" || key != s.cfg.AdminAPIKey() {
+			respondError(w, http.StatusUnauthorized, "unauthorized", errors.New("admin key required"))
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
+func isAuthenticated(r *http.Request) bool {
+	cookie, err := r.Cookie("session")
+	if err == nil && cookie.Value != "" {
+		return true
+	}
+	auth := r.Header.Get("Authorization")
+	return auth != ""
 }
 
 func (s *Server) handleHealth(w http.ResponseWriter, r *http.Request) {

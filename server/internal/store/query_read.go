@@ -1017,12 +1017,18 @@ GROUP BY t.id, t.name, t.category, t.color, t.description, t.created_at, t.updat
 	return items, rows.Err()
 }
 
+var metadataColumns = map[string]string{
+	"subject": "subject",
+	"grade":   "grade",
+}
+
 func (r *Repository) listProblemMetadata(ctx context.Context, column string) ([]string, error) {
-	if column != "subject" && column != "grade" {
+	col, ok := metadataColumns[column]
+	if !ok {
 		return nil, fmt.Errorf("unsupported metadata column: %s", column)
 	}
 
-	rows, err := r.db.Query(ctx, `SELECT DISTINCT `+column+` FROM problems WHERE deleted_at IS NULL AND `+column+` IS NOT NULL AND `+column+` <> '' ORDER BY `+column+` ASC`)
+	rows, err := r.db.Query(ctx, `SELECT DISTINCT `+col+` FROM problems WHERE deleted_at IS NULL AND `+col+` IS NOT NULL AND `+col+` <> '' ORDER BY `+col+` ASC`)
 	if err != nil {
 		return nil, err
 	}
@@ -1281,7 +1287,21 @@ func buildProblemPredicates(opts problemPredicateOptions) problemPredicateState 
 	}
 	if keyword := strings.TrimSpace(opts.Keyword); keyword != "" {
 		state.keywordArg = args.Add(keyword)
-		conditions = append(conditions, "p.search_tsv @@ plainto_tsquery('simple', "+state.keywordArg+")")
+		// Use ILIKE for Chinese keywords (plainto_tsquery doesn't work well with Chinese)
+		// For keywords containing only ASCII letters/numbers, use plainto_tsquery
+		isAscii := func(s string) bool {
+			for _, c := range s {
+				if c >= 128 {
+					return false
+				}
+			}
+			return true
+		}
+		if isAscii(keyword) {
+			conditions = append(conditions, "p.search_tsv @@ plainto_tsquery('simple', "+state.keywordArg+")")
+		} else {
+			conditions = append(conditions, "p.search_tsv::text ILIKE '%' || "+state.keywordArg+" || '%'")
+		}
 	}
 	if formula := normalizeFormulaQuery(opts.Formula); formula != "" {
 		conditions = append(conditions, "p.formula_tsv @@ to_tsquery('simple', "+args.Add(formula)+")")

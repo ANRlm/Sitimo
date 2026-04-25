@@ -1,6 +1,7 @@
 package api
 
 import (
+	"errors"
 	"io"
 	"net/http"
 	"path/filepath"
@@ -153,6 +154,10 @@ func (s *Server) handleEditImage(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleImageFile(w http.ResponseWriter, r *http.Request) {
+	if !isAuthenticated(r) {
+		respondError(w, http.StatusForbidden, "forbidden", errors.New("authentication required"))
+		return
+	}
 	ctx, cancel := requestContext(r)
 	defer cancel()
 	info, err := s.svc.Repository().GetImageStorageInfo(ctx, chi.URLParam(r, "id"))
@@ -167,6 +172,10 @@ func (s *Server) handleImageFile(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleImageThumbnail(w http.ResponseWriter, r *http.Request) {
+	if !isAuthenticated(r) {
+		respondError(w, http.StatusForbidden, "forbidden", errors.New("authentication required"))
+		return
+	}
 	ctx, cancel := requestContext(r)
 	defer cancel()
 	info, err := s.svc.Repository().GetImageStorageInfo(ctx, chi.URLParam(r, "id"))

@@ -135,7 +135,7 @@ export default function TrashPage() {
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {imageItems.map((image) => (
                 <PagePanel key={image.id}>
-                  <div className="space-y-3 p-4">
+                  <div className="space-y-3 p-5">
                     <Link href={`/images/${image.id}`}>
                       <img src={image.thumbnailUrl} alt={image.filename} className="aspect-video w-full rounded-xl object-cover" />
                     </Link>

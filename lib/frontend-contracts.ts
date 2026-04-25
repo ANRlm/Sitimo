@@ -93,6 +93,11 @@ export type ParsedProblemDraft = {
   grade?: string;
   source?: string;
   tagNames: string[];
+  answerLatex?: string;
+  solutionLatex?: string;
+  inferredType?: string;
+  needsReview?: boolean;
+  sectionTags?: string[];
 };
 
 export type ImportBatchMetadata = {

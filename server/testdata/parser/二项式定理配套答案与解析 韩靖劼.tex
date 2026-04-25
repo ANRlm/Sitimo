@@ -1,0 +1,657 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{tcolorbox} % 用于美化重点框图
+\usepackage{tikz}
+\usepackage{pifont}
+\usepackage{fancybox}
+\usepackage{mdframed}
+\usepackage{tasks}
+\usepackage{array}
+\usepackage{cancel}
+\usepackage{pifont}
+\usepackage{xcolor}
+\usetikzlibrary{calc}
+
+\geometry{left=2cm, right=2cm, top=2.5cm, bottom=2.5cm}
+
+\newtcolorbox{mybox}[1]{
+    colback=white,           % 背景纯白
+    colframe=black,          % 边框纯黑
+    coltitle=black,          % 标题文字黑色
+    fonttitle=\bfseries\Large\linespread{1.5}\selectfont,
+    sharp corners,           % 直角风格更适合讲义排版
+    boxrule=0.8pt,           % 边框线条粗细
+    toptitle=3mm,            % 标题上方留空
+    bottomtitle=3mm,         % 标题下方留空
+    top=4mm,                 % 内容上方留空，防止和标题挤在一起
+    bottom=4mm,              % 内容下方留空
+    left=2mm,                % 内容左侧缩进
+    right=2mm,               % 内容右侧缩进
+    titlerule=0.5pt,         % 标题与内容之间的分隔线
+    attach title to upper,   % 标题直接置于上方（非色块模式）
+    after title={\par\medskip\hrule\medskip}, % 在标题后添加水平线并留空
+    title=#1
+}
+
+
+\setcounter{secnumdepth}{0} % 将编号深度设为 0，即不显示 section 的编号
+
+
+
+\usepackage{fancyhdr} % 引入页眉页脚宏包
+% 页面样式设置
+\pagestyle{fancy}
+\fancyhf{} % 清除所有默认的页眉页脚设置
+
+% 页眉设置
+\fancyhead[L]{韩靖劼 \, 制作} 
+\fancyhead[R]{专题：二项式定理} 
+\fancyhead[C]{例题解析} 
+
+% 页脚设置
+\fancyfoot[C]{\thepage} % 页脚中间显示页码
+\renewcommand{\headrulewidth}{0.4pt} % 页眉线的粗细，如果你页眉不想要线，可以改为 0pt
+\renewcommand{\footrulewidth}{0.4pt} % 页脚线的粗细（你要求的页脚那条线）
+
+
+
+\usepackage[firstpage=false]{draftwatermark} % 引入水印宏包，firstpage=false表示全页显示
+% 水印设置
+\SetWatermarkText{韩靖劼 \, 制作} % 这里留空，你可以在大括号内填入你想要的水印文字，例如 "练习题" 或 "模拟考试"
+\SetWatermarkLightness{0.97} % 设置颜色深浅，范围0-1，越接近1越淡。建议0.9-0.95之间，不影响学生做题
+\SetWatermarkScale{0.3}     % 设置缩放比例
+\SetWatermarkAngle{45}      % 设置旋转角度，通常为45度
+
+
+\newlength{\myspace}             % 定义一个名为 myitemspace 的长度变量
+\setlength{\myspace}{2em}        % 设置初始间距为 2em（约两个汉字宽）
+
+\usepackage{tasks}
+% 全局设置 tasks 的标签样式为 A. B. C. D.，并调整标签与内容的间距
+\settasks{
+    label=\Alph*.,
+    label-width=1.5em,   % 标签宽度
+    item-indent=2em,     % 整体缩进
+    column-sep=10pt      % 列间距
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+
+\section{二项式定理 \, 例题}
+
+
+
+\begin{mybox}{通项公式的应用}
+    在解决特定项系数问题时，核心工具是二项展开式的通项公式：
+    \[ T_{r+1} = C_n^r a^{n-r} b^r \]
+    \textbf{注意：} $r$ 从 $0$ 开始取值，第 $r+1$ 项对应 $b$ 的指数为 $r$。
+\end{mybox}
+
+\vspace{\myspace}
+
+\section{特定项系数问题}
+
+
+\begin{enumerate}[label=\arabic*., leftmargin=1.5em]
+
+    % --- 例题 1 ---
+    \item $(3-2x)^5$ 展开式中 $x^3$ 的系数是 \underline{\hspace{2cm}}. 
+   
+    
+    \begin{description}
+        \item[【分析】] 
+        首先写出通项公式：$T_{r+1} = C_5^r \cdot 3^{5-r} \cdot (-2x)^r = C_5^r \cdot 3^{5-r} \cdot (-2)^r \cdot x^r$。\\
+        令 $x$ 的指数 $r=3$，则该项系数为：
+        \[ C_5^3 \cdot 3^{5-3} \cdot (-2)^3 = 10 \cdot 3^2 \cdot (-8) = 10 \cdot 9 \cdot (-8) = -720 \]
+        \textbf{易错点：} 不要忽略 $(-2)$ 中的负号。
+    \end{description}
+
+    \vspace{\myspace}
+
+    % --- 例题 2 ---
+    \item 已知 $\left( x + \dfrac{a}{x} \right)^6$ 的展开式中常数项是 $20$，则 $a = $ \underline{\hspace{2cm}}.
+  
+    
+    \begin{description}
+        \item[【分析】] 
+        写出通项：$T_{r+1} = C_6^r \cdot x^{6-r} \cdot \left( \dfrac{a}{x} \right)^r = C_6^r \cdot a^r \cdot x^{6-2r}$。\\
+        常数项意味着 $x$ 的指数为 $0$，即 $6-2r = 0 \implies r=3$。\\
+        根据题意：$C_6^3 \cdot a^3 = 20$。\\
+        计算得：$20 \cdot a^3 = 20 \implies a^3 = 1 \implies a=1$。
+    \end{description}
+
+    \vspace{\myspace}
+
+    % --- 例题 3 ---
+    \item $\left( \dfrac{1}{x} + 3x^2 \right)^6$ 的二项展开式中，$\dfrac{1}{x^3}$ 的系数为 \underline{\hspace{2cm}}.
+    
+    \begin{description}
+        \item[【分析】] 
+        写出通项：$T_{r+1} = C_6^r \cdot (x^{-1})^{6-r} \cdot (3x^2)^r = C_6^r \cdot 3^r \cdot x^{-(6-r) + 2r} = C_6^r \cdot 3^r \cdot x^{3r-6}$。\\
+        要求 $\dfrac{1}{x^3}$ 即 $x^{-3}$ 的系数，令 $3r-6 = -3 \implies 3r = 3 \implies r=1$。\\
+        该项系数为：$C_6^1 \cdot 3^1 = 6 \cdot 3 = 18$。
+    \end{description}
+
+\end{enumerate}
+
+\newpage
+
+\begin{enumerate}[label=\arabic*., start=4, leftmargin=1.5em]
+
+    % --- 练习 4 ---
+    \item $\left( x^3 + \dfrac{1}{2\sqrt{x}} \right)^5$ 的展开式中 $x^8$ 的系数是 \underline{\hspace{2cm}}. 
+    
+    \begin{description}
+        \item[【分析】] 
+        首先将根式化为指数幂形式：$\left( x^3 + \dfrac{1}{2}x^{-\frac{1}{2}} \right)^5$。\\
+        写出通项公式：
+        \[ T_{r+1} = C_5^r \cdot (x^3)^{5-r} \cdot \left( \frac{1}{2}x^{-\frac{1}{2}} \right)^r = C_5^r \cdot \left( \frac{1}{2} \right)^r \cdot x^{15-3r} \cdot x^{-\frac{1}{2}r} = C_5^r \cdot \left( \frac{1}{2} \right)^r \cdot x^{15 - \frac{7}{2}r} \]
+        令 $x$ 的指数 $15 - \frac{7}{2}r = 8$，解得 $\frac{7}{2}r = 7 \implies r = 2$。\\
+        该项系数为：$C_5^2 \cdot \left( \dfrac{1}{2} \right)^2 = 10 \cdot \dfrac{1}{4} = \dfrac{5}{2}$。
+    \end{description}
+
+    \vspace{\myspace}
+
+    % --- 练习 5 ---
+    \item 在 $\left( 2x^3 - \dfrac{1}{x} \right)^6$ 的展开式中，$x^2$ 的系数为 \underline{\hspace{2cm}}.
+    
+    \begin{description}
+        \item[【分析】] 
+        写出通项：$T_{r+1} = C_6^r \cdot (2x^3)^{6-r} \cdot \left( -x^{-1} \right)^r = C_6^r \cdot 2^{6-r} \cdot (-1)^r \cdot x^{18-3r} \cdot x^{-r}$。\\
+        整理得：$T_{r+1} = C_6^r \cdot 2^{6-r} \cdot (-1)^r \cdot x^{18-4r}$。\\
+        要求 $x^2$ 的系数，令 $18-4r = 2 \implies 4r = 16 \implies r = 4$。\\
+        该项系数为：$C_6^4 \cdot 2^{6-4} \cdot (-1)^4 = 15 \cdot 2^2 \cdot 1 = 60$。
+    \end{description}
+
+\end{enumerate}
+
+\vspace{\myspace}
+
+
+
+\section{多因式相乘与多项式展开}
+
+\begin{enumerate}[label=\arabic*., start=6, leftmargin=1.5em]
+
+    % --- 例题 6 (多因式相乘) ---
+    \item $\left( 1 - \dfrac{y}{x} \right)(x+y)^8$ 的展开式中 $x^2y^6$ 的系数为 \underline{\hspace{2cm}}.     
+    \begin{description}
+        \item[【分析】] 
+        利用乘法分配律，将原式展开为两部分讨论：
+        \[ \text{原式} = \underbrace{1 \cdot (x+y)^8}_{\text{第一部分}} - \underbrace{\frac{y}{x} \cdot (x+y)^8}_{\text{第二部分}} \]
+        设 $(x+y)^8$ 的通项为 $T_{r+1} = C_8^r x^{8-r} y^r$。
+        \begin{enumerate}[label=\textcircled{\small\arabic*}]
+            \item \textbf{第一部分}中出现 $x^2y^6$：直接令 $r=6$，该项为 $1 \cdot C_8^6 x^2 y^6$。\\
+            系数为 $C_8^6 = C_8^2 = \dfrac{8 \times 7}{2 \times 1} = 28$。
+            \item \textbf{第二部分}中出现 $x^2y^6$：即 $\dfrac{y}{x} \cdot (C_8^r x^{8-r} y^r) = C_8^r x^{7-r} y^{r+1} = x^2y^6$。\\
+            由指数对应得：$7-r=2$ 且 $r+1=6$，解得 $r=5$。\\
+            该项系数为 $-C_8^5 = -C_8^3 = -\dfrac{8 \times 7 \times 6}{3 \times 2 \times 1} = -56$。
+        \end{enumerate}
+        \textbf{计算结果：} $28 + (-56) = -28$。
+    \end{description}
+
+    \vspace{\myspace}
+
+    % --- 例题 7 ---
+    \item $\left( x + \dfrac{y^2}{x} \right)(x+y)^5$ 的展开式中 $x^3y^3$ 的系数为（\quad）
+    \begin{tasks}(4)
+        \item 5 \item 10 \item 15 \item 20
+    \end{tasks}
+    
+    \begin{description}
+        \item[【分析】] 
+        分步讨论 $(x+y)^5$ 中哪些项与前括号相乘能产生 $x^3y^3$：
+        \begin{enumerate}[label=\textcircled{\small\arabic*}]
+            \item \textbf{前项 $x$：} 需乘以后项展开式中的 $x^2y^3$。\\
+            由通项 $C_5^r x^{5-r} y^r$ 知，令 $r=3$，对应项为 $C_5^3 x^2 y^3$。\\
+            此部分贡献系数：$1 \cdot C_5^3 = C_5^2 = \dfrac{5 \times 4}{2 \times 1} = 10$。
+            \item \textbf{后项 $\dfrac{y^2}{x}$：} 需乘以后项展开式中的 $x^4y^1$。\\
+            由通项公式知，令 $r=1$，对应项为 $C_5^1 x^4 y^1$。\\
+            计算过程：$\dfrac{y^2}{x} \cdot (C_5^1 x^4 y^1) = 5 \cdot x^3 y^3$。\\
+            此部分贡献系数：$C_5^1 = 5$。
+        \end{enumerate}
+        \textbf{计算结果：} $10 + 5 = 15$。
+    \end{description}
+
+    \vspace{\myspace}
+
+    % --- 例题 8 ---
+    \item $(x^2 + x + y)^5$ 的展开式中，$x^5y^2$ 的系数为（\quad）
+    \begin{tasks}(4)
+        \item 10 \item 20 \item 30 \item 60
+    \end{tasks}
+    
+    \begin{description}
+        \item[【分析】] 
+        \textbf{方法（多项式定理分步计数）：} 
+        设展开式的项为 $\dfrac{5!}{n_1! n_2! n_3!} (x^2)^{n_1} (x)^{n_2} (y)^{n_3}$，其中 $n_1, n_2, n_3$ 分别为选到各因式的次数，且 $n_1+n_2+n_3=5$。
+        \begin{enumerate}[label=\textcircled{\small\arabic*}]
+            \item \textbf{锁定 $y$：} 目标项为 $x^5y^2$，故 $n_3=2$。
+            \item \textbf{确定 $x$ 指数：} 剩余次数 $n_1+n_2 = 5 - 2 = 3$。\\
+            $x$ 的总指数为 $2n_1 + 1n_2 = 5$。
+            \item \textbf{列方程组：} 
+            $\begin{cases} n_1 + n_2 = 3 \\ 2n_1 + n_2 = 5 \end{cases} \xrightarrow{\text{\ding{173}-\ding{172}}} n_1 = 2$，代入得 $n_2 = 1$。
+        \end{enumerate}
+        \textbf{最后计算：} 系数为 $\dfrac{5!}{2! 1! 2!} = \dfrac{120}{2 \times 1 \times 2} = \dfrac{120}{4} = 30$。。
+    \end{description}
+
+    \vspace{\myspace}
+
+    % --- 例题 9 ---
+    \item 在 $\left( 1 + x + \dfrac{1}{x^{2015}} \right)^{10}$ 的展开式中，$x^2$ 项的系数为 \underline{\hspace{2cm}}. 
+    
+    \begin{description}
+        \item[【分析】] 
+        设展开式通项为 $A = \dfrac{10!}{n_1! n_2! n_3!} (1)^{n_1} (x)^{n_2} (x^{-2015})^{n_3}$，满足 $n_1+n_2+n_3=10$。\\
+        合并 $x$ 的指数得：$x^{n_2 - 2015n_3} = x^2$。
+        \begin{enumerate}[label=\textcircled{\small\arabic*}]
+            \item \textbf{讨论 $n_3$ 的取值：} \\
+            若 $n_3 \geq 1$，则 $n_2 = 2 + 2015n_3 \geq 2017$。\\
+            由于 $n_1+n_2+n_3=10$ 且 $n_i \geq 0$，显然 $n_2$ 不可能大于 $10$。\\
+            因此必有 $n_3 = 0$。
+            \item \textbf{确定 $n_1, n_2$：} \\
+            当 $n_3=0$ 时，$n_2 = 2$。\\
+            代入总次数方程：$n_1 + 2 + 0 = 10 \implies n_1 = 8$。
+        \end{enumerate}
+        \textbf{最后计算：} 系数为 $\dfrac{10!}{8! 2! 0!} = \dfrac{10 \times 9}{2 \times 1} = 45$。
+    \end{description}
+
+\end{enumerate}
+
+
+
+\section{多项式展开的计数原理}
+
+对于 $(a + b + c)^n$ 的展开，每一项的构成可以理解为：从 $n$ 个括号中分别选出 $n_1$ 个 $a$，$n_2$ 个 $b$，$n_3$ 个 $c$ 相乘。其通项公式为：
+\[ \frac{n!}{n_1! n_2! n_3!} a^{n_1} b^{n_2} c^{n_3} \quad (\text{其中 } n_1 + n_2 + n_3 = n) \]
+
+\medskip
+\hrule
+\medskip
+\vspace{\myspace}
+
+% --- 视角一：排列消重法 ---
+\noindent \textbf{【视角一】排列消重法：先假装不同，再消除重复}
+\begin{itemize}
+    \item \textbf{设定：} 以 5 个位置放 $n_1=2$ 个 A，$n_2=2$ 个 B，$n_3=1$ 个 C 为例。
+    \item \textbf{第一步：全排列} \\
+    假装字母都不同（标记为 $A_1, A_2, B_1, B_2, C_1$），总排法为 $5!$ 种。
+    \item \textbf{第二步：除以内部排列数} \\
+    擦掉编号后，原本 $n_1$ 个 A 内部的 $n_1!$ 种排法变得不可区分；同理 B 有 $n_2!$ 种，C 有 $n_3!$ 种。
+    \item \textbf{总结：}
+    \[ \text{总方法数} = \frac{\text{全排列总数}}{\text{A的重复度} \times \text{B的重复度} \times \text{C的重复度}} = \frac{5!}{n_1! \cdot n_2! \cdot n_3!} \]
+\end{itemize}
+
+\vspace{\myspace}
+
+% --- 视角二：组合选位法 ---
+\noindent \textbf{【视角二】组合选位法：依次选位，分步计数}
+\begin{itemize}
+    \item \textbf{设定：} 想象 5 个空位，手持字母依次放入。
+    \item \textbf{分步操作：}
+    \begin{enumerate}[label=\small\arabic*)]
+        \item \textbf{放 A：} 从 5 个空位选 $n_1$ 个，方法有 $C_5^{n_1}$ 种；
+        \item \textbf{放 B：} 从剩余 $(5-n_1)$ 个位选 $n_2$ 个，方法有 $C_{5-n_1}^{n_2}$ 种；
+        \item \textbf{放 C：} 剩下最后位子放 C，方法有 $C_{5-n_1-n_2}^{n_3}$ 种。
+    \end{enumerate}
+    \item \textbf{公式推导：}
+    \[ C_5^{n_1} \cdot C_{5-n_1}^{n_2} \cdot C_{5-n_1-n_2}^{n_3} = \frac{5!}{n_1!\cancel{(5-n_1)!}} \cdot \frac{\cancel{(5-n_1)!}}{n_2!\cancel{(5-n_1-n_2)!}}= \frac{5!}{n_1! n_2! n_3!} \]
+\end{itemize}
+
+
+\begin{mybox}{\textbf{结论：}}
+ 两种视角殊途同归。在处理多项式展开时，直接通过“总数的阶乘除以各分项数量的阶乘”即可快速得到项的系数。
+\end{mybox}
+
+
+\subsection{多项式展开例题深度解析：双重验证}
+
+\begin{enumerate}[label=\arabic*., start=8, leftmargin=1.5em]
+
+    % --- 例题 8 ---
+    \item $(x^2 + x + y)^5$ 展开式中 $x^5y^2$ 的系数。
+    \begin{description}
+        \item[【前置分析：确定分配方案】] 
+        设展开式的通用项为 $\frac{n!}{n_1! n_2! n_3!} (x^2)^{n_1} (x)^{n_2} (y)^{n_3}$。\\
+        1. 观察 $y^2$：由于原式中只有 $y^1$，故必须选 $2$ 次，即 $n_3 = 2$。\\
+        2. 锁定 $x$ 指数：剩余 $5-2=3$ 个位置分配给 $x^2$ 和 $x$。\\
+        列方程组：$\begin{cases} n_1 + n_2 = 3 \\ 2n_1 + n_2 = 5 \end{cases} \implies \begin{cases} n_1 = 2 \quad (\text{选 } x^2 \text{ 的次数}) \\ n_2 = 1 \quad (\text{选 } x \text{ 的次数}) \end{cases}$
+
+        \item[【方法一：排列消重法】] 
+        从 5 个括号中取出 2 个 $x^2$、1 个 $x$、2 个 $y$ 进行排列。\\
+        \[ \text{系数} = \frac{\text{总排列数}}{\text{重复度}} = \frac{5!}{2! \cdot 1! \cdot 2!} = \frac{120}{2 \times 1 \times 2} = \mathbf{30} \]
+
+        \item[【方法二：组合选位法】] 
+        依次为不同的元素寻找放置的“坑位”：\\
+        1. 先从 5 个位选 2 个放 $y$：$C_5^2 = 10$ 种；\\
+        2. 再从剩 3 个位选 2 个放 $x^2$：$C_3^2 = 3$ 种；\\
+        3. 最后剩 1 个位放 $x$：$C_1^1 = 1$ 种。\\
+        \[ \text{系数} = C_5^2 \cdot C_3^2 \cdot C_1^1 = 10 \times 3 \times 1 = \mathbf{30} \]
+    \end{description}
+
+    \vspace{\myspace}
+
+    % --- 例题 9 ---
+    \item $(1 + x + x^{-2015})^{10}$ 展开式中 $x^2$ 的系数。
+    \begin{description}
+        \item[【前置分析：确定分配方案】] 
+        设选出 $1$ 为 $n_1$ 次，$x$ 为 $n_2$ 次，$x^{-2015}$ 为 $n_3$ 次。\\
+        \textbf{关键突破口：} 若 $n_3 \geq 1$，由于总次数只有 10，即便剩下 9 个全选 $x$，总指数 $9 - 2015$ 仍远小于目标指数 2。\\
+        因此，必须令 $n_3 = 0$。\\
+        此时问题简化为：$n_1 + n_2 = 10$ 且 $x^{n_2} = x^2 \implies n_2 = 2, n_1 = 8$。
+
+        \item[【方法一：排列消重法】] 
+        此时相当于对 8 个“1”和 2 个“$x$”进行全排列：\\
+        \[ \text{系数} = \frac{10!}{8! \cdot 2! \cdot 0!} = \frac{10 \times 9}{2 \times 1} = \mathbf{45} \]
+
+        \item[【方法二：组合选位法】] 
+        从 10 个括号位置中，任选 2 个位置让它贡献 $x$，其余位置自动贡献 $1$：\\
+        \[ \text{系数} = C_{10}^2 = \frac{10 \times 9}{2 \times 1} = \mathbf{45} \]
+    \end{description}
+
+\end{enumerate}
+
+
+\newpage
+
+\section{二项式系数的最大项}
+
+\begin{enumerate}[label=\arabic*., start=10, leftmargin=1.5em]
+
+    % --- 例题 10 ---
+    \item $\left( \sqrt{x} - \dfrac{1}{2}x \right)^n$ 的展开式中，只有第六项的二项式系数最大，则展开式中 $x^6$ 的系数是 \underline{\hspace{2cm}}. 
+\vspace{1em}
+    \begin{description}
+        \item[【分析】] 
+        \textbf{第一步：确定 $n$ 的值。} \\
+        根据二项式系数的对称性与中间项最大原理：
+        \begin{itemize}
+            \item 若只有第 6 项（即 $C_n^5$）最大，说明第 6 项是唯一的中间项。
+            \item 唯一中间项出现时，$n$ 必为偶数，且该项为 $C_n^{\frac{n}{2}}$。
+            \item 令 $\frac{n}{2} = 5 \implies n = 10$。
+        \end{itemize}
+        
+        \textbf{第二步：写出通项公式并求 $r$。} \\
+        $n=10$ 时，通项 $T_{r+1} = C_{10}^r \cdot (\sqrt{x})^{10-r} \cdot \left( -\dfrac{1}{2}x \right)^r = C_{10}^r \cdot \left( -\dfrac{1}{2} \right)^r \cdot x^{\frac{10-r}{2} + r} = C_{10}^r \cdot \left( -\dfrac{1}{2} \right)^r \cdot x^{5 + \frac{r}{2}}$。\\
+        令 $x$ 的指数 $5 + \frac{r}{2} = 6 \implies \frac{r}{2} = 1 \implies r = 2$。
+        
+        \textbf{第三步：计算系数。} \\
+        将 $r=2$ 代入系数部分：
+        \[ C_{10}^2 \cdot \left( -\frac{1}{2} \right)^2 = 45 \cdot \frac{1}{4} = \mathbf{\frac{45}{4}} \]
+    \end{description}
+
+    \vspace{1cm}
+
+    % --- 例题 11 ---
+    \item 设 $m$ 为正整数，$(x+y)^{2m}$ 展开式的二项式系数最大值为 $a$，$(x+y)^{2m+1}$ 展开式的二项式系数最大值为 $b$，若 $13a = 7b$，则 $m = $（\quad）
+    
+
+    \begin{description}
+        \item[【分析】] 
+        \textbf{第一步：根据结论表示 $a, b$} \\
+        1. 对于 $(x+y)^{2m}$，$2m$ 为偶数，最大二项式系数为中间项 $a = C_{2m}^m$。\\
+        2. 对于 $(x+y)^{2m+1}$，$2m+1$ 为奇数，最大二项式系数有两项且相等：$b = C_{2m+1}^m = C_{2m+1}^{m+1}$。
+        
+        \textbf{第二步：利用已知条件列方程} \\
+        已知 $13 \cdot C_{2m}^m = 7 \cdot C_{2m+1}^m$。\\
+        利用组合数展开公式：$13 \cdot \dfrac{(2m)!}{m!m!} = 7 \cdot \dfrac{(2m+1)!}{m!(m+1)!}$。
+        
+        \textbf{第三步：化简} \\
+        两边同时约去 $\dfrac{(2m)!}{m!}$，得：$\dfrac{13}{m!} = \dfrac{7(2m+1)}{(m+1)!}$。\\
+        进一步约去 $\dfrac{1}{m!}$，得：$13 = \dfrac{7(2m+1)}{m+1}$。\\
+        解方程：$13(m+1) = 7(2m+1) \implies 13m + 13 = 14m + 7 \implies m = 6$。\\
+    \end{description}
+
+
+    \begin{description}
+
+
+\begin{mybox}{【重要提示】化简此类阶乘分式应该注意以下基础结论：}
+    \begin{itemize}[label=\ding{46}]
+        \item $(n+1)! \to (n+1) \cdot n!$
+        \item $(2m+1)! \to (2m+1) \cdot (2m)!$
+    \end{itemize}
+\end{mybox}
+
+\newpage
+
+    \item[【化简详解】] 
+    针对方程 $13 \cdot \dfrac{(2m)!}{m!m!} = 7 \cdot \dfrac{(2m+1)!}{m!(m+1)!}$，采用“大拆小”原则分步处理：
+    
+    \begin{enumerate}[label=\textcircled{\small\arabic*}]
+        \item \textbf{分子约分：} 利用 $(2m+1)! = (2m+1) \cdot (2m)!$
+        \[ 13 \cdot \frac{\color{red}{(2m)!}}{m!m!} = 7 \cdot \frac{(2m+1) \cdot \color{red}{(2m)!}}{m!(m+1)!} \]
+        两边同时约去 $\color{red}{(2m)!}$，得：$13 \cdot \dfrac{1}{m!m!} = 7 \cdot \dfrac{2m+1}{m!(m+1)!}$ \quad
+        
+        \item \textbf{对消 $m!$：} 两边分母均有 $m!$，直接约去
+        \[ \frac{13}{m!} = \frac{7(2m+1)}{(m+1)!} \] \quad
+        
+        \item \textbf{分母约分：} 利用 $(m+1)! = (m+1) \cdot m!$
+        \[ \frac{13}{\color{blue}{m!}} = \frac{7(2m+1)}{(m+1) \cdot \color{blue}{m!}} \]
+        两边同时约去 $\color{blue}{m!}$，得：$13 = \dfrac{7(2m+1)}{m+1}$ \quad
+        
+        \item \textbf{整式化：} 去分母得 $13(m+1) = 7(2m+1)$
+        \[ 13m + 13 = 14m + 7 \implies \mathbf{m = 6} \] \quad
+    \end{enumerate}
+    
+
+\end{description}
+
+\end{enumerate}
+
+\vspace{2em}
+
+\section{项的系数的最值问题}
+
+\begin{enumerate}[label=\arabic*., start=12, leftmargin=1.5em]
+
+    % --- 例题 12 ---
+    \item 在 $(1+2x)^7$ 的二项展开式中，系数最大的项是 \underline{\hspace{2cm}}.
+    
+    \begin{description}
+        \item[【分析】] 
+        \textbf{注意：} 二项式系数最大项与“项的系数”最大项不同。后者需考虑 $b=2x$ 中数字 2 的影响。\\
+        设第 $r+1$ 项系数最大，其系数为 $A_{r+1} = C_7^r \cdot 2^r$。需满足：
+        \[ \begin{cases} A_{r+1} \geq A_r \\ A_{r+1} \geq A_{r+2} \end{cases} \implies \begin{cases} C_7^r 2^r \geq C_7^{r-1} 2^{r-1} \\ C_7^r 2^r \geq C_7^{r+1} 2^{r+1} \end{cases} \]
+        
+        \textbf{解不等式 \textcircled{1}：} $\dfrac{7!}{r!(7-r)!} \cdot 2 \geq \dfrac{7!}{(r-1)!(8-r)!} \implies \dfrac{2}{r} \geq \dfrac{1}{8-r} \implies 16-2r \geq r \implies r \leq \dfrac{16}{3} = 5.33$。\\
+        \textbf{解不等式 \textcircled{2}：} $\dfrac{7!}{r!(7-r)!} \geq \dfrac{7!}{(r+1)!(6-r)!} \cdot 2 \implies \dfrac{1}{7-r} \geq \dfrac{2}{r+1} \implies r+1 \geq 14-2r \implies r \geq \dfrac{13}{3} = 4.33$。\\
+        取整得 $r=5$。
+        
+        \textbf{结论：} 最大项为第 $r+1=6$ 项，$T_6 = C_7^5 (2x)^5 = 21 \cdot 32x^5 = \mathbf{672x^5}$。
+    \end{description}
+
+\end{enumerate}
+
+\newpage
+
+\begin{mybox}{组合数与排列数阶乘的转化}
+在处理复杂的系数比较或最值问题时，将组合数还原为阶乘形式是约分的基础。
+
+\begin{itemize}
+    \item \textbf{排列数公式：} $A_n^r = \dfrac{n!}{(n-r)!}$
+    \item \textbf{组合数公式：} $C_n^r = \dfrac{n!}{r!(n-r)!}$
+    \item \textbf{阶乘的约分核心：} 
+    \begin{itemize}[label=\ding{46}]
+        \item $n! = n \cdot (n-1)!$
+        \item $(n+1)! = (n+1) \cdot n!$
+        \item $(n+1)! = (n+1) \cdot n \cdot (n-1)!$
+    \end{itemize}
+\end{itemize}
+
+\end{mybox}
+
+\vspace{\myspace}
+
+\subsection{系数最值不等式的化简详解}
+
+以例 12 中解不等式 \textcircled{1}：$C_7^r 2^r \geq C_7^{r-1} 2^{r-1}$ 为例：
+
+\begin{description}
+    \item[第一步：展开为阶乘并消去幂项]
+    利用 $C_n^r$ 公式展开，并两边同时除以 $2^{r-1}$（左边余 $2$）：
+    \[ \frac{7!}{r!(7-r)!} \cdot 2 \geq \frac{7!}{(r-1)!(8-r)!} \]
+    两边同时约去 $7!$，得到：
+    \[ \frac{2}{r!(7-r)!} \geq \frac{1}{(r-1)!(8-r)!} \]
+
+    \item[第二步：阶乘“大拆小”进行约分]
+    观察分母中相邻的阶乘项，拆开较大的那一项：
+    \begin{itemize}
+        \item 对于 $r!$ 与 $(r-1)!$：拆 $r! = r \cdot (r-1)!$
+        \item 对于 $(8-r)!$ 与 $(7-r)!$：拆 $(8-r)! = (8-r) \cdot (7-r)!$
+    \end{itemize}
+    代回原式：
+    \[ \frac{2}{r \cdot \color{red}{(r-1)!} \cdot \color{blue}{(7-r)!}} \geq \frac{1}{\color{red}{(r-1)!} \cdot (8-r) \cdot \color{blue}{(7-r)!}} \]
+
+    \item[第三步：约分]
+    约去红色与蓝色的相同项，得：
+    \[ \frac{2}{r} \geq \frac{1}{8-r} \]
+    因为 $r > 0$ 且 $8-r > 0$，直接交叉相乘：
+    \[ 2(8-r) \geq r \implies 16-2r \geq r \implies 3r \leq 16 \implies r \leq 5.33 \]
+\end{description}
+
+\newpage
+
+\begin{enumerate}[label=\arabic*., start=13, leftmargin=1.5em]
+
+    % --- 变式例题 ---
+    \item 写出 $\left( \sqrt{x} - \dfrac{2}{x^2} \right)^8$ 的展开式中系数最大的项 \underline{\hspace{2cm}}. 
+    
+    \begin{description}
+        \item[【分析】] 
+        设通项为 $T_{r+1} = C_8^r (\sqrt{x})^{8-r} \left( -2x^{-2} \right)^r = C_8^r (-2)^r x^{\frac{8-r}{2} - 2r} = C_8^r (-2)^r x^{4 - \frac{5}{2}r}$。\\
+        令第 $r+1$ 项的系数为 $a_r = C_8^r (-2)^r$。由于 $(-2)^r$ 正负交替，我们先求 $|a_r| = C_8^r 2^r$ 的最大值。
+        
+        \item[第一步：利用比值法求绝对值最大项]
+        设 $|a_{r+1}| \geq |a_r|$ 且 $|a_{r+1}| \geq |a_{r+2}|$：
+        \[ \begin{cases} C_8^r 2^r \geq C_8^{r-1} 2^{r-1} & \text{\textcircled{1}} \\ C_8^r 2^r \geq C_8^{r+1} 2^{r+1} & \text{\textcircled{2}} \end{cases} \]
+        
+        解不等式 \textcircled{1}：
+        \[ \frac{8!}{r!(8-r)!} \cdot 2 \geq \frac{8!}{(r-1)!(9-r)!} \implies \frac{2}{r} \geq \frac{1}{9-r} \implies 18-2r \geq r \implies r \leq 6 \]
+        
+        解不等式 \textcircled{2}：
+        \[ \frac{8!}{r!(8-r)!} \geq \frac{8!}{(r+1)!(7-r)!} \cdot 2 \implies \frac{1}{8-r} \geq \frac{2}{r+1} \implies r+1 \geq 16-2r \implies r \geq 5 \]
+        
+        由此可知，当 $r=5$ 或 $r=6$ 时，系数的\textbf{绝对值}最大。
+        
+        \item[第二步：讨论正负号锁定“系数最大”]
+        计算这两项的具体系数：
+        \begin{itemize}
+            \item 当 $r=5$ 时：$a_5 = C_8^5 \cdot (-2)^5 = 56 \cdot (-32) = -1792$
+            \item 当 $r=6$ 时：$a_6 = C_8^6 \cdot (-2)^6 = 28 \cdot 64 = 1792$
+        \end{itemize}
+        
+        由于题目要求的是“系数最大”（而非绝对值最大），负数显然不符合要求，故只有 $a_6$ 符合。
+        
+        \item[第三步：写出完整项]
+        将 $r=6$ 代入通项中的 $x$ 指数部分：$4 - \frac{5}{2}(6) = 4 - 15 = -11$。\\
+        \textbf{结论：} 该项为 $T_7 = \mathbf{1792x^{-11}}$。
+    \end{description}
+\end{enumerate}
+
+\medskip
+\hrule
+\medskip
+
+\begin{mybox}{避坑指南}
+    \begin{enumerate}[label=\small\alph*.]
+        \item \textbf{概念区分}：二项式系数最大（看 $C_n^r$）、系数绝对值最大、系数最大（考虑正负）是三个不同的考点。
+        \item \textbf{处理策略}：遇到系数带负号时，可以先用公式解出绝对值最值的 $r$ 范围，再带回原系数对比正负。
+        \item \textbf{整数判断}：若解出 $r \leq 6$（带等号），说明 $r=5$ 和 $r=6$ 的绝对值相等，此时需根据奇偶次方来取正值。
+    \end{enumerate}
+\end{mybox}
+
+
+\newpage
+
+
+
+\section{赋值法}
+
+
+对于恒等式 $(ax+b)^n = a_0 + a_1x + a_2x^2 + \dots + a_nx^n$，赋值法利用了展开式对任意 $x$ 均成立的特性：
+\begin{itemize}
+    \item \textbf{常数项 $a_0$：} 令 $x = 0$。
+    \item \textbf{系数全和：} 令 $x = 1$，得到 $a_0 + a_1 + a_2 + \dots + a_n = (a+b)^n$。
+    \item \textbf{奇偶位系数和：} 通过联立 $x=1$ 与 $x=-1$ 的结果进行加减消元。
+\end{itemize}
+
+\medskip
+\hrule
+\medskip
+
+\subsection{赋值法七问}
+
+\begin{enumerate}[label=\arabic*., start=14, leftmargin=1.5em]
+
+    \item 若 $(3x-2)^{2025} = a_0 + a_1x + a_2x^2 + \dots + a_{2025}x^{2025}$，求：
+    
+    \begin{description}[style=nextline, leftmargin=1em, font=\bfseries]
+        
+        \item[\textbf{A. 常数项 $a_0$}] 
+        令 $x=0$，则 $a_0 = (3 \cdot 0 - 2)^{2025} = -2^{2025}$。
+
+        \item[\textbf{B. 非零次项系数和 $a_1 + a_2 + \dots + a_{2025}$}] 
+        令 $x=1$，得总和 $S = (3-2)^{2025} = 1$。\\
+        则结果为 $S - a_0 = 1 - (-2^{2025}) = 1 + 2^{2025}$。
+
+        \item[\textbf{C. 分母加权和 $\frac{a_1}{3} + \frac{a_2}{3^2} + \dots + \frac{a_{2025}}{3^{2025}}$}] 
+        观察形式，需令 $x = \frac{1}{3}$：\\
+        左边 $= (3 \cdot \frac{1}{3} - 2)^{2025} = (-1)^{2025} = -1$。\\
+        结果 $= -1 - a_0 = -1 - (-2^{2025}) = 2^{2025} - 1$。
+
+        \item[\textbf{D. 奇数项之和 $a_1 + a_3 + \dots + a_{2025}$}] 
+        令 $x=1$ 得 $a_0 + a_1 + a_2 + \dots = 1$ \textcircled{1}\\
+        令 $x=-1$ 得 $a_0 - a_1 + a_2 - \dots = (3(-1)-2)^{2025} = -5^{2025}$ \textcircled{2}\\
+        由 $\frac{\textcircled{1}-\textcircled{2}}{2}$ 得：$\frac{1 - (-5^{2025})}{2} = \frac{1 + 5^{2025}}{2}$。
+
+        \item[E. 偶数项之和（不含 $a_0$）$a_2 + a_4 + \dots + a_{2024}$] 
+        令 $x=1$ 得：$a_0 + a_1 + a_2 + \dots + a_{2025} = 1$ \textcircled{1} \\
+        令 $x=-1$ 得：$a_0 - a_1 + a_2 - \dots - a_{2025} = -5^{2025}$ \textcircled{2} \\
+        由 $\frac{\textcircled{1} + \textcircled{2}}{2}$ 得：$a_0 + a_2 + \dots + a_{2024} = \frac{1 - 5^{2025}}{2}$。 \\
+        已知 $a_0 = -2^{2025}$，则： \\
+        $a_2 + a_4 + \dots + a_{2024} = \frac{1 - 5^{2025}}{2} - a_0 = \mathbf{\frac{1 - 5^{2025}}{2} + 2^{2025}}$。
+
+        \item[\textbf{F. 导数加权和 $a_1 + 2a_2 + 3a_3 + \dots + 2025a_{2025}$}] 
+        对原式两边关于 $x$ 求导：\\
+        $2025(3x-2)^{2024} \cdot 3 = a_1 + 2a_2x + 3a_3x^2 + \dots$\\
+        令 $x=1$，得：$2025 \cdot (3 \cdot 1 - 2)^{2024} \cdot 3 = 2025 \cdot 1 \cdot 3 = 6075$。
+
+        \item[G. 绝对值之和 $|a_0| + |a_1| + |a_2| + \dots + |a_{2025}|$] 
+        绝对值之和即去掉所有负号，让各项“转正”。 \\
+        观察原式：$(3x-2)^{2025} = a_0 + a_1x + a_2x^2 + \dots + a_{2025}x^{2025}$。 \\
+        当我们将 $x$ 替换为 $-1$ 时： \\
+        左边 $= (3 \cdot (-1) - 2)^{2025} = (-5)^{2025} = -5^{2025}$ \\
+        右边 $= a_0 - a_1 + a_2 - a_3 + \dots - a_{2025}$ \\
+        由于本题中 $a_0, a_2 \dots$ 等偶数项本身是负数，而 $a_1, a_3 \dots$ 等奇数项是正数，\\
+        令 $x=-1$ 得到的刚好是各项绝对值的“相反数”： \\
+        $-5^{2025} = -(|a_0| + |a_1| + |a_2| + \dots + |a_{2025}|)$ \\
+        \textbf{所以} 各项绝对值之和为 $ D-E = \mathbf{5^{2025} - 2^{2025}}$。 \\
+        （注：若题目只求 $|a_1| + \dots$ 而不含 $a_0$，则再减去 $|a_0| = 2^{2025}$ 即可。）
+        \end{description}
+
+\end{enumerate}
+
+\vspace{2em}
+
+
+\begin{enumerate}[label=\arabic*., start=15, leftmargin=1.5em]
+
+    \item $(1-2x)^4 = a_0 - 2a_1x + 4a_2x^2 - 8a_3x^3 + 16a_4x^4$，求 $a_1+a_2+a_3+a_4$。
+    
+    \begin{description}
+        \item[【解析】] 
+        观察结构，设 $-2x = t$，则原式为 $(1+t)^4 = a_0 + a_1t + a_2t^2 + a_3t^3 + a_4t^4$。\\
+        1. 令 $t=0$，得 $a_0 = 1^4 = 1$；\\
+        2. 令 $t=1$，得 $a_0 + a_1 + a_2 + a_3 + a_4 = (1+1)^4 = 16$；\\
+        3. 则 $a_1 + a_2 + a_3 + a_4 = 16 - a_0 = 16 - 1 = \mathbf{15}$。
+    \end{description}
+
+\end{enumerate}
+\end{document}

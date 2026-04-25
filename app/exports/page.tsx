@@ -12,11 +12,16 @@ import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { EXPORT_STATUS_FILTER_OPTIONS } from '@/lib/catalogs';
+import { EXPORT_STATUS_CLASSNAMES, EXPORT_STATUS_FILTER_OPTIONS, EXPORT_STATUS_LABELS } from '@/lib/catalogs';
 import { getExportDownloadUrl } from '@/lib/api/exports';
 import { formatAbsoluteDateTime } from '@/lib/format';
 import { useDeleteExport, useExports } from '@/lib/hooks/use-exports';
 import type { ExportJob } from '@/lib/types';
+import { cn } from '@/lib/utils';
+
+const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+const ONE_MONTH_MS = 30 * 24 * 60 * 60 * 1000;
 
 export default function ExportsPage() {
   const [query, setQuery] = useState('');
@@ -39,9 +44,9 @@ export default function ExportsPage() {
         const age = now - new Date(row.createdAt).getTime();
         const matchesDate =
           dateFilter === 'all' ||
-          (dateFilter === 'today' && age <= 24 * 60 * 60 * 1000) ||
-          (dateFilter === 'week' && age <= 7 * 24 * 60 * 60 * 1000) ||
-          (dateFilter === 'month' && age <= 30 * 24 * 60 * 60 * 1000);
+          (dateFilter === 'today' && age <= ONE_DAY_MS) ||
+          (dateFilter === 'week' && age <= ONE_WEEK_MS) ||
+          (dateFilter === 'month' && age <= ONE_MONTH_MS);
 
         return matchesQuery && matchesStatus && matchesFormat && matchesDate;
       }),
@@ -95,7 +100,7 @@ export default function ExportsPage() {
         <div className="flex flex-col gap-3 xl:flex-row xl:items-center">
           <div className="relative min-w-[260px] flex-1">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索任务标题..." className="pl-9" />
+            <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索任务标题..." aria-label="搜索任务标题" className="pl-9" />
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
@@ -130,6 +135,7 @@ export default function ExportsPage() {
               key={status.value}
               type="button"
               onClick={() => toggleStatus(status.value)}
+              aria-label={`筛选: ${status.label}`}
               className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
                 selectedStatuses.includes(status.value) ? 'border-primary bg-primary/8 text-primary' : 'border-border text-muted-foreground'
               }`}
@@ -145,13 +151,13 @@ export default function ExportsPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>任务标题</TableHead>
-                <TableHead>格式</TableHead>
-                <TableHead>版本</TableHead>
-                <TableHead>状态</TableHead>
-                <TableHead>创建时间</TableHead>
-                <TableHead>耗时</TableHead>
-                <TableHead className="text-right">操作</TableHead>
+                <TableHead className="py-3 px-4">任务标题</TableHead>
+                <TableHead className="py-3 px-4">格式</TableHead>
+                <TableHead className="py-3 px-4">版本</TableHead>
+                <TableHead className="py-3 px-4">状态</TableHead>
+                <TableHead className="py-3 px-4">创建时间</TableHead>
+                <TableHead className="py-3 px-4">耗时</TableHead>
+                <TableHead className="text-right py-3 px-4">操作</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -175,7 +181,7 @@ export default function ExportsPage() {
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
                       {row.status === 'done' ? (
-                        <Button variant="ghost" size="icon" asChild>
+                        <Button variant="ghost" size="icon" aria-label="下载导出文件" asChild>
                           <a href={getExportDownloadUrl(row.id)} download>
                             <Download className="h-4 w-4" />
                           </a>
@@ -185,7 +191,7 @@ export default function ExportsPage() {
                       {row.status === 'failed' ? (
                         <Dialog>
                           <DialogTrigger asChild>
-                            <Button variant="ghost" size="icon">
+                            <Button variant="ghost" size="icon" aria-label="查看错误">
                               <AlertCircle className="h-4 w-4 text-destructive" />
                             </Button>
                           </DialogTrigger>
@@ -238,24 +244,12 @@ export default function ExportsPage() {
 }
 
 function renderStatus(row: ExportJob) {
-  if (row.status === 'processing') {
-    return (
-      <Badge variant="outline" className="gap-2 border-sky-500/40 bg-sky-500/10 text-sky-700 dark:text-sky-300">
-        <LoaderCircle className="h-3 w-3 animate-spin" />
-        生成中
-      </Badge>
-    );
-  }
-
-  if (row.status === 'done') {
-    return <Badge variant="outline" className="border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300">完成</Badge>;
-  }
-
-  if (row.status === 'failed') {
-    return <Badge variant="outline" className="border-rose-500/40 bg-rose-500/10 text-rose-700 dark:text-rose-300">失败</Badge>;
-  }
-
-  return <Badge variant="outline" className="border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-300">排队中</Badge>;
+  return (
+    <Badge variant="outline" className={cn('gap-2', EXPORT_STATUS_CLASSNAMES[row.status])}>
+      {row.status === 'processing' && <LoaderCircle className="h-4 w-4 animate-spin" />}
+      {EXPORT_STATUS_LABELS[row.status]}
+    </Badge>
+  );
 }
 
 function formatElapsed(row: ExportJob, now: number) {

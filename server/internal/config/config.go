@@ -73,6 +73,17 @@ func (c Config) Validate() error {
 	return nil
 }
 
+func (c Config) AdminAPIKey() string {
+	return c.getEnv("ADMIN_API_KEY", "")
+}
+
+func (c Config) getEnv(key, fallback string) string {
+	if v := os.Getenv(key); v != "" {
+		return v
+	}
+	return fallback
+}
+
 func splitCSV(raw string) []string {
 	parts := strings.Split(raw, ",")
 	out := make([]string, 0, len(parts))
