@@ -362,10 +362,6 @@ func (m *Manager) renderLatex(paper domain.PaperDetail, variant domain.ExportVar
 {{if gt .BlankLines 0}}
 \par\vspace*{ {{.BlankLines}}\baselineskip }
 {{end}}
-{{if or (eq $.Variant "answer") (eq $.Variant "both")}}
-\par\noindent\textbf{答案：}{{.AnswerLatex}}
-\par\noindent\textbf{解析：}{{.SolutionLatex}}
-{{end}}
 \vspace{1.5em}
 {{end}}
 \MathLibEndDocument
