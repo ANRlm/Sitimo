@@ -483,7 +483,7 @@ export default function ProblemImportPage() {
                         <Badge variant={problem.status === 'success' ? 'outline' : 'destructive'}>{problem.status === 'success' ? '成功' : '错误'}</Badge>
                       </TableCell>
                       <TableCell className="max-w-[420px]">
-                        <div className="line-clamp-2">{problem.latex}</div>
+                        <MathText latex={problem.latex} className="line-clamp-2" />
                       </TableCell>
                       <TableCell>{problem.subject}</TableCell>
                       <TableCell>{problem.grade}</TableCell>

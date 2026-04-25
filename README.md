@@ -112,12 +112,25 @@ docker compose exec server go test ./...
 - `POST /api/v1/settings/sweep-orphans`：手动清理已软删除且未被题目引用的孤儿图片
 - 服务启动时会自动执行一次孤儿图片清理
 
+## 导入试卷
+
+访问 `/problems/import` 页面，上传 `.tex` 文件即可批量导入题目。
+
+支持的 LaTeX 格式：
+- `enumerate` 环境（`label=\textbf{题 \arabic*}` / `label=\textbf{例\arabic*.}` / `label=\arabic*.`）
+- `tasks` 环境（选择题选项，自动识别为 A/B/C/D）
+- `mybox` 自定义环境
+- 数学分隔符：`$...$`、`$$...$$`、`\(...\)`、`\[...\]` 均支持
+
+配套解析文件命名规则：题目文件 `foo.tex` 对应解析文件 `foo配套解析.tex` 或 `foo_answers.tex`。
+
 ## 排障
 
 - 搜索结果为空时，先确认已执行 `make migrate`，尤其是 `search_tsv`/`formula_tsv` 触发器是否存在
 - 导出任务长时间停在 `processing`，先检查 `xelatex` 是否可执行，以及 `STORAGE_ROOT/derived/exports` 是否可写
 - 多实例下导出流没有更新时，确认 PostgreSQL `LISTEN/NOTIFY` 可用且实例都连到同一个数据库
 - 图片文件存在但详情页 404 时，检查 `PUBLIC_BASE_URL` 和 `STORAGE_ROOT` 是否对应同一套文件
+- 导入预览中数学公式显示异常时，确认 `.tex` 文件使用标准数学分隔符（`$`、`\(`、`\[`）
 
 ## 性能基线
 
