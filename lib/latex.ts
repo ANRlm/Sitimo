@@ -13,9 +13,12 @@ export function normalizeLatexForDisplay(value: string): string {
   // Strip structural/layout LaTeX commands that should not appear in display
   const stripped = stripStructuralCommands(value);
 
+  // Replace \item[label] from description environments with "label: " text
+  const withDescLabels = replaceDescriptionItems(stripped);
+
   // Pre-process \item/\task into A. B. C. D. labels across the whole string
   // (they always appear in text segments, never inside math)
-  const preprocessed = replaceItemCommands(stripped);
+  const preprocessed = replaceItemCommands(withDescLabels);
 
   // If no math delimiters at all, wrap entire content for MathJax
   if (!HAS_MATH_PATTERN.test(preprocessed)) {
@@ -67,6 +70,9 @@ function stripStructuralCommands(value: string): string {
   // \begin{itemize}[...] or \begin{itemize} → remove
   s = s.replace(/\\begin\{itemize\}(?:\[[^\]]*\])?\s*/g, '');
   s = s.replace(/\\end\{itemize\}\s*/g, '');
+  // \begin{description}[...] or \begin{description} → remove
+  s = s.replace(/\\begin\{description\}(?:\[[^\]]*\])?\s*/g, '');
+  s = s.replace(/\\end\{description\}\s*/g, '');
 
   // Layout commands → remove
   s = s.replace(/\\(?:newpage|clearpage|pagebreak)\b\s*/g, '');
@@ -94,6 +100,14 @@ function stripStructuralCommands(value: string): string {
 function replaceNestedBraces(value: string, cmd: string): string {
   // Simple non-nested: \cmd{content}
   return value.replace(new RegExp(`\\\\${cmd}\\{([^{}]*)\\}`, 'g'), '$1');
+}
+
+/**
+ * Replace \item[label] (description env items) with "label: ", preserving label text.
+ * Must run before replaceItemCommands so bare \item is still converted to A/B/C/D.
+ */
+function replaceDescriptionItems(value: string): string {
+  return value.replace(/\\item\[([^\]]*)\]\s*/g, '$1: ');
 }
 
 /**
