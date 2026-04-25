@@ -338,7 +338,7 @@ func (m *Manager) renderLatex(paper domain.PaperDetail, variant domain.ExportVar
 \newcommand{\MathLibBeginDocument}{}
 \newcommand{\MathLibEndDocument}{}
 \fi
-\usepackage{amsmath,amssymb,graphicx,geometry}
+\usepackage{amsmath,amssymb,graphicx,geometry,enumitem}
 \geometry{ {{.PaperSize}}paper, margin=2cm }
 \linespread{ {{.LineHeight}} }
 \begin{document}
