@@ -120,17 +120,29 @@ docker compose exec server go test ./...
 - `enumerate` 环境（`label=\textbf{题 \arabic*}` / `label=\textbf{例\arabic*.}` / `label=\arabic*.`）
 - `tasks` 环境（选择题选项，自动识别为 A/B/C/D）
 - `mybox` 自定义环境
+- `description` 环境（含 `style=nextline` 等 `enumitem` 选项，自动提取子题标签）
 - 数学分隔符：`$...$`、`$$...$$`、`\(...\)`、`\[...\]` 均支持
+- `\textbf{}` 嵌套数学公式（含 `\frac`、`^{}`、`_{}` 等）正确解析
 
 配套解析文件命名规则：题目文件 `foo.tex` 对应解析文件 `foo配套解析.tex` 或 `foo_answers.tex`。
+
+## 导出试卷
+
+在试卷编辑页面点击「导出」，可生成 PDF 或 LaTeX 源码包。
+
+- 导出使用 XeLaTeX 编译（自动处理中文）
+- 支持的宏包：`amsmath`、`amssymb`、`graphicx`、`geometry`、`enumitem`
+- 导出内容仅包含题目，不包含答案和解析
 
 ## 排障
 
 - 搜索结果为空时，先确认已执行 `make migrate`，尤其是 `search_tsv`/`formula_tsv` 触发器是否存在
 - 导出任务长时间停在 `processing`，先检查 `xelatex` 是否可执行，以及 `STORAGE_ROOT/derived/exports` 是否可写
+- 导出 PDF 编译报错 `missing \item`，确认源文件中的 `description` 环境选项（如 `style=nextline`）需要 `enumitem` 包支持
 - 多实例下导出流没有更新时，确认 PostgreSQL `LISTEN/NOTIFY` 可用且实例都连到同一个数据库
 - 图片文件存在但详情页 404 时，检查 `PUBLIC_BASE_URL` 和 `STORAGE_ROOT` 是否对应同一套文件
 - 导入预览中数学公式显示异常时，确认 `.tex` 文件使用标准数学分隔符（`$`、`\(`、`\[`）
+- 导出 PDF 可以下载但进度条卡住不消失时，检查 SSE 流端点是否可达（`/api/v1/exports/stream`）
 
 ## 性能基线
 
