@@ -73,8 +73,10 @@ function stripStructuralCommands(value: string): string {
   // \begin{itemize}[...] or \begin{itemize} → remove
   s = s.replace(/\\begin\{itemize\}(?:\[[^\]]*\])?\s*/g, '');
   s = s.replace(/\\end\{itemize\}\s*/g, '');
-  // \begin{description}[...] or \begin{description} → remove
-  s = s.replace(/\\begin\{description\}(?:\[[^\]]*\])?\s*/g, '');
+  // Plain \begin{description}...\end{description} (analysis blocks) → strip entirely
+  s = s.replace(/\\begin\{description\}(?!\[)[\s\S]*?\\end\{description\}\s*/g, '');
+  // \begin{description}[options] (answer choice lists) → strip markers, keep content
+  s = s.replace(/\\begin\{description\}\[[^\]]*\]\s*/g, '');
   s = s.replace(/\\end\{description\}\s*/g, '');
 
   // Layout commands → remove
