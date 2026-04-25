@@ -1,6 +1,6 @@
 const TEXT_COMMAND_PATTERN = /\\text\{([^{}]+)\}/g;
-// Matches \item optionally followed by [label] — used in enumerate/tasks environments
-const ITEM_PATTERN = /\\item(?:\[[^\]]*\])?\s*/g;
+// Matches \item or \task optionally followed by [label] — used in enumerate/tasks environments
+const ITEM_PATTERN = /\\(?:item|task)(?:\[[^\]]*\])?\s*/g;
 
 const MATH_DELIMITER_PATTERN = /\\\(|\\\[/;
 
