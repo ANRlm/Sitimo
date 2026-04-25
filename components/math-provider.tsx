@@ -7,8 +7,8 @@ const mathJaxConfig = {
   loader: { load: ['[tex]/ams'] },
   tex: {
     packages: { '[+]': ['ams'] },
-    inlineMath: [['\\(', '\\)']],
-    displayMath: [['\\[', '\\]']],
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
   },
 };
 

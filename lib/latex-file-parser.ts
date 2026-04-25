@@ -6,7 +6,7 @@ export interface ParseTexFileResult {
 }
 
 const SKIP_SECTION_KEYWORDS = ['答案', '解析', '解答', '参考', '简析'];
-const PROBLEM_MIN_CHARS = 80;
+const PROBLEM_MIN_CHARS = 60;
 
 export function parseTexFile(content: string): ParseTexFileResult {
   const warnings: string[] = [];
