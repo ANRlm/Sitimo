@@ -33,6 +33,11 @@ next-env.d.ts
 .omc/
 .claude/
 .opencode/
+.sisyphus/
+
+# playwright
+.playwright-mcp/
+test-results/
 
 # server
 /server/storage/original/*
