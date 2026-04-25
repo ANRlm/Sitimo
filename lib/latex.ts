@@ -100,11 +100,42 @@ function stripStructuralCommands(value: string): string {
 }
 
 /**
- * Replace \cmd{content} with content, handling one level of nesting.
+ * Replace \cmd{content} with content, properly handling nested braces.
  */
 function replaceNestedBraces(value: string, cmd: string): string {
-  // Simple non-nested: \cmd{content}
-  return value.replace(new RegExp(`\\\\${cmd}\\{([^{}]*)\\}`, 'g'), '$1');
+  const startMarker = `\\${cmd}{`;
+  let result = '';
+  let i = 0;
+
+  while (i < value.length) {
+    const idx = value.indexOf(startMarker, i);
+    if (idx === -1) {
+      result += value.slice(i);
+      break;
+    }
+
+    result += value.slice(i, idx);
+
+    // Find the matching closing brace by counting depth
+    let pos = idx + startMarker.length;
+    let depth = 1;
+    while (pos < value.length && depth > 0) {
+      if (value[pos] === '{') depth++;
+      else if (value[pos] === '}') depth--;
+      if (depth > 0) pos++;
+    }
+
+    if (depth === 0) {
+      result += value.slice(idx + startMarker.length, pos);
+      i = pos + 1;
+    } else {
+      // Unmatched brace — keep original text as-is
+      result += value.slice(idx);
+      break;
+    }
+  }
+
+  return result;
 }
 
 /**
