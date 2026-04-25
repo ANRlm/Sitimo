@@ -1,4 +1,6 @@
 const TEXT_COMMAND_PATTERN = /\\text\{([^{}]+)\}/g;
+// Matches \item optionally followed by [label] — used in enumerate/tasks environments
+const ITEM_PATTERN = /\\item(?:\[[^\]]*\])?\s*/g;
 
 const MATH_DELIMITER_PATTERN = /\\\(|\\\[/;
 
@@ -7,12 +9,15 @@ export function normalizeLatexForDisplay(value: string): string {
     return value;
   }
 
+  // Normalize \item commands before any math processing.
+  const normalized = normalizeTextSegment(value);
+
   // If the content has no math delimiters, wrap the whole thing so MathJax renders it.
-  if (!MATH_DELIMITER_PATTERN.test(value)) {
-    return `\\(${normalizeMathSegment(value)}\\)`;
+  if (!MATH_DELIMITER_PATTERN.test(normalized)) {
+    return `\\(${normalizeMathSegment(normalized)}\\)`;
   }
 
-  return rewriteLatexSegments(value, normalizeTextSegment, normalizeMathSegment);
+  return rewriteLatexSegments(normalized, (s) => s, normalizeMathSegment);
 }
 
 function rewriteLatexSegments(
@@ -62,7 +67,15 @@ function findNextMathStart(value: string, fromIndex: number) {
 }
 
 function normalizeTextSegment(segment: string) {
-  return segment.replace(TEXT_COMMAND_PATTERN, '$1');
+  // Replace \item sequences with A. B. C. D. labels
+  let itemIndex = 0;
+  const OPTION_LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
+  const result = segment.replace(ITEM_PATTERN, () => {
+    const label = OPTION_LABELS[itemIndex] ?? String(itemIndex + 1);
+    itemIndex++;
+    return `${label}. `;
+  });
+  return result.replace(TEXT_COMMAND_PATTERN, '$1');
 }
 
 function normalizeMathSegment(segment: string) {
