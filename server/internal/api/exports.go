@@ -206,10 +206,6 @@ func sanitizeASCIIFilename(value string) string {
 }
 
 func (s *Server) handleExportStream(w http.ResponseWriter, r *http.Request) {
-	if !isAuthenticated(r) {
-		respondError(w, http.StatusForbidden, "forbidden", errors.New("authentication required"))
-		return
-	}
 	w.Header().Set("Content-Type", "text/event-stream")
 	w.Header().Set("Cache-Control", "no-cache")
 	w.Header().Set("Connection", "keep-alive")
