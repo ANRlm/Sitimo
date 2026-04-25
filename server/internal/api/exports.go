@@ -97,10 +97,6 @@ func (s *Server) handleDeleteExport(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleDownloadExport(w http.ResponseWriter, r *http.Request) {
-	if !isAuthenticated(r) {
-		respondError(w, http.StatusForbidden, "forbidden", errors.New("authentication required"))
-		return
-	}
 	ctx, cancel := requestContext(r)
 	defer cancel()
 	job, err := s.svc.Repository().GetExportJob(ctx, chi.URLParam(r, "id"))
