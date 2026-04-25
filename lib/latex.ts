@@ -35,6 +35,9 @@ export function normalizeLatexForDisplay(value: string): string {
 function stripStructuralCommands(value: string): string {
   let s = value;
 
+  // Strip LaTeX comments (% to end of line)
+  s = s.replace(/%[^\n]*/g, '');
+
   // \underline{\hspace{...}} or \underline{\qquad} → ____ (fill-in-blank)
   s = s.replace(/\\underline\{\\(?:hspace\{[^}]*\}|qquad|quad)\}/g, '____');
   // \underline{\hspace{X em}} with space before unit
