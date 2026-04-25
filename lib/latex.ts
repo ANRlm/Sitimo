@@ -10,9 +10,12 @@ export function normalizeLatexForDisplay(value: string): string {
     return value;
   }
 
+  // Strip structural/layout LaTeX commands that should not appear in display
+  const stripped = stripStructuralCommands(value);
+
   // Pre-process \item/\task into A. B. C. D. labels across the whole string
   // (they always appear in text segments, never inside math)
-  const preprocessed = replaceItemCommands(value);
+  const preprocessed = replaceItemCommands(stripped);
 
   // If no math delimiters at all, wrap entire content for MathJax
   if (!HAS_MATH_PATTERN.test(preprocessed)) {
@@ -20,6 +23,77 @@ export function normalizeLatexForDisplay(value: string): string {
   }
 
   return rewriteLatexSegments(preprocessed);
+}
+
+/**
+ * Strip structural/layout LaTeX commands that are not meaningful for display.
+ * This runs before math segmentation so it only touches text outside math.
+ */
+function stripStructuralCommands(value: string): string {
+  let s = value;
+
+  // \underline{\hspace{...}} or \underline{\qquad} → ____ (fill-in-blank)
+  s = s.replace(/\\underline\{\\(?:hspace\{[^}]*\}|qquad|quad)\}/g, '____');
+  // \underline{\hspace{X em}} with space before unit
+  s = s.replace(/\\underline\{\\hspace\{[^}]*\}\}/g, '____');
+  // bare \underline{...} that contains only whitespace/hspace → ____
+  s = s.replace(/\\underline\{\s*\}/g, '____');
+
+  // \textbf{content} → content
+  s = replaceNestedBraces(s, 'textbf');
+  // \textit{content} → content
+  s = replaceNestedBraces(s, 'textit');
+  // \textrm{content} → content
+  s = replaceNestedBraces(s, 'textrm');
+  // \texttt{content} → content
+  s = replaceNestedBraces(s, 'texttt');
+  // \emph{content} → content
+  s = replaceNestedBraces(s, 'emph');
+  // \text{content} is handled later in normalizeTextSegment, skip here
+
+  // \ding{...} → remove
+  s = s.replace(/\\ding\{[^}]*\}/g, '');
+
+  // \section{...}, \subsection{...}, \subsubsection{...} → remove
+  s = s.replace(/\\(?:sub)*section\*?\{[^}]*\}/g, '');
+
+  // Environment begin/end markers → remove (keep content between them)
+  // \begin{tasks}(N) or \begin{tasks} → remove
+  s = s.replace(/\\begin\{tasks\}(?:\(\d+\))?\s*/g, '');
+  s = s.replace(/\\end\{tasks\}\s*/g, '');
+  // \begin{enumerate}[...] or \begin{enumerate} → remove
+  s = s.replace(/\\begin\{enumerate\}(?:\[[^\]]*\])?\s*/g, '');
+  s = s.replace(/\\end\{enumerate\}\s*/g, '');
+  // \begin{itemize}[...] or \begin{itemize} → remove
+  s = s.replace(/\\begin\{itemize\}(?:\[[^\]]*\])?\s*/g, '');
+  s = s.replace(/\\end\{itemize\}\s*/g, '');
+
+  // Layout commands → remove
+  s = s.replace(/\\(?:newpage|clearpage|pagebreak)\b\s*/g, '');
+  s = s.replace(/\\vspace\*?\{[^}]*\}\s*/g, '');
+  s = s.replace(/\\hspace\*?\{[^}]*\}/g, ' ');
+  s = s.replace(/\\hfill\b/g, ' ');
+  s = s.replace(/\\medskip\b\s*/g, '');
+  s = s.replace(/\\bigskip\b\s*/g, '');
+  s = s.replace(/\\smallskip\b\s*/g, '');
+  s = s.replace(/\\noindent\b\s*/g, '');
+  s = s.replace(/\\par\b\s*/g, ' ');
+
+  // \\ line break → space
+  s = s.replace(/\\\\\s*/g, ' ');
+
+  // Collapse multiple spaces/newlines into single space
+  s = s.replace(/[ \t]*\n[ \t]*/g, ' ').replace(/\s{2,}/g, ' ').trim();
+
+  return s;
+}
+
+/**
+ * Replace \cmd{content} with content, handling one level of nesting.
+ */
+function replaceNestedBraces(value: string, cmd: string): string {
+  // Simple non-nested: \cmd{content}
+  return value.replace(new RegExp(`\\\\${cmd}\\{([^{}]*)\\}`, 'g'), '$1');
 }
 
 /**
