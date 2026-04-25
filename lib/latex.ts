@@ -1,8 +1,15 @@
 const TEXT_COMMAND_PATTERN = /\\text\{([^{}]+)\}/g;
 
+const MATH_DELIMITER_PATTERN = /\\\(|\\\[/;
+
 export function normalizeLatexForDisplay(value: string): string {
   if (!value) {
     return value;
+  }
+
+  // If the content has no math delimiters, wrap the whole thing so MathJax renders it.
+  if (!MATH_DELIMITER_PATTERN.test(value)) {
+    return `\\(${normalizeMathSegment(value)}\\)`;
   }
 
   return rewriteLatexSegments(value, normalizeTextSegment, normalizeMathSegment);
