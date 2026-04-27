@@ -40,7 +40,7 @@ interface Section {
 
 function splitBySections(body: string): Section[] {
   const sections: Section[] = [];
-  const re = /\\section\{([^}]*)\}/g;
+  const re = /\\section\*?\{([^}]*)\}/g;
   let lastTitle = '';
   let lastEnd = 0;
   let isFirst = true;
