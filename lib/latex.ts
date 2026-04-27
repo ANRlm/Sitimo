@@ -90,9 +90,6 @@ function stripStructuralCommands(value: string): string {
   s = s.replace(/\\noindent\b\s*/g, '');
   s = s.replace(/\\par\b\s*/g, ' ');
 
-  // \\ line break → space
-  s = s.replace(/\\\\\s*/g, ' ');
-
   // Collapse multiple spaces/newlines into single space
   s = s.replace(/[ \t]*\n[ \t]*/g, ' ').replace(/\s{2,}/g, ' ').trim();
 
@@ -225,7 +222,9 @@ function findNextMathStart(value: string, fromIndex: number): MathDelimiter | nu
 }
 
 function normalizeTextSegment(segment: string): string {
-  return segment.replace(TEXT_COMMAND_PATTERN, '$1');
+  return segment
+    .replace(TEXT_COMMAND_PATTERN, '$1')
+    .replace(/\\\\\s*/g, ' ');
 }
 
 function normalizeMathSegment(segment: string): string {

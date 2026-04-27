@@ -12,10 +12,11 @@ type MathTextProps = {
 
 export function MathText({ latex, inline = false, className }: MathTextProps) {
   const normalized = normalizeLatexForDisplay(latex);
+  const Tag = inline ? 'span' : 'div';
 
   return (
-    <div className={cn('math-text max-w-full', className)}>
+    <Tag className={cn('math-text max-w-full', className)}>
       <MathJax inline={inline}>{normalized}</MathJax>
-    </div>
+    </Tag>
   );
 }

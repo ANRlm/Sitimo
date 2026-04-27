@@ -311,9 +311,9 @@ func (m *Manager) renderLatex(paper domain.PaperDetail, variant domain.ExportVar
 	}
 
 	data := map[string]any{
-		"Title":             paper.Title,
-		"SchoolName":        deref(paper.SchoolName),
-		"ExamName":          deref(paper.ExamName),
+		"Title":             latexEscapeText(paper.Title),
+		"SchoolName":        latexEscapeText(deref(paper.SchoolName)),
+		"ExamName":          latexEscapeText(deref(paper.ExamName)),
 		"Columns":           paper.Layout.Columns,
 		"FontSize":          paper.Layout.FontSize,
 		"PaperSize":         strings.ToLower(paper.Layout.PaperSize),
@@ -394,6 +394,25 @@ func deref(value *string) string {
 	return *value
 }
 
+// latexEscapeReplacer escapes plain-text strings for safe inclusion in LaTeX source.
+// The backslash replacement must come first to avoid double-escaping subsequent replacements.
+var latexEscapeReplacer = strings.NewReplacer(
+	`\`, `\textbackslash{}`,
+	`&`, `\&`,
+	`%`, `\%`,
+	`$`, `\$`,
+	`#`, `\#`,
+	`_`, `\_`,
+	`{`, `\{`,
+	`}`, `\}`,
+	`~`, `\textasciitilde{}`,
+	`^`, `\textasciicircum{}`,
+)
+
+func latexEscapeText(s string) string {
+	return latexEscapeReplacer.Replace(s)
+}
+
 func normalizeLatexForExport(value string) string {
 	if value == "" {
 		return value
@@ -452,17 +471,53 @@ func rewriteLatexSegments(value string, textTransform func(string) string, mathT
 }
 
 func findNextMathStart(value string, from int) (index int, open string, close string) {
-	inlineIndex := strings.Index(value[from:], `\(`)
-	displayIndex := strings.Index(value[from:], `\[`)
-
-	switch {
-	case inlineIndex < 0 && displayIndex < 0:
-		return -1, "", ""
-	case inlineIndex >= 0 && (displayIndex < 0 || inlineIndex <= displayIndex):
-		return from + inlineIndex, `\(`, `\)`
-	default:
-		return from + displayIndex, `\[`, `\]`
+	type candidate struct {
+		idx   int
+		open  string
+		close string
 	}
+	var candidates []candidate
+
+	sub := value[from:]
+
+	if i := strings.Index(sub, `\(`); i >= 0 {
+		candidates = append(candidates, candidate{from + i, `\(`, `\)`})
+	}
+	if i := strings.Index(sub, `\[`); i >= 0 {
+		candidates = append(candidates, candidate{from + i, `\[`, `\]`})
+	}
+
+	// Check $$ before $ to avoid treating $$ as two separate $.
+	if i := strings.Index(sub, `$$`); i >= 0 {
+		candidates = append(candidates, candidate{from + i, `$$`, `$$`})
+	}
+
+	// Single $ — only if not adjacent to another $.
+	for search := 0; search < len(sub); {
+		i := strings.Index(sub[search:], `$`)
+		if i < 0 {
+			break
+		}
+		abs := search + i
+		nextIsDollar := abs+1 < len(sub) && sub[abs+1] == '$'
+		prevIsDollar := abs > 0 && sub[abs-1] == '$'
+		if !nextIsDollar && !prevIsDollar {
+			candidates = append(candidates, candidate{from + abs, `$`, `$`})
+			break
+		}
+		search = abs + 1
+	}
+
+	if len(candidates) == 0 {
+		return -1, "", ""
+	}
+	best := candidates[0]
+	for _, c := range candidates[1:] {
+		if c.idx < best.idx {
+			best = c
+		}
+	}
+	return best.idx, best.open, best.close
 }
 
 func normalizeLatexTextSegment(segment string) string {

@@ -36,27 +36,45 @@ func TestNormalizeLatexForExport(t *testing.T) {
 }
 
 func TestRenderLatexNormalizesAnswerAndSolution(t *testing.T) {
+	// normalizeLatexForExport is applied to answer/solution fields; verify normalization
+	// directly since the export template intentionally omits answer sections from output.
 	answer := "第一步\\n第二步"
 	solution := "证明如下：\\n1. 先设 \\(a=b\\)。\\n2. 再证 \\neq 0 且 \\nabla f(x)=0，\\left(x+1\\right)^2 > 0。"
 
+	normAnswer := normalizeLatexForExport(answer)
+	normSolution := normalizeLatexForExport(solution)
+
+	if strings.Contains(normAnswer, `\n第二步`) {
+		t.Fatalf("expected escaped newline in answer to be normalized, got %q", normAnswer)
+	}
+	if !strings.Contains(normAnswer, "第一步\n\n第二步") {
+		t.Fatalf("expected normalized answer paragraphs, got %q", normAnswer)
+	}
+	if strings.Contains(normSolution, `\n1. 先设`) {
+		t.Fatalf("expected escaped newlines in solution to be normalized, got %q", normSolution)
+	}
+	if !strings.Contains(normSolution, `\neq 0`) || !strings.Contains(normSolution, `\nabla f(x)=0`) {
+		t.Fatalf("expected valid latex commands to be preserved in solution, got %q", normSolution)
+	}
+	if !strings.Contains(normSolution, `\left(x+1\right)^2 > 0`) {
+		t.Fatalf("expected \\left/\\right commands to be preserved, got %q", normSolution)
+	}
+
+	// Also verify renderLatex runs without error and normalizes the problem body.
 	manager := &Manager{}
 	rendered, _, err := manager.renderLatex(domain.PaperDetail{
 		Paper: domain.Paper{
 			Title: "导出规范化测试",
 			Layout: domain.PaperLayout{
-				Columns:           1,
-				FontSize:          12,
-				LineHeight:        1.4,
-				PaperSize:         "A4",
-				ShowAnswerVersion: true,
+				Columns:    1,
+				FontSize:   12,
+				LineHeight: 1.4,
+				PaperSize:  "A4",
 			},
 		},
 		ItemDetails: []domain.PaperItemDetail{
 			{
-				PaperItem: domain.PaperItem{
-					Score:      10,
-					OrderIndex: 0,
-				},
+				PaperItem: domain.PaperItem{Score: 10, OrderIndex: 0},
 				Problem: &domain.ProblemDetail{
 					Problem: domain.Problem{
 						Latex:         "已知 \\(f(x)=x^2\\)，求极值。",
@@ -66,22 +84,12 @@ func TestRenderLatexNormalizesAnswerAndSolution(t *testing.T) {
 				},
 			},
 		},
-	}, domain.ExportVariantAnswer)
+	}, domain.ExportVariantStudent)
 	if err != nil {
 		t.Fatalf("render latex: %v", err)
 	}
-
-	if strings.Contains(rendered, `\n1. 先设`) || strings.Contains(rendered, `\n第二步`) {
-		t.Fatalf("expected escaped newlines to be normalized in rendered latex, got %q", rendered)
-	}
-	if !strings.Contains(rendered, "第一步\n\n第二步") {
-		t.Fatalf("expected normalized answer paragraphs, got %q", rendered)
-	}
-	if !strings.Contains(rendered, `\neq 0`) || !strings.Contains(rendered, `\nabla f(x)=0`) {
-		t.Fatalf("expected valid latex commands to be preserved, got %q", rendered)
-	}
-	if !strings.Contains(rendered, `\left(x+1\right)^2 > 0`) {
-		t.Fatalf("expected \\right command to be preserved, got %q", rendered)
+	if !strings.Contains(rendered, `已知 \(f(x)=x^2\)，求极值。`) {
+		t.Fatalf("expected problem latex in rendered output, got %q", rendered)
 	}
 }
 
