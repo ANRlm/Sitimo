@@ -186,8 +186,13 @@ function findTextMarkerProblems(content: string): string[] {
 
   // Try multiple regex patterns for text markers
   const patterns = [
+    // \noindent \textbf{例1.} or \noindent \textbf{例 1.}
     /(?:^|\n)\s*\\noindent\s+\\textbf\{例\s*\d+[.、]?\s*\}/g,
+    // \textbf{例1.} style
     /(?:^|\n)\\textbf\{例\s*\d+[.、]?\s*\}/g,
+    // Bare-number markers: \textbf{1.} or \textbf{1、}
+    /(?:^|\n)\s*\\noindent\s+\\textbf\{\s*\d+[.、]\s*\}/g,
+    /(?:^|\n)\\textbf\{\s*\d+[.、]\s*\}/g,
   ];
 
   for (const re of patterns) {
@@ -292,6 +297,15 @@ function stripSolutionContent(item: string): string {
   return item;
 }
 
+function isDuplicateByPrefix(candidate: string, existing: string[], limit: number): boolean {
+  if (candidate.length < 40) return false;
+  const prefix = candidate.slice(0, 40);
+  for (let i = 0; i < limit; i++) {
+    if (existing[i].startsWith(prefix)) return true;
+  }
+  return false;
+}
+
 // --- Main extraction ---
 
 function extractProblems(body: string, warnings: string[]): string[] {
@@ -311,10 +325,15 @@ function extractProblems(body: string, warnings: string[]): string[] {
       }
     }
 
-    // Also try text-marker extraction for sections without enumerate blocks
-    if (enumBlocks.length === 0) {
-      for (const problem of findTextMarkerProblems(section.content)) {
-        problems.push(stripSolutionContent(problem));
+    // Also try text-marker extraction for sections with non-enumerate problem patterns.
+    // A section may contain both enumerate blocks (e.g. ABCD option lists) and
+    // text-marker problems (e.g. \textbf{例1.}), so we always run both passes.
+    const enumCount = problems.length;
+    for (const problem of findTextMarkerProblems(section.content)) {
+      const stripped = stripSolutionContent(problem);
+      // Avoid double-counting if the same content was already extracted via enumerate
+      if (!isDuplicateByPrefix(stripped, problems, enumCount)) {
+        problems.push(stripped);
       }
     }
   }
