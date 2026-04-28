@@ -143,10 +143,11 @@ func appendBody(current, next string) string {
 
 func isKnowledgeContent(content string) bool {
 	trimmed := strings.TrimSpace(content)
-	if !strings.HasPrefix(trimmed, `\item \textbf{`) {
+	// The scanner strips the \item prefix, so content starts with the label or body.
+	if !strings.HasPrefix(trimmed, `\textbf{`) {
 		return false
 	}
-	rest := trimmed[len(`\item \textbf{`):]
+	rest := trimmed[len(`\textbf{`):]
 	for _, r := range rest {
 		if r == '}' {
 			return false

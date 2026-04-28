@@ -38,23 +38,45 @@ interface Section {
   content: string;
 }
 
+// extractBracedGroup extracts {content} with brace-matching at position pos.
+// Returns the braced content and the position after the closing }.
+function extractBracedGroup(s: string, pos: number): { content: string; endPos: number } | null {
+  if (pos >= s.length || s[pos] !== '{') return null;
+  let depth = 1;
+  let i = pos + 1;
+  while (i < s.length && depth > 0) {
+    if (s[i] === '{') depth++;
+    else if (s[i] === '}') depth--;
+    i++;
+  }
+  if (depth !== 0) return null;
+  return { content: s.slice(pos + 1, i - 1), endPos: i };
+}
+
 function splitBySections(body: string): Section[] {
   const sections: Section[] = [];
-  const re = /\\section\*?\{([^}]*)\}/g;
+  const re = /\\(?:sub)?section\*?\{/g;
   let lastTitle = '';
   let lastEnd = 0;
   let isFirst = true;
   let m: RegExpExecArray | null;
 
   while ((m = re.exec(body)) !== null) {
+    const cmdEnd = m.index + m[0].length - 1; // position of the opening {
+    const braced = extractBracedGroup(body, cmdEnd);
+    if (!braced) continue;
+    const title = braced.content;
+    const fullEnd = braced.endPos;
+
     if (isFirst) {
       if (m.index > 0) sections.push({ title: '', content: body.slice(0, m.index) });
       isFirst = false;
     } else {
       sections.push({ title: lastTitle, content: body.slice(lastEnd, m.index) });
     }
-    lastTitle = m[1];
-    lastEnd = m.index + m[0].length;
+    lastTitle = title;
+    lastEnd = fullEnd;
+    re.lastIndex = fullEnd;
   }
 
   sections.push({ title: lastTitle, content: body.slice(lastEnd) });
@@ -65,6 +87,8 @@ function isSkipSection(title: string): boolean {
   return SKIP_SECTION_KEYWORDS.some((kw) => title.includes(kw));
 }
 
+// --- Enumerate block extraction ---
+
 function findEnumerateBlocks(content: string): string[] {
   const blocks: string[] = [];
   let pos = 0;
@@ -74,8 +98,7 @@ function findEnumerateBlocks(content: string): string[] {
     if (startIdx < 0) break;
 
     let searchPos = startIdx + '\\begin{enumerate}'.length;
-    // skip optional [...]
-    if (content[searchPos] === '[') {
+    if (searchPos < content.length && content[searchPos] === '[') {
       const close = content.indexOf(']', searchPos);
       if (close >= 0) searchPos = close + 1;
     }
@@ -132,14 +155,13 @@ function extractTopLevelItems(enumContent: string): string[] {
       current += enumContent.slice(pos, close + 1);
       pos = close + 1;
     } else if (depth === 0 && enumContent.startsWith('\\item', pos)) {
-      // guard against \itemsep, \itemize, etc.
-      const next = enumContent[pos + 5];
-      const isItem = !next || next === ' ' || next === '\n' || next === '\t' || next === '[';
+      const nextCh = pos + 5 < enumContent.length ? enumContent[pos + 5] : undefined;
+      const isItem = nextCh === undefined || nextCh === ' ' || nextCh === '\n' || nextCh === '\t' || nextCh === '[';
       if (isItem) {
         if (current.trim()) items.push(current.trim());
         current = '';
         pos += 5;
-        if (enumContent[pos] === '[') {
+        if (pos < enumContent.length && enumContent[pos] === '[') {
           const close = enumContent.indexOf(']', pos);
           if (close >= 0) pos = close + 1;
         }
@@ -155,30 +177,127 @@ function extractTopLevelItems(enumContent: string): string[] {
   return items;
 }
 
+// --- Text-marker pattern extraction ---
+
+const textMarkerRe = /(?:^|\n)\s*\\noindent\s+\\textbf\{例\s*(\d+)[.、]?\s*\}/gm;
+const textMarkerSimpleRe = /(?:^|\n)\\textbf\{例\s*(\d+)[.、]?\s*\}/gm;
+
+function findTextMarkerProblems(content: string): string[] {
+  const problems: string[] = [];
+  // Find all text-marker positions
+  const markers: { index: number; endIndex: number }[] = [];
+
+  // Try multiple regex patterns for text markers
+  const patterns = [
+    /(?:^|\n)\s*\\noindent\s+\\textbf\{例\s*\d+[.、]?\s*\}/g,
+    /(?:^|\n)\\textbf\{例\s*\d+[.、]?\s*\}/g,
+  ];
+
+  for (const re of patterns) {
+    re.lastIndex = 0;
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(content)) !== null) {
+      // Start of problem is right after the marker
+      const markerEnd = m.index + m[0].length;
+      // Skip leading whitespace/newlines
+      let bodyStart = markerEnd;
+      while (bodyStart < content.length && (content[bodyStart] === ' ' || content[bodyStart] === '\t')) {
+        bodyStart++;
+      }
+      if (content[bodyStart] === '\n') bodyStart++;
+      markers.push({ index: bodyStart, endIndex: markerEnd });
+    }
+  }
+
+  if (markers.length === 0) return problems;
+
+  // Sort markers by position
+  markers.sort((a, b) => a.index - b.index);
+
+  // Deduplicate by index (different regexes may match same position)
+  const deduped: { index: number }[] = [];
+  for (const m of markers) {
+    if (deduped.length === 0 || m.index - deduped[deduped.length - 1].index > 5) {
+      deduped.push(m);
+    }
+  }
+
+  if (deduped.length === 0) return problems;
+
+  // Extract problem content (from marker to next marker or end of content)
+  for (let i = 0; i < deduped.length; i++) {
+    const start = deduped[i].index;
+    const end = i + 1 < deduped.length ? findMarkerStart(content, deduped[i + 1]) : content.length;
+    const body = content.slice(start, end).trim();
+    if (body.length >= PROBLEM_MIN_CHARS) {
+      problems.push(body);
+    }
+  }
+
+  return problems;
+}
+
+function findMarkerStart(content: string, marker: { index: number }): number {
+  // Walk back from marker.index to find the beginning of the \textbf{ or \noindent line
+  let pos = marker.index;
+  while (pos > 0 && content[pos - 1] !== '\n') {
+    pos--;
+  }
+  return pos;
+}
+
+// --- Problem detection ---
+
 function isProblemItem(item: string): boolean {
-  // Skip theorem/remark notes starting with a bold label.
-  // Handles both \textbf{label：} (colon inside) and \textbf{label}： (colon outside)
+  // Skip items starting with bold knowledge labels like \textbf{定义：}
   if (/^\s*\\textbf\{[^}]*[：:][^}]*\}/.test(item)) return false;
   if (/^\s*\\textbf\{[^}]+\}[：:]/.test(item)) return false;
 
   // Multiple choice with tasks environment
   if (item.includes('\\begin{tasks}')) return true;
-  // Inline A. B. C. D. options
+  // Inline A. B. C. D. options (inside itemize or enumerate)
   if (/\\item\s*\[A[\.\s]/.test(item)) return true;
   if (/A\.\s*(\\quad|\s)+B\./.test(item)) return true;
   // Minipage-based ABCD options
   if (/\\begin\{minipage\}/.test(item) && /[AB]\.\s/.test(item)) return true;
   // Fill-in-blank markers
   if (item.includes('\\underline')) return true;
-  // Chinese exam blank placeholder （\quad）or (\quad)
+  // Chinese exam blank placeholders
   if (/（\\quad[）\s]|\(\\quad[）\s)]/.test(item)) return true;
-  // Problem with clear question verbs and sufficient length,
-  // but not if the item starts with \textbf (definition/theorem format)
+
+  // Problem with clear question verbs and sufficient length
   const stripped = item.replace(/%[^\n]*/g, '').replace(/\s+/g, ' ').trim();
   const startsWithBold = item.trimStart().startsWith('\\textbf');
-  if (!startsWithBold && stripped.length >= PROBLEM_MIN_CHARS && /求|证明|解方程|计算|化简/.test(stripped)) return true;
+  if (!startsWithBold && stripped.length >= PROBLEM_MIN_CHARS && /求|证明|解方程|计算|化简|则|等于|判断|若.*则/.test(stripped)) return true;
+
+  // Chinese exam bracket （  ）or ( ) patterns
+  if (/（\s*\\quad\s*）|\(\s*\\quad\s*\)/.test(item)) return true;
+
   return false;
 }
+
+// --- Strip solution/answer content from problem body ---
+
+function stripSolutionContent(item: string): string {
+  // Remove everything starting from \textbf{【解析】} or \textbf{【解】} or \textbf{解：}
+  const patterns = [
+    /\\textbf\{\s*【解析】\s*\}[\s\S]*$/,
+    /\\textbf\{\s*【解】\s*\}[\s\S]*$/,
+    /\\textbf\{\s*解[：:][^}]*\}[\s\S]*$/,
+    /\\textbf\{【解析】\}[\s\S]*$/,
+    /\\textbf\{【解】\}[\s\S]*$/,
+  ];
+
+  for (const re of patterns) {
+    const idx = item.search(re);
+    if (idx >= 0) {
+      return item.slice(0, idx).trim();
+    }
+  }
+  return item;
+}
+
+// --- Main extraction ---
 
 function extractProblems(body: string, warnings: string[]): string[] {
   const problems: string[] = [];
@@ -186,15 +305,27 @@ function extractProblems(body: string, warnings: string[]): string[] {
 
   for (const section of sections) {
     if (isSkipSection(section.title)) continue;
-    for (const block of findEnumerateBlocks(section.content)) {
+
+    // First try enumerate-based extraction
+    const enumBlocks = findEnumerateBlocks(section.content);
+    for (const block of enumBlocks) {
       for (const item of extractTopLevelItems(block)) {
-        if (isProblemItem(item)) problems.push(item);
+        if (isProblemItem(item)) {
+          problems.push(stripSolutionContent(item));
+        }
+      }
+    }
+
+    // Also try text-marker extraction (can find problems outside enumerate blocks)
+    if (enumBlocks.length === 0 || problems.length === 0) {
+      for (const problem of findTextMarkerProblems(section.content)) {
+        problems.push(stripSolutionContent(problem));
       }
     }
   }
 
   if (problems.length === 0 && warnings.length === 0) {
-    warnings.push('未从 enumerate 环境中检测到题目。');
+    warnings.push('未从 enumerate 环境或文本标记中检测到题目。');
   }
 
   return problems;
