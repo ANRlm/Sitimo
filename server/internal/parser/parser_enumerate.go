@@ -26,14 +26,6 @@ func ParseEnumerate(blocks []Block) ([]ProblemBlock, []ParseError) {
 	var savedPattern string
 	var savedEnvArgs string
 
-	isFullDocument := false
-	for _, b := range blocks {
-		if b.Type == BlockEnvBegin && b.EnvName == "document" {
-			isFullDocument = true
-			break
-		}
-	}
-	var skipThis bool
 
 	for _, block := range blocks {
 		switch block.Type {
@@ -44,8 +36,6 @@ func ParseEnumerate(blocks []Block) ([]ProblemBlock, []ParseError) {
 					currentEnvArgs = block.EnvArgs
 					currentPattern = detectPattern(block.EnvArgs)
 					openStarts = append(openStarts, block.LineStart)
-					hasLeftmargin := strings.Contains(currentEnvArgs, "leftmargin")
-					skipThis = isFullDocument && currentPattern == PatternC && !hasLeftmargin
 					continue
 				}
 				if currentProblem != nil {
@@ -61,7 +51,6 @@ func ParseEnumerate(blocks []Block) ([]ProblemBlock, []ParseError) {
 					currentEnvArgs = block.EnvArgs
 					currentPattern = PatternA
 					openStarts = append(openStarts, block.LineStart)
-					skipThis = false
 					continue
 				}
 				if currentProblem != nil {
@@ -100,9 +89,6 @@ func ParseEnumerate(blocks []Block) ([]ProblemBlock, []ParseError) {
 				if isKnowledgeContent(block.Content) {
 					continue
 				}
-				if skipThis {
-					continue
-				}
 				flushProblem(&problems, currentProblem)
 				label := block.Label
 				if label == "" {
@@ -119,7 +105,7 @@ func ParseEnumerate(blocks []Block) ([]ProblemBlock, []ParseError) {
 			}
 
 		default:
-			if !skipThis && enumerateDepth >= 1 && currentProblem != nil {
+			if enumerateDepth >= 1 && currentProblem != nil {
 				currentProblem.Body = appendBody(currentProblem.Body, block.Content)
 			}
 		}
@@ -153,20 +139,44 @@ func appendBody(current, next string) string {
 
 func isKnowledgeContent(content string) bool {
 	trimmed := strings.TrimSpace(content)
-	// The scanner strips the \item prefix, so content starts with the label or body.
-	if !strings.HasPrefix(trimmed, `\textbf{`) {
+	if trimmed == "" {
 		return false
 	}
-	rest := trimmed[len(`\textbf{`):]
-	for _, r := range rest {
-		if r == '}' {
-			return false
+
+	// Bold label with colon: \textbf{定义：...} or \textbf{定义}：...
+	if strings.HasPrefix(trimmed, `\textbf{`) {
+		rest := trimmed[len(`\textbf{`):]
+		for _, r := range rest {
+			if r == '}' {
+				return false
+			}
+			if r == '\uff1a' || r == ':' {
+				return true
+			}
 		}
-		if r == '\uff1a' || r == ':' {
-			return true
+		return false
+	}
+
+	// Non-bold knowledge items: "基本概念：二项展开式" etc.
+	// Must be short and start with a knowledge keyword followed by colon.
+	runes := []rune(trimmed)
+	if len(runes) < 40 {
+		for _, kw := range knowledgeKeywords {
+			if strings.HasPrefix(trimmed, kw+":") ||
+				strings.HasPrefix(trimmed, kw+string('\uff1a')) {
+				return true
+			}
 		}
 	}
+
 	return false
+}
+
+var knowledgeKeywords = []string{
+	"基本概念", "通项公式", "项数", "定义", "定理", "性质",
+	"公式", "运算律", "说明", "注意", "补充", "结论",
+	"总结", "归纳", "易错", "原理", "表述", "常见变形",
+	"核心公式", "使用口诀", "前提条件", "适用范围",
 }
 
 // detectPattern inspects enumerate optional arguments to determine the

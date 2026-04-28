@@ -281,11 +281,15 @@ function isProblemItem(item: string): boolean {
 // --- Strip solution/answer content from problem body ---
 
 function stripSolutionContent(item: string): string {
-  // Remove everything starting from \textbf{【解析】} or \textbf{【解】} or \textbf{解：}
+  // Remove everything starting from \textbf{答案...}, \textbf{【解析】}, \textbf{【解】}, etc.
   const patterns = [
     /\\textbf\{\s*【解析】\s*\}[\s\S]*$/,
     /\\textbf\{\s*【解】\s*\}[\s\S]*$/,
+    /\\textbf\{\s*【详解】\s*\}[\s\S]*$/,
+    /\\textbf\{\s*【答案】\s*\}[\s\S]*$/,
     /\\textbf\{\s*解[：:][^}]*\}[\s\S]*$/,
+    /\\textbf\{\s*(?:参考)?答案[：:][^}]*\}[\s\S]*$/,
+    /\\textbf\{\s*解析[：:][^}]*\}[\s\S]*$/,
   ];
 
   for (const re of patterns) {
