@@ -30,7 +30,7 @@ export function parseTexFile(content: string): ParseTexFileResult {
 function extractSuggestedSource(content: string): string {
   const m = content.match(/\\fancyhead\[R\]\{([^}]+)\}/);
   if (!m) return '';
-  return m[1].replace(/\\,\s*/g, ' ').trim();
+  return m[1].replace(/\\,\s*/g, ' ').replace(/[\x00-\x1f\x7f]/g, '').trim().slice(0, 200);
 }
 
 interface Section {
@@ -179,9 +179,6 @@ function extractTopLevelItems(enumContent: string): string[] {
 
 // --- Text-marker pattern extraction ---
 
-const textMarkerRe = /(?:^|\n)\s*\\noindent\s+\\textbf\{例\s*(\d+)[.、]?\s*\}/gm;
-const textMarkerSimpleRe = /(?:^|\n)\\textbf\{例\s*(\d+)[.、]?\s*\}/gm;
-
 function findTextMarkerProblems(content: string): string[] {
   const problems: string[] = [];
   // Find all text-marker positions
@@ -205,7 +202,7 @@ function findTextMarkerProblems(content: string): string[] {
         bodyStart++;
       }
       if (content[bodyStart] === '\n') bodyStart++;
-      markers.push({ index: bodyStart, endIndex: markerEnd });
+      markers.push({ index: bodyStart });
     }
   }
 
@@ -284,8 +281,6 @@ function stripSolutionContent(item: string): string {
     /\\textbf\{\s*【解析】\s*\}[\s\S]*$/,
     /\\textbf\{\s*【解】\s*\}[\s\S]*$/,
     /\\textbf\{\s*解[：:][^}]*\}[\s\S]*$/,
-    /\\textbf\{【解析】\}[\s\S]*$/,
-    /\\textbf\{【解】\}[\s\S]*$/,
   ];
 
   for (const re of patterns) {
@@ -316,8 +311,8 @@ function extractProblems(body: string, warnings: string[]): string[] {
       }
     }
 
-    // Also try text-marker extraction (can find problems outside enumerate blocks)
-    if (enumBlocks.length === 0 || problems.length === 0) {
+    // Also try text-marker extraction for sections without enumerate blocks
+    if (enumBlocks.length === 0) {
       for (const problem of findTextMarkerProblems(section.content)) {
         problems.push(stripSolutionContent(problem));
       }

@@ -23,6 +23,8 @@ func ParseEnumerate(blocks []Block) ([]ProblemBlock, []ParseError) {
 	var currentPattern string
 	var currentEnvArgs string
 	var openStarts []int
+	var savedPattern string
+	var savedEnvArgs string
 
 	isFullDocument := false
 	for _, b := range blocks {
@@ -54,6 +56,8 @@ func ParseEnumerate(blocks []Block) ([]ProblemBlock, []ParseError) {
 				if enumerateDepth == 1 {
 					flushProblem(&problems, currentProblem)
 					currentProblem = nil
+					savedPattern = currentPattern
+					savedEnvArgs = currentEnvArgs
 					currentEnvArgs = block.EnvArgs
 					currentPattern = PatternA
 					openStarts = append(openStarts, block.LineStart)
@@ -75,6 +79,12 @@ func ParseEnumerate(blocks []Block) ([]ProblemBlock, []ParseError) {
 					if n := len(openStarts); n > 0 {
 						openStarts = openStarts[:n-1]
 					}
+						if block.EnvName == "tasks" && savedPattern != "" {
+						currentPattern = savedPattern
+						currentEnvArgs = savedEnvArgs
+						savedPattern = ""
+						savedEnvArgs = ""
+						}
 				} else if enumerateDepth > 1 {
 					if currentProblem != nil {
 						currentProblem.Body = appendBody(currentProblem.Body, block.Content)
@@ -152,7 +162,7 @@ func isKnowledgeContent(content string) bool {
 		if r == '}' {
 			return false
 		}
-		if r == '\uff1a' {
+		if r == '\uff1a' || r == ':' {
 			return true
 		}
 	}
